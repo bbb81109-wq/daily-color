@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>貓咪的房間</title>
+  <meta name="theme-color" content="#faf9ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="每日色彩">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script src="liff.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #faf9ff 0%, #f5f8ff 100%);
+      font-family: "Noto Serif TC", Georgia, serif;
+      font-weight: 300;
+      color: #4a3f73;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 700px 400px at 25% 25%, rgba(255, 182, 193, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 600px 350px at 75% 20%, rgba(147, 112, 219, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse 650px 380px at 80% 80%, rgba(135, 206, 235, 0.09) 0%, transparent 50%),
+        radial-gradient(ellipse 700px 400px at 20% 75%, rgba(255, 215, 100, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .back-link {
+      position: fixed; top: 1.2rem; left: 1.4rem;
+      font-size: 0.66rem; letter-spacing: 0.2em;
+      color: #9b8db5; text-decoration: none; z-index: 100;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #6b5b95; }
+
+    .step {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; padding: 4.5rem 1.2rem 3rem;
+    }
+    .step.hidden { display: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeUp 0.45s ease both; }
+
+    .step-header { text-align: center; margin-bottom: 2rem; position: relative; z-index: 1; }
+    .step-num { font-size: 0.52rem; letter-spacing: 0.45em; color: #b5a9c9; margin-bottom: 0.7rem; }
+    .step-title { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.32em; color: #6b5b95; margin-bottom: 0.5rem; text-shadow: 0 2px 8px rgba(160,100,255,0.15); }
+    .step-sub { font-size: 0.62rem; letter-spacing: 0.2em; color: #9b8db5; line-height: 1.9; }
+
+    /* ══ 物件網格 ══ */
+    .objects-grid {
+      width: 100%; max-width: 600px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 1.2rem; margin-bottom: 2rem;
+      padding: 1.2rem; background: rgba(147,112,219,0.08); border-radius: 20px;
+      border: 1px solid rgba(147,112,219,0.15);
+      box-shadow: inset 0 0 20px rgba(147,112,219,0.05);
+      position: relative;
+      z-index: 1;
+    }
+
+    .object-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, rgba(220,200,255,0.5) 0%, rgba(200,180,255,0.35) 100%);
+      border: 2.5px solid rgba(147,112,219,0.5);
+      padding: 1rem 0.8rem;
+      border-radius: 24px 12px 28px 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: inherit; color: #7a6fb5;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow:
+        0 3px 8px rgba(147,112,219,0.12),
+        inset 0 1px 2px rgba(255,255,255,0.6),
+        -1px 2px 0 rgba(147,112,219,0.1),
+        2px -1px 0 rgba(147,112,219,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .object-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.3) 2px, rgba(255,255,255,0.3) 4px),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.15) 2px, rgba(255,255,255,0.15) 4px);
+      opacity: 0.5;
+      pointer-events: none;
+      border-radius: 24px 12px 28px 16px;
+    }
+
+    .object-btn:hover {
+      background: linear-gradient(135deg, rgba(200,170,255,0.6) 0%, rgba(180,160,255,0.45) 100%);
+      border-color: rgba(147,112,219,0.8);
+      transform: translateY(-3px) rotate(0.5deg);
+      box-shadow:
+        0 6px 16px rgba(147,112,219,0.2),
+        inset 0 1px 2px rgba(255,255,255,0.7),
+        -2px 3px 0 rgba(147,112,219,0.15),
+        3px -2px 0 rgba(147,112,219,0.12);
+    }
+
+    .object-btn.selected {
+      background: linear-gradient(135deg, rgba(147,112,219,0.8) 0%, rgba(130,100,200,0.7) 100%);
+      border-color: rgba(147,112,219,0.95);
+      border-width: 2.5px;
+      color: #fff;
+      box-shadow:
+        0 0 16px rgba(147,112,219,0.4),
+        inset 0 1px 2px rgba(255,255,255,0.4),
+        -2px 2px 0 rgba(147,112,219,0.3),
+        2px -2px 0 rgba(147,112,219,0.2);
+      transform: rotate(-1deg);
+    }
+
+    .object-icon {
+      font-size: 1.8rem;
+      position: relative;
+      z-index: 1;
+      animation: icon-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes icon-bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .object-name {
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-align: center;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+      font-weight: 500;
+    }
+
+    .step-footer {
+      display: flex; flex-direction: column; align-items: center; gap: 1.2rem; width: 100%;
+    }
+    .hint-text {
+      font-size: 0.62rem; letter-spacing: 0.22em;
+      color: #9b8db5; text-align: center; height: 1.2em;
+    }
+    .next-btn {
+      background: transparent; border: 1px solid rgba(147,112,219,0.4);
+      color: #9b8db5; font-family: inherit;
+      font-size: 0.82rem; letter-spacing: 0.35em; padding: 0.65rem 2.2rem;
+      border-radius: 100px; cursor: pointer;
+      transition: all 0.25s; opacity: 0; pointer-events: none;
+    }
+    .next-btn.show { opacity: 1; pointer-events: all; }
+    .next-btn:hover { background: rgba(147,112,219,0.15); color: #6b5b95; }
+
+    /* ════════════════════════════════════════
+       顏色選擇區
+    ════════════════════════════════════════ */
+    .color-section {
+      width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .color-group-label {
+      font-size: 0.62rem; letter-spacing: 0.3em;
+      color: #9b8db5; text-align: center; margin-bottom: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .color-row {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .swatch-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.6rem; cursor: pointer; transition: transform 0.2s;
+    }
+    .swatch-wrap:hover { transform: scale(1.08); }
+    .swatch-circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 0 8px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+    .swatch-wrap.selected .swatch-circle {
+      border-color: #fff; box-shadow: 0 0 16px var(--sw-color), 0 0 28px rgba(0,0,0,0.5);
+    }
+    .swatch-label {
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: #9b8db5; transition: color 0.2s;
+    }
+    .swatch-wrap.selected .swatch-label {
+      color: #6b5b95; text-shadow: 0 0 6px var(--sw-color);
+    }
+
+    /* ════════════════════════════════════════
+       結果頁
+    ════════════════════════════════════════ */
+    .result-tags {
+      display: flex; flex-wrap: wrap; gap: 0.8rem;
+      justify-content: center; margin-bottom: 1.6rem;
+    }
+    .result-tag {
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      background: rgba(147,112,219,0.15); border: 1px solid rgba(147,112,219,0.4);
+      color: #7a6fb5; padding: 0.4rem 1rem;
+      border-radius: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .result-card {
+      width: 100%; max-width: 380px;
+      background: rgba(240,230,255,0.6); border: 1px solid rgba(147,112,219,0.25);
+      padding: 2.2rem; border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(147,112,219,0.1);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .result-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(147,112,219,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(200,180,255,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .result-title {
+      display: block; font-size: 1.28rem; font-weight: 500;
+      letter-spacing: 0.2em; color: #6b5b95;
+      text-shadow: 0 2px 8px rgba(147,112,219,0.15);
+      margin-bottom: 1.2rem; text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .result-text {
+      font-size: 0.95rem; line-height: 2.15; letter-spacing: 0.05em;
+      color: #6b5b95; white-space: pre-line; margin-bottom: 1.3rem;
+      padding: 0 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .result-divider {
+      height: 2px; background: linear-gradient(90deg, transparent, rgba(147,112,219,0.3), transparent); margin: 1.3rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    .result-action-label {
+      font-size: 0.6rem; letter-spacing: 0.28em;
+      color: #9b8db5; margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    .result-action {
+      font-size: 0.88rem; line-height: 2; letter-spacing: 0.05em;
+      color: #6b5b95;
+      padding: 0.8rem 1rem;
+      background: rgba(220,200,255,0.2);
+      border-left: 3px solid rgba(147,112,219,0.4);
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .result-transform-label {
+      font-size: 0.6rem; letter-spacing: 0.28em;
+      color: #9b8db5; margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    .result-transform {
+      font-size: 0.88rem; line-height: 2; letter-spacing: 0.05em;
+      color: #6b5b95;
+      padding: 0.8rem 1rem;
+      background: rgba(220,200,255,0.15);
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .result-extension-label {
+      font-size: 0.6rem; letter-spacing: 0.28em;
+      color: #9b8db5; margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    .result-extension {
+      font-size: 0.82rem; line-height: 1.8; letter-spacing: 0.05em;
+      color: #7a6fb5;
+    }
+
+    .result-more {
+      background: rgba(147,112,219,0.1); padding: 1.2rem; border-radius: 16px;
+      margin-bottom: 1.8rem; text-align: center;
+      border: 1px solid rgba(147,112,219,0.15);
+      position: relative;
+      z-index: 1;
+    }
+    .result-more-label {
+      font-size: 0.62rem; letter-spacing: 0.2em;
+      color: #9b8db5; margin-bottom: 0.8rem;
+    }
+    .result-more-links {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .more-link {
+      font-size: 0.7rem; letter-spacing: 0.18em;
+      color: #7a6fb5; text-decoration: none;
+      border: 1px solid rgba(147,112,219,0.4); padding: 0.45rem 1rem;
+      border-radius: 20px; transition: all 0.2s;
+    }
+    .more-link:hover { background: rgba(147,112,219,0.15); color: #6b5b95; }
+
+    .line-share-btn {
+      display: block; margin: 0 auto 1.2rem;
+      background: transparent; border: 1px solid #06C755;
+      color: #06C755; font-family: inherit;
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      padding: 0.5rem 1.5rem; border-radius: 100px;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .line-share-btn:hover { background: #06C755; color: #fff; }
+
+    .result-footer {
+      display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
+    }
+    .retry-btn {
+      background: none; border: 1px solid rgba(147,112,219,0.3);
+      color: #9b8db5; font-family: inherit;
+      font-size: 0.68rem; letter-spacing: 0.24em;
+      padding: 0.5rem 1.5rem; border-radius: 100px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .retry-btn:hover { border-color: rgba(147,112,219,0.6); color: #6b5b95; }
+
+    .home-link {
+      font-size: 0.54rem; letter-spacing: 0.24em;
+      color: #b5a9c9; text-decoration: none; transition: color 0.2s;
+    }
+    .home-link:hover { color: #9b8db5; }
+  </style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">← 返回</a>
+
+<!-- Step 1: 物件選擇 -->
+<div id="step-room" class="step">
+  <div class="step-header">
+    <p class="step-num">01 ／ 03</p>
+    <h1 class="step-title">貓咪的房間</h1>
+    <p class="step-sub">選一個或多個你有感覺的物件<br>用很輕的方式靠近自己</p>
+    <p id="todayChakraDisplay" style="font-size: 0.58rem; letter-spacing: 0.15em; color: rgba(220,170,255,0.7); margin-top: 0.8rem; display: none;"></p>
+  </div>
+
+  <div class="objects-grid" id="objectsGrid"></div>
+
+  <div class="step-footer">
+    <p class="hint-text" id="obj-hint">點至少一個</p>
+    <button class="next-btn" id="btn-to-color">下一步 →</button>
+  </div>
+</div>
+
+<!-- Step 2: 顏色選擇 -->
+<div id="step-color" class="step hidden">
+  <div class="step-header">
+    <p class="step-num">02 ／ 03</p>
+    <h1 class="step-title">此刻的心情</h1>
+    <p class="step-sub">今天像什麼顏色？<br>用直覺去選</p>
+  </div>
+  <div class="color-section" id="color-section"></div>
+  <div class="step-footer">
+    <p class="hint-text" id="color-hint">&nbsp;</p>
+    <button class="next-btn" id="btn-to-result">看看 →</button>
+  </div>
+</div>
+
+<!-- Step 3: 結果頁 -->
+<div id="step-result" class="step hidden">
+  <div class="result-tags" id="result-tags"></div>
+  <div class="result-card">
+    <span class="result-title" id="result-title"></span>
+    <p class="result-text" id="result-text"></p>
+    <div class="result-divider"></div>
+    <p class="result-action-label">🎯 今天可以</p>
+    <p class="result-action" id="result-action"></p>
+    <div class="result-divider"></div>
+    <p class="result-transform-label">💭 轉化方向</p>
+    <p class="result-transform" id="result-transform"></p>
+    <div class="result-divider"></div>
+    <p class="result-extension-label">🔗 延伸體驗</p>
+    <p class="result-extension" id="result-extension"></p>
+  </div>
+  <div class="result-more">
+    <p class="result-more-label">如果今天想多一點陪伴</p>
+    <div class="result-more-links">
+      <a class="more-link" href="daily-color.html">接收今日祝福</a>
+      <a class="more-link" href="chakra-cat.html">身體在說什麼</a>
+    </div>
+  </div>
+  <button class="line-share-btn" id="roomLineShare">分享到 LINE ↗</button>
+  <div class="result-footer">
+    <button class="retry-btn" id="btn-retry">換個方式試試</button>
+    <a class="home-link" href="index.html">回到首頁</a>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  物件資料層
+// ════════════════════════════════════════
+const OBJECTS = {
+  bed:       { name: '床', icon: '🛏️', essence: 'rest', energy: 'passive', keywords: ['放鬆','停頓','暫停'], meaning: '身體的休息地，心靈的避風港', scenario: '需要復原的時候；累的時候' },
+  mirror:    { name: '鏡子', icon: '🪞', essence: 'introspect', energy: 'reflective', keywords: ['思考','看見','審視'], meaning: '看見自己的工具，不評判地觀察', scenario: '需要誠實面對自己的時候' },
+  table:     { name: '餐桌', icon: '🍽️', essence: 'nourish', energy: 'active', keywords: ['照顧','給予','滋養'], meaning: '滋養與連結發生的地方', scenario: '需要照顧自己或他人的時候' },
+  window:    { name: '窗戶', icon: '🪟', essence: 'escape', energy: 'open', keywords: ['透氣','距離','開放'], meaning: '通往外面世界的通道，看見更寬廣的景色', scenario: '需要透氣、改變視角的時候' },
+  doll:      { name: '玩偶', icon: '🧸', essence: 'comfort', energy: 'passive', keywords: ['陪伴','柔軟','接住'], meaning: '無條件陪伴的象徵', scenario: '需要被溫柔對待、允許脆弱的時候' },
+  plant:     { name: '植物', icon: '🌿', essence: 'growth', energy: 'passive', keywords: ['成長','生命','繼續'], meaning: '生命的持續與轉變', scenario: '相信改變、相信自己會長大的時候' },
+  lamp:      { name: '檯燈', icon: '💡', essence: 'clarity', energy: 'active', keywords: ['照亮','找路','希望'], meaning: '在黑暗中找到方向的光', scenario: '感到迷茫、需要答案的時候' },
+  bookshelf: { name: '書架', icon: '📚', essence: 'knowledge', energy: 'reflective', keywords: ['思想','沉思','理解'], meaning: '思想的堆積，過往經驗的承載', scenario: '需要學習或從過去汲取力量的時候' },
+  pillow:    { name: '枕頭', icon: '🛌', essence: 'softness', energy: 'passive', keywords: ['柔軟','溫柔','脆弱'], meaning: '柔軟與舒適的承載', scenario: '允許自己柔軟、不必強撐的時候' },
+  ceiling:   { name: '天花板', icon: '🏠', essence: 'vastness', energy: 'open', keywords: ['遼闊','無限','寬廣'], meaning: '無限的空間與可能性', scenario: '感到被限制、需要仰望的時候' },
+  door:      { name: '門', icon: '🚪', essence: 'choice', energy: 'active', keywords: ['決定','進出','可能'], meaning: '選擇與轉變的入口', scenario: '面臨抉擇、準備開始新篇章的時候' },
+  incense:   { name: '香薰', icon: '🕯️', essence: 'calm', energy: 'passive', keywords: ['寧靜','冥想','放下'], meaning: '寧靜與淨化的象徵', scenario: '需要平復心情、放下擔憂的時候' },
+  carpet:    { name: '地毯', icon: '🏡', essence: 'ground', energy: 'passive', keywords: ['紮根','穩定','踏實'], meaning: '踏實感與家的溫暖', scenario: '需要感受安全、扎根的時候' },
+  clock:     { name: '時鐘', icon: '⏰', essence: 'time', energy: 'reflective', keywords: ['時間','流逝','轉變'], meaning: '時間的流動與無常', scenario: '需要接納變化、珍惜當下的時候' },
+  cup:       { name: '杯子', icon: '☕', essence: 'warmth', energy: 'active', keywords: ['溫暖','享受','給予'], meaning: '溫暖的承載與分享', scenario: '需要給自己一份溫暖、享受片刻的時候' },
+  wall:      { name: '牆壁', icon: '🧱', essence: 'boundary', energy: 'passive', keywords: ['保護','界線','屏障'], meaning: '保護與界線的象徵', scenario: '需要建立邊界、保護自己的時候' },
+  speaker:   { name: '揚聲器', icon: '🔊', essence: 'voice', energy: 'active', keywords: ['表達','傳遞','聆聽'], meaning: '聲音與表達的放大', scenario: '需要讓自己被聽見、表達的時候' },
+  candle:    { name: '蠟燭', icon: '🕯️', essence: 'presence', energy: 'reflective', keywords: ['陪伴','溫度','專注'], meaning: '溫柔陪伴與持久的關注', scenario: '需要專注、冥想或安靜陪伴的時候' },
+};
+
+const COLOR_GROUPS = [
+  { label:'比較燙的那種', colors:[
+    {id:'深紅',hex:'#A94545',mood:'warm'},{id:'紅',hex:'#C96060',mood:'warm'},
+    {id:'淺紅',hex:'#E08080',mood:'warm'},{id:'橙',hex:'#D08858',mood:'warm'},
+    {id:'深橙',hex:'#B8704A',mood:'warm'},{id:'黃',hex:'#CEB84A',mood:'warm'},
+    {id:'淺黃',hex:'#E0C860',mood:'warm'},{id:'金',hex:'#B8962A',mood:'warm'},
+    {id:'焦糖',hex:'#B89860',mood:'warm'}]},
+  { label:'比較靜的那種', colors:[
+    {id:'深綠',hex:'#5A8A68',mood:'cool'},{id:'綠',hex:'#7AAF88',mood:'cool'},
+    {id:'淺綠',hex:'#95C9A8',mood:'cool'},{id:'深藍',hex:'#3A5A88',mood:'cool'},
+    {id:'藍',hex:'#5888B8',mood:'cool'},{id:'淺藍',hex:'#88B8CC',mood:'cool'},
+    {id:'青',hex:'#5AA8B8',mood:'cool'},{id:'蒂爾',hex:'#4A9A9A',mood:'cool'}]},
+  { label:'比較軟的那種', colors:[
+    {id:'玫瑰粉',hex:'#C88898',mood:'soft'},{id:'粉',hex:'#D898B0',mood:'soft'},
+    {id:'淡粉',hex:'#E0B0C8',mood:'soft'},{id:'紫',hex:'#8870B8',mood:'soft'},
+    {id:'淺紫',hex:'#A898D0',mood:'soft'},{id:'薰衣草',hex:'#B8A0D0',mood:'soft'},
+    {id:'銀',hex:'#A8B0C0',mood:'soft'},{id:'淡紫',hex:'#D0C8E0',mood:'soft'}]},
+  { label:'比較重的那種', colors:[
+    {id:'深褐',hex:'#3A3030',mood:'deep'},{id:'黑',hex:'#484040',mood:'deep'},
+    {id:'灰黑',hex:'#605858',mood:'deep'},{id:'石墨',hex:'#6A7070',mood:'deep'},
+    {id:'棕',hex:'#6A5848',mood:'deep'},{id:'深灰',hex:'#888888',mood:'deep'}]},
+];
+
+// ════════════════════════════════════════
+//  氛圍引擎
+// ════════════════════════════════════════
+const AMBIENT_TEMPLATES = {
+  warm: {
+    passive: {
+      title: '放鬆，同時還有火在',
+      template: '你選了__，身體想停下來，但有一種小小的溫度還在動。\n那份溫度是真實的，讓它在也可以。'
+    },
+    active: {
+      title: '有事要做，但先呼吸',
+      template: '你選了__，好像有些什麼想發生。\n不用急著全力以赴，今天先溫溫地開始。'
+    },
+    reflective: {
+      title: '邊想邊溫暖',
+      template: '你在想，同時有一些溫度陪著這個思考。\n這是很好的狀態——思考不是冷的。'
+    },
+    open: {
+      title: '想透氣，又有溫度',
+      template: '想出去、想自由，同時有溫度在你身邊。\n這兩件事可以同時有。'
+    }
+  },
+  cool: {
+    passive: {
+      title: '安靜的陪伴',
+      template: '你選了__，想靜，也需要被陪著。\n這兩件事可以一起。不需要說話，就這樣在。'
+    },
+    active: {
+      title: '清醒地前進',
+      template: '你選了__，有些什麼要做，同時想要清楚。\n今天一步一步來，不用急。'
+    },
+    reflective: {
+      title: '靜靜地看',
+      template: '你在想，在靜靜地審視。\n有些事不需要答案，就讓自己安靜地在那裡。'
+    },
+    open: {
+      title: '安靜的空間',
+      template: '需要空間，也需要靜。\n找一個讓自己可以安靜思考的地方就好。'
+    }
+  },
+  soft: {
+    passive: {
+      title: '柔軟地停下來',
+      template: '你選了__，有一點脆弱，有一點需要被溫柔對待。\n不需要堅強，可以先軟著。'
+    },
+    active: {
+      title: '溫柔地前進',
+      template: '你選了__，還是想做什麼，但希望是溫柔的方式。\n不用力，讓它自然發生。'
+    },
+    reflective: {
+      title: '細膩的自我觀察',
+      template: '你在細膩地看著自己。\n這份觀察很溫柔，讓它在，不需要趕快好起來。'
+    },
+    open: {
+      title: '輕輕地透氣',
+      template: '有一點想離開，但很溫柔。\n出去走走，只是為了透氣，不用有目的。'
+    }
+  },
+  deep: {
+    passive: {
+      title: '沉著就好',
+      template: '你選了__，很沉，也很靜。\n不用說清楚，就讓自己在那裡。'
+    },
+    active: {
+      title: '沉著撐著',
+      template: '你選了__，有點重，但還是想做什麼。\n不用很有力量，只要一點點就夠了。'
+    },
+    reflective: {
+      title: '在深處思考',
+      template: '有什麼深在心裡，說不太出來。\n不用說出來，就讓它在。'
+    },
+    open: {
+      title: '黑暗裡想看到光',
+      template: '很沉，但還想找出口。\n先換個角度看，出口也許就會出現。'
+    }
+  }
+};
+
+function classifyEssences(objects) {
+  const essences = objects.map(o => o.essence);
+  const energies = objects.map(o => o.energy);
+
+  if (energies.includes('active')) return 'active';
+  if (energies.includes('reflective')) return 'reflective';
+  if (energies.includes('open')) return 'open';
+  return 'passive';
+}
+
+function generateAmbience(selectedObjects, selectedColor) {
+  const essenceGroup = classifyEssences(selectedObjects);
+  const template = AMBIENT_TEMPLATES[selectedColor.mood]?.[essenceGroup] ||
+                   { title: '你的此刻', template: '你選了一個挺獨特的組合。\n無論今天是什麼感覺，都可以先給自己一點空間。' };
+
+  // 動態生成個性化開場
+  let text = '';
+  if (selectedObjects.length === 1) {
+    // 單個物件：直接用模板
+    const names = selectedObjects[0].name;
+    text = template.template.replace('__', names);
+  } else {
+    // 多個物件：生成更個性化的文案
+    const names = selectedObjects.map(o => o.name).join('、');
+    const firstEssence = selectedObjects[0].essence;
+    const secondEssence = selectedObjects.length > 1 ? selectedObjects[1].essence : null;
+
+    const openings = [
+      `你同時選了${names}，`,
+      `${names}，這個組合說出了什麼？`,
+      `${names}，你在做什麼樣的選擇呢？`
+    ];
+
+    const openingText = openings[Math.floor(Math.random() * openings.length)];
+    text = `${openingText}${template.template.substring(template.template.indexOf('。') + 1)}`;
+  }
+
+  // 詩意的 action 映射
+  const actionMap = {
+    rest: '讓身體完全放下來，感受支撐',
+    introspect: '靜靜地想一想，不用急著有答案',
+    nourish: '好好吃一頓，用對待朋友的溫柔對待自己',
+    escape: '深呼吸，讓新鮮空氣進來',
+    comfort: '找個地方抱著自己，允許脆弱',
+    growth: '給自己一個小小的可能，耐心等待它發芽',
+    clarity: '打開燈，看清楚現在的樣子',
+    knowledge: '看看書，或就靜靜地想，都很好',
+    softness: '用溫柔的方式對待自己，像對待摯友',
+    boundary: '說不出來也沒關係，沈默也是一種答案',
+    voice: '說出或寫下心裡話，讓它流動',
+    warmth: '泡杯暖的東西，用雙手包著溫度',
+    vastness: '仰頭看天空，感受自己的渺小與自由',
+    choice: '想想你真的想要什麼，不是應該要什麼',
+    calm: '深呼吸，慢下來，就只是呼吸',
+    ground: '感受腳踩地的感覺，感謝地球的承載',
+    time: '讓自己有時間，時間會治癒很多事',
+    presence: '就在這裡，沒別的，這就很好了',
+  };
+
+  let action = actionMap[selectedObjects[0]?.essence] || '讓自己先停下來';
+  if (selectedObjects.length > 1) {
+    action = actionMap[selectedObjects[1]?.essence] || action;
+  }
+
+  // 轉化建議
+  const transformSuggestions = {
+    warm: '從著急 → 溫柔地開始',
+    cool: '從冷漠 → 清醒地連結',
+    soft: '從硬撐 → 允許柔軟',
+    deep: '從沉重 → 深刻地接納'
+  };
+
+  // 延伸體驗邀請（豐富的選項）
+  const extensionMap = {
+    rest: '想深入了解穩定感？進入脈輪貓，感受海底輪紮根的力量。',
+    introspect: '想深化觀察？進入脈輪貓，靜靜地感受眉心輪的洞見。',
+    nourish: '想連結更深的滋養？進入抽牌頁，讓宇宙餵養你的靈魂。',
+    escape: '想探索開放與自由？進入脈輪貓，感受心輪的風。',
+    comfort: '想找到內在的溫柔？進入抽牌頁，讓宇宙對你說一句溫暖的話。',
+    growth: '想探索成長的力量？進入脈輪貓，感受太陽神經叢的清晰與力量。',
+    clarity: '想看得更清楚？進入脈輪貓，點亮眉心輪的智慧之光。',
+    knowledge: '想從智慧中汲取力量？進入抽牌頁，宇宙有答案要給你。',
+    softness: '想讓自己更柔軟？進入脈輪貓，感受臍輪的流動與溫柔。',
+    boundary: '想建立健康的界線？進入脈輪貓，感受根輪的穩定支撐。',
+    voice: '想放大自己的聲音？進入脈輪貓，探索喉輪的表達力量。',
+    warmth: '想深化滋養的感受？進入脈輪貓，感受心輪的溫暖。',
+    vastness: '想擁抱無限的可能？進入脈輪貓，望向頂輪的光。',
+    choice: '想為今天找個方向？進入抽牌頁，感受脈輪的祝福與指引。',
+    calm: '想深入冥想？進入脈輪貓，點擊頂輪，在寧靜中呼吸。',
+    ground: '想更踏實？進入脈輪貓，感受海底輪的紮根與重量。',
+    time: '想珍惜此刻？進入脈輪貓，感受心輪對時間的柔軟態度。',
+    presence: '想更深地臨在？進入脈輪貓，感受整個身體的存在感。',
+  };
+
+  let extension = '';
+  for (const obj of selectedObjects) {
+    if (extensionMap[obj.essence]) {
+      extension = extensionMap[obj.essence];
+      break;
+    }
+  }
+
+  return {
+    title: template.title,
+    text: text,
+    action: action,
+    transform: transformSuggestions[selectedColor.mood],
+    extension: extension || '想深入探索？進入脈輪貓，感受身體的智慧。'
+  };
+}
+
+// ════════════════════════════════════════
+//  UI 邏輯
+// ════════════════════════════════════════
+let selectedObjects = [];
+let selectedColor = null;
+
+// 物件網格初始化
+const objectsGrid = document.getElementById('objectsGrid');
+Object.entries(OBJECTS).forEach(([key, obj]) => {
+  const btn = document.createElement('button');
+  btn.className = 'object-btn';
+  btn.title = `${obj.name} — ${obj.meaning}`;
+  btn.innerHTML = `<div class="object-icon">${obj.icon}</div><div class="object-name">${obj.name}</div>`;
+  btn.addEventListener('click', () => {
+    const idx = selectedObjects.findIndex(o => o.essence === obj.essence && o.name === obj.name);
+    if (idx >= 0) {
+      selectedObjects.splice(idx, 1);
+      btn.classList.remove('selected');
+    } else {
+      selectedObjects.push(obj);
+      btn.classList.add('selected');
+    }
+    updateHint();
+  });
+  objectsGrid.appendChild(btn);
+});
+
+function updateHint() {
+  const hint = document.getElementById('obj-hint');
+  const btn = document.getElementById('btn-to-color');
+  if (selectedObjects.length === 0) {
+    hint.textContent = '點至少一個';
+    btn.classList.remove('show');
+  } else if (selectedObjects.length === 1) {
+    hint.textContent = `選了 ${selectedObjects[0].name}${selectedObjects.length > 1 ? '…' : ''}`;
+    btn.classList.add('show');
+  } else {
+    hint.textContent = `選了 ${selectedObjects.length} 個`;
+    btn.classList.add('show');
+  }
+}
+
+// 顏色網格初始化
+const colorSection = document.getElementById('color-section');
+COLOR_GROUPS.forEach(group => {
+  const lbl = document.createElement('p');
+  lbl.className = 'color-group-label';
+  lbl.textContent = group.label;
+  colorSection.appendChild(lbl);
+  const row = document.createElement('div');
+  row.className = 'color-row';
+  group.colors.forEach(c => {
+    const w = document.createElement('div');
+    w.className = 'swatch-wrap';
+    w.style.setProperty('--sw-color', c.hex);
+    w.innerHTML = `<div class="swatch-circle" style="background:${c.hex}"></div><span class="swatch-label">${c.id}</span>`;
+    w.addEventListener('click', () => {
+      document.querySelectorAll('.swatch-wrap').forEach(s => s.classList.remove('selected'));
+      w.classList.add('selected');
+      selectedColor = c;
+      document.getElementById('color-hint').textContent = `選了 ${c.id}`;
+      document.getElementById('btn-to-result').classList.add('show');
+    });
+    row.appendChild(w);
+  });
+  colorSection.appendChild(row);
+});
+
+// 步驟切換
+function goTo(from, to) {
+  document.getElementById(from).classList.add('hidden');
+  const t = document.getElementById(to);
+  t.classList.remove('hidden');
+  t.classList.add('fade-in');
+  setTimeout(() => t.classList.remove('fade-in'), 500);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('btn-to-color').addEventListener('click', () => goTo('step-room', 'step-color'));
+document.getElementById('btn-to-result').addEventListener('click', () => {
+  buildResult();
+  goTo('step-color', 'step-result');
+});
+
+// 結果生成
+function buildResult() {
+  const result = generateAmbience(selectedObjects, selectedColor);
+
+  const tagsEl = document.getElementById('result-tags');
+  tagsEl.innerHTML = '';
+  selectedObjects.forEach(obj => {
+    const t = document.createElement('span');
+    t.className = 'result-tag';
+    t.textContent = obj.name;
+    tagsEl.appendChild(t);
+  });
+  const ct = document.createElement('span');
+  ct.className = 'result-tag';
+  ct.style.cssText = `background:${selectedColor.hex}22;border-color:${selectedColor.hex}44;color:${selectedColor.hex}`;
+  ct.textContent = selectedColor.id;
+  tagsEl.appendChild(ct);
+
+  document.getElementById('result-title').textContent = result.title;
+  document.getElementById('result-text').textContent = result.text;
+  document.getElementById('result-action').textContent = result.action;
+  document.getElementById('result-transform').textContent = result.transform;
+  document.getElementById('result-extension').textContent = result.extension;
+}
+
+// 重試
+document.getElementById('btn-retry').addEventListener('click', () => {
+  selectedObjects = [];
+  selectedColor = null;
+  document.querySelectorAll('.object-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.swatch-wrap').forEach(s => s.classList.remove('selected'));
+  document.getElementById('obj-hint').textContent = '點至少一個';
+  document.getElementById('color-hint').textContent = ' ';
+  document.getElementById('btn-to-color').classList.remove('show');
+  document.getElementById('btn-to-result').classList.remove('show');
+  goTo('step-result', 'step-room');
+});
+
+// LINE 分享
+document.getElementById('roomLineShare').addEventListener('click', async function() {
+  const result = generateAmbience(selectedObjects, selectedColor);
+  this.textContent = '傳送中…';
+  this.disabled = true;
+  try {
+    await shareToLine(buildRoomFlexMessage(
+      selectedObjects.map(o => o.name).join('、'),
+      selectedObjects.map(o => o.name).join('、'),
+      selectedColor?.id || '', selectedColor?.hex || '#7a6aaa',
+      result.text
+    ));
+  } catch(e) {}
+  this.textContent = '分享到 LINE ↗';
+  this.disabled = false;
+});
+
+// ── 讀取今天的脈輪 ──
+(() => {
+  try {
+    const chakraData = localStorage.getItem('todayChakra');
+    if (chakraData) {
+      const chakra = JSON.parse(chakraData);
+      const display = document.getElementById('todayChakraDisplay');
+      if (display) {
+        display.innerHTML = `✨ 今天的脈輪：<span style="color: ${chakra.color}; font-weight: 500;">${chakra.name}</span> (${chakra.en})`;
+        display.style.display = 'block';
+      }
+    }
+  } catch {}
+})();
+
+initLiff();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+</script>
+</body>
+</html>

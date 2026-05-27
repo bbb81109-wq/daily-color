@@ -1,0 +1,30 @@
+{
+  "name": "每日色彩",
+  "short_name": "每日色彩",
+  "description": "每一天都是一個重新開始的機會",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080613",
+  "theme_color": "#1c1538",
+  "orientation": "portrait",
+  "lang": "zh-TW",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

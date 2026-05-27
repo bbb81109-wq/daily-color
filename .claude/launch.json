@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/anmita/Desktop/每日色彩 && python3 -m http.server"],
+      "port": 8000,
+      "autoPort": true
+    }
+  ]
+}
