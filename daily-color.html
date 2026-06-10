@@ -348,7 +348,10 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* 結果卡片內容 */
+    /* ════════════════════════════════════════
+       重設計：5 層資訊結構
+    ════════════════════════════════════════ */
+
     .ck-back-content {
       position: relative;
       z-index: 1;
@@ -357,6 +360,11 @@
       opacity: 0;
       transform: translateY(12px);
       transition: all 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 1rem;
     }
 
     .ck-back-content.show {
@@ -364,64 +372,81 @@
       transform: translateY(0);
     }
 
-    .ck-back-card-type {
-      display: inline-block;
-      font-size: 0.58rem;
-      letter-spacing: 0.28em;
-      color: #c5c0b8;
+    /* 第一層：訊息類別 */
+    .ck-layer-1 {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      color: #9b8db5;
       text-transform: uppercase;
       font-weight: 600;
-      margin-bottom: 1rem;
-      padding: 0.4rem 0.8rem;
-      background: rgba(147,112,219,0.08);
-      border-radius: 50px;
-    }
-
-    .ck-back-card-icon {
-      font-size: 1.8rem;
-      margin-bottom: 0.8rem;
       opacity: 0.8;
     }
 
+    /* 第二層：卡牌名稱（最大標題） */
+    .ck-layer-2 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .ck-back-card-icon {
+      font-size: 2.6rem;
+      opacity: 0.9;
+    }
+
     .ck-back-card-title {
-      font-size: 1.25rem;
-      font-weight: 500;
+      font-size: 2rem;
+      font-weight: 400;
       letter-spacing: 0.08em;
-      color: #5a4a7a;
-      margin-bottom: 1.2rem;
-      line-height: 1.7;
+      color: #3d3556;
+      line-height: 1.4;
+      max-width: 280px;
     }
 
-    .ck-back-card-deeper {
-      font-size: 0.94rem;
+    /* 第三層：核心訊息（主內容） */
+    .ck-layer-3 {
+      font-size: 1.04rem;
       line-height: 2.1;
-      letter-spacing: 0.01em;
-      color: #6b5b95;
-      margin-bottom: 1.6rem;
-      padding: 1.1rem 1.3rem;
-      background: linear-gradient(135deg, rgba(220,200,255,0.12) 0%, rgba(200,180,255,0.08) 100%);
-      border-radius: 10px;
-      min-height: 4.4rem;
+      letter-spacing: 0.02em;
+      color: #5a4a7a;
+      max-width: 300px;
+      font-weight: 400;
     }
 
-    .ck-back-card-action-label {
-      font-size: 0.60rem;
-      letter-spacing: 0.3em;
-      color: #c5c0b8;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
+    /* 第四層：行動建議 */
+    .ck-layer-4 {
+      width: 100%;
+      max-width: 320px;
     }
 
     .ck-back-card-action {
-      font-size: 0.97rem;
-      line-height: 2;
+      font-size: 0.96rem;
+      line-height: 1.95;
       letter-spacing: 0.01em;
-      color: #5a4a7a;
-      padding: 1.1rem 1.3rem;
-      background: linear-gradient(135deg, rgba(147,112,219,0.15) 0%, rgba(180,160,240,0.08) 100%);
-      border-left: 3px solid rgba(147,112,219,0.35);
-      border-radius: 10px;
+      color: #6b5b95;
+      padding: 1rem 1.2rem;
+      background: rgba(220,200,255,0.1);
+      border-left: 3px solid rgba(147,112,219,0.3);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    /* 第五層：自我提問 */
+    .ck-layer-5 {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      letter-spacing: 0.01em;
+      color: #8A7A8A;
+      font-style: italic;
+      font-weight: 300;
+      max-width: 280px;
+      opacity: 0.85;
+    }
+
+    /* 隱藏舊的不用樣式 */
+    .ck-back-card-action-label {
+      display: none;
     }
 
     /* 舊的動畫元素隱藏 */
@@ -621,36 +646,47 @@
       background: rgba(147,112,219,0.1);
       border-color: rgba(147,112,219,0.5);
     }
+    /* 次要按鈕：分享 */
     .ck-share {
-      display: block;
+      display: inline-block;
       width: fit-content;
-      margin: 1.4rem auto 0;
-      background: linear-gradient(135deg, rgba(200,190,220,0.1) 0%, rgba(220,200,255,0.06) 100%);
-      border: 1.2px solid rgba(147,112,219,0.25);
-      color: #8b7ba8;
+      margin: 0 0.5rem 0 0.5rem;
+      background: transparent;
+      border: 1px solid rgba(147,112,219,0.2);
+      color: #9b8db5;
       font-family: inherit;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      padding: 0.55rem 1.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      padding: 0.5rem 1.2rem;
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: 400;
     }
     .ck-share:hover {
-      background: linear-gradient(135deg, rgba(200,190,220,0.18) 0%, rgba(220,200,255,0.12) 100%);
+      background: rgba(147,112,219,0.08);
       border-color: rgba(147,112,219,0.4);
       color: #6b5b95;
     }
+
+    /* LINE 按鈕特色 */
     .ck-share.line-btn {
       border-color: #06C755;
       color: #06C755;
-      background: linear-gradient(135deg, rgba(6,199,85,0.08) 0%, rgba(6,199,85,0.04) 100%);
+      background: transparent;
     }
     .ck-share.line-btn:hover {
-      background: #06C755;
+      background: rgba(6,199,85,0.1);
       border-color: #06C755;
-      color: #fff;
+      color: #06C755;
+    }
+
+    /* 最低優先：進入房間 */
+    #roomBtn {
+      opacity: 0.7;
+    }
+    #roomBtn:hover {
+      opacity: 1;
     }
 
     /* ── LINE 個人化問候 ── */
@@ -675,17 +711,22 @@
     .ta.in { opacity: 1; transform: translateY(0); }
 
     /* ── 換一張按鈕 ── */
+    /* ════════════════════════════════════════
+       按鈕層級（主 > 次 > 最低）
+    ════════════════════════════════════════ */
+
+    /* 主要按鈕：再抽一張 */
     .redraw-btn {
       display: block;
-      margin: 2rem auto 0;
-      background: linear-gradient(135deg, rgba(147,112,219,0.12) 0%, rgba(200,180,255,0.08) 100%);
-      border: 1.5px solid rgba(147,112,219,0.3);
-      color: #6b5b95;
+      margin: 2.8rem auto 2rem;
+      background: linear-gradient(135deg, rgba(147,112,219,0.22) 0%, rgba(180,160,240,0.15) 100%);
+      border: 2px solid rgba(147,112,219,0.45);
+      color: #5a4a7a;
       font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 400;
-      letter-spacing: 0.25em;
-      padding: 0.75rem 2.6rem;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      padding: 0.85rem 3rem;
       border-radius: 100px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -694,7 +735,7 @@
       pointer-events: none;
       position: relative;
       z-index: 1;
-      box-shadow: 0 4px 15px rgba(147,112,219,0.06);
+      box-shadow: 0 6px 24px rgba(147,112,219,0.12);
     }
     .redraw-btn.visible {
       opacity: 1;
@@ -702,11 +743,11 @@
       pointer-events: all;
     }
     .redraw-btn:hover {
-      background: linear-gradient(135deg, rgba(147,112,219,0.2) 0%, rgba(200,180,255,0.12) 100%);
-      border-color: rgba(147,112,219,0.5);
-      color: #5a4a7a;
-      box-shadow: 0 6px 20px rgba(147,112,219,0.12);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(147,112,219,0.32) 0%, rgba(180,160,240,0.22) 100%);
+      border-color: rgba(147,112,219,0.65);
+      color: #3d3556;
+      box-shadow: 0 10px 32px rgba(147,112,219,0.18);
+      transform: translateY(-3px);
     }
     .redraw-btn:active { transform: scale(0.98); }
 
@@ -833,10 +874,43 @@
         margin-bottom: 0.9rem;
       }
 
-      .ck-back-card-type {
-        font-size: 0.56rem;
-        margin-bottom: 0.9rem;
-        padding: 0.38rem 0.8rem;
+      /* 手機版背卡 5 層結構 */
+      .ck-layer-1 {
+        font-size: 0.60rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .ck-layer-2 {
+        gap: 0.8rem;
+      }
+
+      .ck-back-card-icon {
+        font-size: 2.2rem;
+      }
+
+      .ck-back-card-title {
+        font-size: 1.65rem;
+        max-width: 260px;
+      }
+
+      .ck-layer-3 {
+        font-size: 0.98rem;
+        max-width: 280px;
+        gap-bottom: 1.6rem;
+      }
+
+      .ck-layer-4 {
+        max-width: 300px;
+      }
+
+      .ck-back-card-action {
+        font-size: 0.92rem;
+        padding: 0.9rem 1rem;
+      }
+
+      .ck-layer-5 {
+        font-size: 0.84rem;
+        max-width: 270px;
       }
 
       .ck-back-card-icon {
@@ -1057,12 +1131,25 @@
 
           <!-- 結果卡片內容 -->
           <div class="ck-back-content" id="ckBackContent">
-            <div class="ck-back-card-type" id="ckCardType"></div>
-            <div class="ck-back-card-icon" id="ckCardIcon"></div>
-            <div class="ck-back-card-title" id="ckCardTitle"></div>
-            <div class="ck-back-card-deeper" id="ckCardDeeper"></div>
-            <div class="ck-back-card-action-label">🎯 今天的小行動</div>
-            <div class="ck-back-card-action" id="ckCardAction"></div>
+            <!-- 第一層：訊息類別 -->
+            <div class="ck-layer-1" id="ckCardType"></div>
+
+            <!-- 第二層：卡牌名稱 -->
+            <div class="ck-layer-2">
+              <div class="ck-back-card-icon" id="ckCardIcon"></div>
+              <div class="ck-back-card-title" id="ckCardTitle"></div>
+            </div>
+
+            <!-- 第三層：核心訊息 -->
+            <div class="ck-layer-3" id="ckCardDeeper"></div>
+
+            <!-- 第四層：行動建議 -->
+            <div class="ck-layer-4">
+              <div class="ck-back-card-action" id="ckCardAction"></div>
+            </div>
+
+            <!-- 第五層：自我提問 -->
+            <div class="ck-layer-5" id="ckCardQuestion"></div>
           </div>
 
           <div class="ck-back-aura"></div>
@@ -1516,42 +1603,65 @@ function fillIC(ic, isSpirit = false) {
 
 // ── 填充脈輪卡 或 靈性指引卡 ──
 function fillCK(ck, spirit = null) {
-  const deeperSection = document.getElementById('ckDeeperSection');
-  const expandBtn = document.getElementById('ckExpandBtn');
+  // 填充背卡：5 層結構
+  const fillBackCard = (type, title, icon, message, action, question) => {
+    document.getElementById('ckCardType').textContent = type;
+    document.getElementById('ckCardIcon').textContent = icon;
+    document.getElementById('ckCardTitle').textContent = title;
+    document.getElementById('ckCardDeeper').textContent = message;
+    document.getElementById('ckCardAction').textContent = action;
+    document.getElementById('ckCardQuestion').textContent = question;
+  };
 
   if (spirit) {
-    // 顯示靈性指引卡
-    document.getElementById('ckStrip').style.background    = spirit.color;
-    document.getElementById('ckDot').style.background      = spirit.color;
-    document.getElementById('ckName').textContent           = spirit.title;
-    document.getElementById('ckEn').textContent             = spirit.category;
+    // 靈性指引卡：5 層結構
+    document.getElementById('ckStrip').style.background = spirit.color;
+    document.getElementById('ckDot').style.background = spirit.color;
+    document.getElementById('ckName').textContent = spirit.title;
+    document.getElementById('ckEn').textContent = spirit.category;
     document.getElementById('ckElementLocation').textContent = '✨ ' + spirit.category;
-    document.getElementById('ckBlessing').textContent       = spirit.text;
-    document.getElementById('ckAction').textContent         = spirit.action;
+    document.getElementById('ckBlessing').textContent = spirit.text;
+    document.getElementById('ckAction').textContent = spirit.action;
 
-    // 靈性指引卡沒有深度理解部分
-    deeperSection.classList.remove('visible');
-    expandBtn.style.display = 'none';
+    // 背卡內容：新的 5 層結構
+    fillBackCard(
+      spirit.category,
+      spirit.title,
+      '✨',
+      spirit.text,
+      spirit.action,
+      spirit.question || '這訊息對你的當下有什麼啟發？'
+    );
+
+    document.getElementById('ckDeeperSection').classList.remove('visible');
+    document.getElementById('ckExpandBtn').style.display = 'none';
   } else {
-    // 顯示脈輪卡（原有邏輯）
-    document.getElementById('ckStrip').style.background    = ck.color;
-    document.getElementById('ckDot').style.background      = ck.color;
-    document.getElementById('ckName').textContent           = ck.name;
-    document.getElementById('ckEn').textContent             = ck.en;
+    // 脈輪卡：5 層結構
+    document.getElementById('ckStrip').style.background = ck.color;
+    document.getElementById('ckDot').style.background = ck.color;
+    document.getElementById('ckName').textContent = ck.name;
+    document.getElementById('ckEn').textContent = ck.en;
     const elementIcon = ck.element === '地' ? '🌍' : ck.element === '水' ? '💧' :
                         ck.element === '火' ? '🔥' : ck.element === '風' ? '💨' :
                         ck.element === '空' ? '☁️' : ck.element === '靈' ? '✨' : '⭕';
     document.getElementById('ckElementLocation').textContent = `${elementIcon} ${ck.element}元素 · ${ck.location}`;
-    document.getElementById('ckBlessing').textContent       = ck.blessing;
-    document.getElementById('ckAction').textContent         = ck.action;
-
-    // 填充深度理解和轉化方向
-    document.getElementById('ckDeeper').textContent  = ck.deeper;
+    document.getElementById('ckBlessing').textContent = ck.blessing;
+    document.getElementById('ckAction').textContent = ck.action;
+    document.getElementById('ckDeeper').textContent = ck.deeper;
     document.getElementById('ckTransform').textContent = ck.transform;
 
-    // 顯示展開按鈕
-    expandBtn.style.display = 'inline-block';
-    deeperSection.classList.remove('visible');
+    // 背卡內容：新的 5 層結構
+    fillBackCard(
+      `今日訊息 · ${ck.name}`,
+      ck.blessing,
+      '✨',
+      ck.deeper,
+      ck.action,
+      `你可以如何用 ${ck.name} 的能量轉化此刻？`
+    );
+
+    document.getElementById('ckExpandBtn').style.display = 'inline-block';
+    document.getElementById('ckDeeperSection').classList.remove('visible');
   }
   document.querySelectorAll('#ckFront .ta').forEach(el => el.classList.remove('in'));
 }
