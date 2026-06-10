@@ -864,6 +864,24 @@
           <!-- 行動建議動態填入 -->
         </div>
       </div>
+
+      <div class="result-divider"></div>
+
+      <div class="result-section">
+        <div class="result-section-label">🔄 轉化方向</div>
+        <div class="result-section-content" id="result-transform">
+          <!-- 轉化建議動態填入 -->
+        </div>
+      </div>
+
+      <div class="result-divider"></div>
+
+      <div class="result-section">
+        <div class="result-section-label">🔗 延伸體驗</div>
+        <div class="result-section-content" id="result-extension">
+          <!-- 延伸體驗動態填入 -->
+        </div>
+      </div>
     </div>
 
     <div class="button-group" style="margin-bottom: 2rem;">
@@ -884,16 +902,16 @@
 // ════════════════════════════════════════
 
 const OBJECTS = {
-  moon: { name: '月亮', meaning: '靜夜的陪伴' },
-  seed: { name: '種子', meaning: '潛在的可能' },
-  window: { name: '窗戶', meaning: '看向外界' },
-  feather: { name: '羽毛', meaning: '輕盈與自由' },
-  key: { name: '鑰匙', meaning: '開啟新的' },
-  candle: { name: '燭光', meaning: '內在的光' },
-  river: { name: '河流', meaning: '流動與改變' },
-  letter: { name: '信封', meaning: '傳遞與連結' },
-  plant: { name: '植物', meaning: '緩慢的成長' },
-  mirror: { name: '鏡子', meaning: '看見自己' }
+  moon: { name: '月亮', meaning: '靜夜的陪伴', scenario: '需要冷靜思考或感受孤獨的時候' },
+  seed: { name: '種子', meaning: '潛在的可能', scenario: '需要醞釀新計畫或等待時機的時候' },
+  window: { name: '窗戶', meaning: '看向外界', scenario: '需要改變視角或逃離現況的時候' },
+  feather: { name: '羽毛', meaning: '輕盈與自由', scenario: '想放下沉重負擔的時候' },
+  key: { name: '鑰匙', meaning: '開啟新的', scenario: '準備做出重大改變的時候' },
+  candle: { name: '燭光', meaning: '內在的光', scenario: '需要找回希望或力量的時候' },
+  river: { name: '河流', meaning: '流動與改變', scenario: '在轉折點或學習放手的時候' },
+  letter: { name: '信封', meaning: '傳遞與連結', scenario: '需要表達或連結他人的時候' },
+  plant: { name: '植物', meaning: '緩慢的成長', scenario: '想要穩定進展或觀察生長的時候' },
+  mirror: { name: '鏡子', meaning: '看見自己', scenario: '需要深入了解自己或面對真實的時候' }
 };
 
 const COLORS = {
@@ -1318,6 +1336,41 @@ function resetSelection() {
   document.getElementById('next-to-result').disabled = true;
 }
 
+// 生成轉化建議的函數
+function generateTransformSuggestions(objectKey, colorKey) {
+  const transforms = {
+    // 物件主題
+    moon: '放下對清晰的執著，允許模糊。靠近直覺而不是邏輯。相信看不見的智慧。',
+    seed: '停止催促成長，信任時間。觀察而不是控制。在等待中找到力量。',
+    window: '改變視角，而不是改變環境。看見邊界是幻象。開放接納所有的可能。',
+    feather: '輕盈不是逃避，是流動。放下不等於放棄。在輕盈中找到力量。',
+    key: '打開一扇門，不一定要離開。有時候鑰匙是用來開啟內在的。',
+    candle: '光不來自外界，來自你內部。照亮自己，而不是被他人照亮。',
+    river: '流動是生命的本質。跟隨而不是抵抗。在改變中找到穩定。',
+    letter: '表達不需要完美，只需要真實。連結是透過脆弱而不是防禦。',
+    plant: '成長是緩慢的，每一步都算。沒有成果，也有成長。在過程中找到滿足。',
+    mirror: '看見自己，才能看見他人。誠實面對，才能真正改變。'
+  };
+  return transforms[objectKey] || '相信這個時刻教給你的，正是你需要的。';
+}
+
+// 生成延伸體驗的函數
+function generateExtension(objectKey) {
+  const extensions = {
+    moon: '想進一步探索直覺的力量？進入「脈輪貓」，感受眉心輪的洞見能量。',
+    seed: '想了解潛力的成長過程？進入「脈輪貓」，探索與臍輪相連的創造力。',
+    window: '想打開觀看的新視角？進入「脈輪貓」，體驗心輪的開放能量。',
+    feather: '想感受身體的輕盈？進入「脈輪貓」，體驗喉輪的自由表達。',
+    key: '想為改變賦予力量？進入「脈輪貓」，點亮太陽神經叢的行動力。',
+    candle: '想點亮內在的光？進入「脈輪貓」，感受海底輪的根基能量。',
+    river: '想順應生命的流動？進入「脈輪貓」，體驗臍輪的流動能量。',
+    letter: '想連結更深的共鳴？進入「脈輪貓」，感受心輪的連結能量。',
+    plant: '想觀察生長的智慧？進入「脈輪貓」，體驗頂輪的寬廣意識。',
+    mirror: '想深入了解自己？進入「脈輪貓」，探索所有七個脈輪的自我認識。'
+  };
+  return extensions[objectKey] || '想深入這個能量的本質？進入「脈輪貓」，感受身體的聲音。';
+}
+
 function showResult() {
   const resultKey = `${selectedObject}_${selectedColor}`;
   const result = RESULTS[resultKey];
@@ -1333,6 +1386,14 @@ function showResult() {
   document.getElementById('result-reminder').textContent = result.reminder;
   document.getElementById('result-action').textContent = result.action;
 
+  // 動態填入轉化方向
+  const transform = generateTransformSuggestions(selectedObject, selectedColor);
+  document.getElementById('result-transform').textContent = transform;
+
+  // 動態填入延伸體驗
+  const extension = generateExtension(selectedObject);
+  document.getElementById('result-extension').textContent = extension;
+
   // 填入物件icon的簡單表示
   const iconContainer = document.getElementById('result-icon-object');
   iconContainer.textContent = objectData.name;
@@ -1346,8 +1407,9 @@ async function shareToLine() {
   const objectName = OBJECTS[selectedObject].name;
   const colorName = COLORS[selectedColor].name;
   const result = RESULTS[`${selectedObject}_${selectedColor}`];
+  const transform = generateTransformSuggestions(selectedObject, selectedColor);
 
-  const message = `✨ 今天的靜觀提醒\n\n${result.title}\n\n${result.message}\n\n💭 ${result.reminder}\n\n🌿 ${result.action}\n\n— 靜觀儀式`;
+  const message = `✨ 今天的靜觀提醒\n\n${result.title}\n\n${result.message}\n\n💭 ${result.reminder}\n\n🌿 ${result.action}\n\n🔄 轉化方向\n${transform}\n\n— 靜觀儀式`;
 
   try {
     if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {

@@ -176,6 +176,33 @@ function buildBlessingFlexMessage(intuitionText, chakra) {
     margin: 'sm'
   });
 
+  // 深度理解（如果有的話）
+  if (chakra.deeper) {
+    bodyContents.push({
+      type: 'separator',
+      margin: 'md',
+      color: '#f0ede8'
+    });
+
+    bodyContents.push({
+      type: 'text',
+      text: '💡 深度理解',
+      size: 'xxs',
+      color: '#c5c0b8',
+      letterSpacing: '3px',
+      margin: 'md'
+    });
+
+    bodyContents.push({
+      type: 'text',
+      text: chakra.deeper,
+      wrap: true,
+      size: 'xs',
+      color: '#6a6560',
+      margin: 'sm'
+    });
+  }
+
   // 轉化方向（如果有的話）
   if (chakra.transform) {
     bodyContents.push({
@@ -261,32 +288,78 @@ function buildBlessingFlexMessage(intuitionText, chakra) {
  * @param {Array} activeChakras - 點亮的脈輪陣列 [{ name, en, color, desc }]
  */
 function buildChakraFlexMessage(activeChakras) {
-  const contents = activeChakras.slice(0, 4).map(c => ({
-    type: 'box',
-    layout: 'horizontal',
-    spacing: 'sm',
-    margin: 'md',
-    contents: [
+  const elementIcon = (element) => {
+    const iconMap = {
+      '地': '🌍', '水': '💧', '火': '🔥', '風': '💨',
+      '空': '☁️', '靈': '✨', '無': '⭕'
+    };
+    return iconMap[element] || '⭕';
+  };
+
+  const contents = activeChakras.slice(0, 4).map(c => {
+    const extra = c.extra || {};
+    const items = [
       {
         type: 'box',
-        layout: 'vertical',
-        flex: 0,
-        width: '12px',
-        height: '12px',
-        cornerRadius: '6px',
-        backgroundColor: c.color,
-        offsetTop: '4px'
-      },
-      {
-        type: 'box',
-        layout: 'vertical',
+        layout: 'horizontal',
+        spacing: 'sm',
+        margin: 'sm',
         contents: [
-          { type: 'text', text: `${c.name}  ${c.en}`, size: 'xs', color: '#2e2a26', weight: 'bold' },
-          { type: 'text', text: c.desc || c.blessing || '', size: 'xxs', color: '#888', wrap: true }
+          {
+            type: 'box',
+            layout: 'vertical',
+            flex: 0,
+            width: '12px',
+            height: '12px',
+            cornerRadius: '6px',
+            backgroundColor: c.color,
+            offsetTop: '4px'
+          },
+          {
+            type: 'box',
+            layout: 'vertical',
+            flex: 5,
+            contents: [
+              { type: 'text', text: `${c.name}  ${c.en}`, size: 'xs', color: '#2e2a26', weight: 'bold' },
+              { type: 'text', text: c.desc || c.blessing || '', size: 'xxs', color: '#888', wrap: true }
+            ]
+          }
         ]
       }
-    ]
-  }));
+    ];
+
+    // 位置 + 元素
+    if (extra.position || extra.element) {
+      items.push({
+        type: 'text',
+        text: `${extra.position || ''} ${extra.element ? elementIcon(extra.element) + ' ' + extra.element : ''}`.trim(),
+        size: 'xxs',
+        color: '#999',
+        margin: 'sm'
+      });
+    }
+
+    // 轉化方向
+    if (extra.transform) {
+      items.push({
+        type: 'box',
+        layout: 'vertical',
+        margin: 'sm',
+        contents: [
+          { type: 'text', text: '🔄 轉化', size: 'xxs', color: '#9b8db5', weight: 'bold' },
+          { type: 'text', text: extra.transform, size: 'xxs', color: '#6a6560', wrap: true, style: 'italic' }
+        ]
+      });
+    }
+
+    return {
+      type: 'box',
+      layout: 'vertical',
+      margin: 'md',
+      spacing: 'sm',
+      contents: items
+    };
+  });
 
   return [{
     type: 'flex',

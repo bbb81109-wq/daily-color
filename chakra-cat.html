@@ -1230,7 +1230,7 @@ function showCard(i) {
       try {
         await shareToLine(buildChakraFlexMessage([{
           name: cur.name, en: cur.en, color: cur.color,
-          desc: cur.desc
+          desc: cur.desc, extra: cur.extra
         }]));
       } catch(e) {}
       shareBtn.textContent = '分享到 LINE ↗';
