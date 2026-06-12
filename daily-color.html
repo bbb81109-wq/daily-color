@@ -43,7 +43,7 @@
         radial-gradient(ellipse 650px 380px at 80% 80%, rgba(135, 206, 235, 0.09) 0%, transparent 50%),
         radial-gradient(ellipse 700px 400px at 20% 75%, rgba(255, 215, 100, 0.08) 0%, transparent 50%);
       pointer-events: none;
-      animation: ambient 12s ease-in-out infinite;
+      animation: none;
       z-index: 0;
     }
     @keyframes ambient {
@@ -170,7 +170,7 @@
       font-size: 0.56rem;
       letter-spacing: 0.36em;
       color: rgba(255,255,255,0.65);
-      animation: hint-pulse 3.8s ease-in-out infinite;
+      animation: none;
       pointer-events: none;
       transition: all 0.3s ease;
       line-height: 1.8;
@@ -340,7 +340,7 @@
       font-size: 2.4rem;
       margin-bottom: 1rem;
       opacity: 0.6;
-      animation: hint-float 3s ease-in-out infinite;
+      animation: none;
     }
 
     @keyframes hint-float {
@@ -1768,7 +1768,7 @@ function showPair(pair) {
   setTimeout(() => {
     // 顯示結果卡片（延遲隱藏提示）
     showResultCard(true);
-    spawnParticles(cardColor);
+    // spawnParticles(cardColor); // 禁用粒子效果
 
     // 延遲 1.5 秒才翻卡，確保用戶看到結果卡片內容
     setTimeout(() => {
@@ -1794,7 +1794,7 @@ function handleDraw() {
 
   // 背面卡翻轉動畫 + 粒子
   backCard.classList.add('flipping');
-  spawnParticles('#b89ad8');
+  // spawnParticles('#b89ad8'); // 禁用粒子效果
 
   // 背面卡淡出
   setTimeout(() => {
