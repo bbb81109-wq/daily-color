@@ -1,24 +1,19 @@
-const CACHE = 'daily-color-v1';
+const CACHE = 'daily-color-v2';
 const ASSETS = [
   './',
   './index.html',
   './daily-color.html',
   './chakra-cat.html',
   './cat-room.html',
-  './inner-space.html',
-  './blessing.html',
+  './liff.js',
+  './manifest.json',
   './icon-192.png',
   './icon-512.png',
   './apple-touch-icon.png',
   './card-back.png',
   './room-bg.png',
+  './cat-room-bg.png',
   './cat-chakra-new.png',
-  './cat-chakra.png',
-  './去背的IMG_5459.png',
-  './去背仙女棒 - 2.PNG',
-  './去背愛心 - 1.PNG',
-  './9997A2AF-60E0-4D23-BA45-7C395F3DCC5C.png',
-  './9997A2AF-60E0-4D23-BA45-7C395F3DCC5C 2.png'
 ];
 
 self.addEventListener('install', e => {

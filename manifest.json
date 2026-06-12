@@ -1,11 +1,11 @@
 {
-  "name": "每日色彩",
-  "short_name": "每日色彩",
-  "description": "每一天都是一個重新開始的機會",
+  "name": "Anmita Riga 宇宙訊號",
+  "short_name": "宇宙訊號",
+  "description": "透過色彩、脈輪和物件，發現內在的靜謐角落",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#080613",
-  "theme_color": "#1c1538",
+  "background_color": "#F5F3F8",
+  "theme_color": "#D8C6F0",
   "orientation": "portrait",
   "lang": "zh-TW",
   "icons": [
