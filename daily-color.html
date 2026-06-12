@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>今日祝福</title>
+  <title>今日祝福 | Anmita Riga</title>
+  <meta name="description" content="每日祝福 - 透過色彩和脈輪，感受宇宙給你的訊息。輕輕地抽一張，看看今天該怎麼活著。">
   <meta name="theme-color" content="#faf9ff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -70,6 +71,25 @@
       color: #5a4a7a;
       transform: translateX(-4px);
       opacity: 1;
+    }
+
+    /* ── 底部回首頁鏈接 ── */
+    .footer-home-link {
+      display: inline-block;
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #b5a9c9;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+    .footer-home-link:hover {
+      color: #6b5b95;
+      opacity: 1;
+      transform: translateY(-2px);
     }
 
     /* ── 標題 ── */
@@ -1200,6 +1220,8 @@
 <!-- ── 再抽一張 ── -->
 <button class="redraw-btn" id="redrawBtn">再抽一張</button>
 
+<!-- ── 回首頁 ── -->
+<a href="index.html" class="footer-home-link">首 頁</a>
 
 <script>
 // ════════════════════════════════════════
