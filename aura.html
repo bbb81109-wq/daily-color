@@ -452,31 +452,33 @@
 
     /* ── Accordion ── */
     .accordion {
-      margin: 0 20px 16px;
+      margin: 0 16px 10px;
       border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
     }
     .accordion-btn {
       width: 100%;
       background: rgba(255,255,255,0.03);
       border: none;
-      padding: 16px 20px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      letter-spacing: 0.1em;
+      font-size: 14px;
+      letter-spacing: 0.08em;
       color: var(--text-primary);
       text-align: left;
     }
     .accordion-arrow {
-      font-size: 20px;
+      font-size: 17px;
       color: var(--gold);
       transition: transform 0.3s ease;
       line-height: 1;
+      flex-shrink: 0;
+      margin-left: 8px;
     }
     .accordion-btn.open .accordion-arrow {
       transform: rotate(45deg);
@@ -487,23 +489,20 @@
       transition: max-height 0.5s cubic-bezier(0.22,0.61,0.36,1);
     }
     .accordion-body.open {
-      max-height: 600px;
+      max-height: 1200px;
     }
     .accordion-body p {
-      font-size: 13px;
-      line-height: 2;
+      font-size: 12.5px;
+      line-height: 1.8;
       color: var(--text-secondary);
-      letter-spacing: 0.04em;
-      padding: 0 20px 14px;
+      letter-spacing: 0.03em;
+      padding: 0 16px 12px;
+      margin: 0;
     }
-    .accordion-body p:first-child { padding-top: 16px; }
-    .accordion-source {
-      font-size: 11px !important;
-      color: var(--text-muted) !important;
-      letter-spacing: 0.08em !important;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 12px !important;
-      margin-top: 4px;
+    .accordion-body p:first-child { padding-top: 12px; }
+    .accordion-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
         /* Overlay to close panel */
