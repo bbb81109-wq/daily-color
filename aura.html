@@ -446,56 +446,54 @@
       margin: 8px 0 4px;
       padding: 0 16px;
     }
-    .color-guide-label {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      text-align: center;
-    }
     .color-strip {
       display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 4px 0 10px;
-      scrollbar-width: none;
+      flex-wrap: wrap;
+      gap: 16px 12px;
+      justify-content: center;
+      padding: 8px 0 16px;
     }
-    .color-strip::-webkit-scrollbar { display: none; }
     .color-swatch {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
       cursor: pointer;
-      flex-shrink: 0;
     }
     .swatch-dot {
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      border: 2px solid transparent;
-      transition: border-color 0.2s, transform 0.2s;
-      box-shadow: 0 0 8px rgba(255,255,255,0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 0 14px rgba(255,255,255,0.08);
     }
     .color-swatch.active .swatch-dot {
-      border-color: rgba(255,255,255,0.6);
-      transform: scale(1.15);
+      transform: scale(1.22);
+      animation: orbPulse 2s ease-in-out infinite;
+    }
+    @keyframes orbPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
     }
     .color-swatch span {
-      font-size: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
     }
+    .color-swatch.active span { color: var(--text-primary); }
     .color-meaning {
       font-size: 12.5px;
-      line-height: 1.8;
+      line-height: 1.85;
       color: var(--text-secondary);
       letter-spacing: 0.04em;
-      padding: 12px 14px;
+      padding: 14px 16px;
       background: rgba(255,255,255,0.03);
-      border-radius: 10px;
+      border-radius: 12px;
       border-left: 2px solid rgba(201,168,76,0.3);
       display: none;
+      margin-top: 4px;
     }
     .color-meaning.visible { display: block; }
     .color-meaning-title {
@@ -1328,19 +1326,19 @@
 
 <!-- Color Guide -->
 <div class="color-guide">
-  <div class="damage-cards-label">光場色彩解讀</div>
+  <div class="damage-cards-label">色彩的語言</div>
   <div class="color-strip" id="color-strip">
-    <div class="color-swatch" data-color="red"><div class="swatch-dot" style="background:radial-gradient(circle,#FF7070,#CC2020)"></div><span>紅</span></div>
-    <div class="color-swatch" data-color="orange"><div class="swatch-dot" style="background:radial-gradient(circle,#FFB060,#E06010)"></div><span>橙</span></div>
-    <div class="color-swatch" data-color="yellow"><div class="swatch-dot" style="background:radial-gradient(circle,#FFE860,#CCA800)"></div><span>黃</span></div>
-    <div class="color-swatch" data-color="green"><div class="swatch-dot" style="background:radial-gradient(circle,#80FFB0,#20A050)"></div><span>綠</span></div>
-    <div class="color-swatch" data-color="blue"><div class="swatch-dot" style="background:radial-gradient(circle,#80CCFF,#1060CC)"></div><span>藍</span></div>
-    <div class="color-swatch" data-color="indigo"><div class="swatch-dot" style="background:radial-gradient(circle,#9080FF,#3020AA)"></div><span>靛</span></div>
-    <div class="color-swatch" data-color="violet"><div class="swatch-dot" style="background:radial-gradient(circle,#E0A0FF,#9020DD)"></div><span>紫</span></div>
-    <div class="color-swatch" data-color="white"><div class="swatch-dot" style="background:radial-gradient(circle,#FFFFFF,#AAAACC)"></div><span>白</span></div>
-    <div class="color-swatch" data-color="gold"><div class="swatch-dot" style="background:radial-gradient(circle,#FFE080,#CC8800)"></div><span>金</span></div>
-    <div class="color-swatch" data-color="pink"><div class="swatch-dot" style="background:radial-gradient(circle,#FFB0D0,#DD4488)"></div><span>粉</span></div>
-    <div class="color-swatch" data-color="gray"><div class="swatch-dot" style="background:radial-gradient(circle,#888899,#333344)"></div><span>暗</span></div>
+    <div class="color-swatch" data-color="red"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#FF9090,#CC2020);box-shadow:0 0 18px rgba(220,40,40,0.5)"></div><span>紅</span></div>
+    <div class="color-swatch" data-color="orange"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#FFB860,#E06010);box-shadow:0 0 18px rgba(220,100,20,0.5)"></div><span>橙</span></div>
+    <div class="color-swatch" data-color="yellow"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#FFEE80,#CCA800);box-shadow:0 0 18px rgba(220,180,0,0.5)"></div><span>黃</span></div>
+    <div class="color-swatch" data-color="green"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#90FFB8,#20A050);box-shadow:0 0 18px rgba(40,180,90,0.5)"></div><span>綠</span></div>
+    <div class="color-swatch" data-color="blue"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#90CCFF,#1060CC);box-shadow:0 0 18px rgba(30,100,220,0.5)"></div><span>藍</span></div>
+    <div class="color-swatch" data-color="indigo"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#A090FF,#3020AA);box-shadow:0 0 18px rgba(80,50,200,0.5)"></div><span>靛</span></div>
+    <div class="color-swatch" data-color="violet"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#E8AAFF,#9020DD);box-shadow:0 0 18px rgba(160,40,220,0.55)"></div><span>紫</span></div>
+    <div class="color-swatch" data-color="white"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#FFFFFF,#BBBBDD);box-shadow:0 0 20px rgba(220,220,255,0.6)"></div><span>白</span></div>
+    <div class="color-swatch" data-color="gold"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#FFE890,#CC8800);box-shadow:0 0 18px rgba(200,150,0,0.55)"></div><span>金</span></div>
+    <div class="color-swatch" data-color="pink"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#FFBEDD,#DD4488);box-shadow:0 0 18px rgba(220,60,140,0.5)"></div><span>粉</span></div>
+    <div class="color-swatch" data-color="gray"><div class="swatch-dot" style="background:radial-gradient(circle at 35% 35%,#999AAA,#333344);box-shadow:0 0 14px rgba(100,100,120,0.4)"></div><span>暗</span></div>
   </div>
   <div class="color-meaning" id="color-meaning"></div>
 </div>
