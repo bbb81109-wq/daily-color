@@ -1075,7 +1075,7 @@
 <body>
 
 <header>
-  <a href="daily-color.html" class="back-btn">← 返回</a>
+  <a href="daily-color.html" class="back-btn" id="back-btn">← 返回</a>
   <span class="page-title">能 量 場</span>
   <button class="hamburger" id="hamburger-btn" aria-label="選單" onclick="document.getElementById('drawer').classList.add('open');document.getElementById('drawer-overlay').classList.add('open');">
     <span></span><span></span><span></span>
@@ -1947,6 +1947,18 @@
       box.innerHTML = `<div class="color-meaning-title">${m.title}</div>${m.text}`;
       box.classList.add('visible');
     });
+  });
+
+  // Back button: go to explore section if not already there, else go to daily-color.html
+  const backBtn = document.getElementById('back-btn');
+  backBtn.addEventListener('click', e => {
+    const exploreSection = document.getElementById('section-explore');
+    if (!exploreSection.classList.contains('active')) {
+      e.preventDefault();
+      document.querySelectorAll('.drawer-item').forEach(i => i.classList.toggle('active', i.dataset.section === 'explore'));
+      document.querySelectorAll('.page-section').forEach(p => p.classList.toggle('active', p.id === 'section-explore'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 
   // Drawer
