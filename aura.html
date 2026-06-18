@@ -593,38 +593,95 @@
       letter-spacing: 0.06em;
     }
 
-    /* ── Tab Bar ── */
-    .tab-bar {
-      display: flex;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(10,8,20,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      margin: 0 -20px;
-      padding: 0 20px;
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 13px 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 14px;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
+    /* ── Hamburger ── */
+    .hamburger {
       background: none;
       border: none;
-      border-bottom: 2px solid transparent;
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 28px;
     }
-    .tab-btn.active {
-      color: var(--text-primary);
-      border-bottom-color: rgba(255,200,120,0.7);
+    .hamburger span {
+      display: block;
+      height: 1.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s, width 0.3s;
     }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+    .hamburger span:nth-child(2) { width: 70%; }
+
+    /* ── Drawer ── */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 240px;
+      background: rgba(12,10,26,0.98);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.32s cubic-bezier(0.22,0.61,0.36,1);
+      display: flex;
+      flex-direction: column;
+      padding: 48px 0 32px;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      padding: 0 28px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 12px;
+    }
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .drawer-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 2px; height: 0;
+      background: rgba(255,200,120,0.7);
+      transition: height 0.2s;
+      border-radius: 2px;
+    }
+    .drawer-item.active { color: var(--text-primary); }
+    .drawer-item.active::before { height: 60%; }
+    .drawer-icon { font-size: 18px; opacity: 0.6; }
+
+    /* ── Sections ── */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
 
     /* ── CTA ── */
     .cta-btn {
@@ -1010,17 +1067,30 @@
 <header>
   <a href="daily-color.html" class="back-btn">← 返回</a>
   <span class="page-title">能 量 場</span>
-  <span style="width:40px"></span>
+  <button class="hamburger" id="hamburger-btn" aria-label="選單">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<!-- Tab Bar -->
-<div class="tab-bar">
-  <button class="tab-btn active" data-tab="explore">探索光場</button>
-  <button class="tab-btn" data-tab="service">服務介紹</button>
+<!-- Drawer Overlay -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<!-- Left Drawer -->
+<div class="drawer" id="drawer">
+  <div class="drawer-title">選單</div>
+  <button class="drawer-item active" data-section="explore">
+    <span class="drawer-icon">◎</span>探索光場
+  </button>
+  <button class="drawer-item" data-section="knowledge">
+    <span class="drawer-icon">✦</span>光場知識
+  </button>
+  <button class="drawer-item" data-section="service">
+    <span class="drawer-icon">◇</span>服務介紹
+  </button>
 </div>
 
-<!-- Tab: Explore -->
-<div class="tab-panel active" id="tab-explore">
+<!-- Section: Explore -->
+<div class="page-section active" id="section-explore">
 
 <div class="intro">
   <h1>你的七層光場</h1>
@@ -1292,6 +1362,11 @@
 </div>
 
 <!-- Damage Cards -->
+</div><!-- /section-explore -->
+
+<!-- Section: Knowledge -->
+<div class="page-section" id="section-knowledge">
+
 <div class="damage-cards-section">
   <div class="damage-cards-label">光場受損的常見模式</div>
   <div class="damage-cards-strip" id="damage-cards-strip">
@@ -1508,10 +1583,10 @@
   </div>
 </div>
 
-</div><!-- /tab-explore -->
+</div><!-- /section-knowledge -->
 
-<!-- Tab: Service -->
-<div class="tab-panel" id="tab-service">
+<!-- Section: Service -->
+<div class="page-section" id="section-service">
 
 <!-- Service Section -->
 <div class="service-section">
@@ -1562,7 +1637,7 @@
   <span class="cta-arrow">→</span>
 </a>
 
-</div><!-- /tab-service -->
+</div><!-- /section-service -->
 
 <!-- Overlay -->
 <div class="overlay" id="overlay"></div>
@@ -1906,13 +1981,21 @@
     });
   });
 
-  // Tab switching
-  document.querySelector('.tab-bar').addEventListener('click', e => {
-    const btn = e.target.closest('.tab-btn');
-    if (!btn) return;
-    const tab = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+  // Drawer
+  const drawer = document.getElementById('drawer');
+  const drawerOverlay = document.getElementById('drawer-overlay');
+  function openDrawer() { drawer.classList.add('open'); drawerOverlay.classList.add('open'); }
+  function closeDrawer() { drawer.classList.remove('open'); drawerOverlay.classList.remove('open'); }
+  document.getElementById('hamburger-btn').addEventListener('click', openDrawer);
+  drawerOverlay.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', e => {
+    const item = e.target.closest('.drawer-item');
+    if (!item) return;
+    const sec = item.dataset.section;
+    document.querySelectorAll('.drawer-item').forEach(i => i.classList.toggle('active', i === item));
+    document.querySelectorAll('.page-section').forEach(p => p.classList.toggle('active', p.id === 'section-' + sec));
+    closeDrawer();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // Card strip interaction (damage, interaction, space)
