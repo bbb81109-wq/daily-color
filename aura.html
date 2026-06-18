@@ -606,37 +606,95 @@
       animation: cardFloat 3s ease-in-out infinite;
     }
     .damage-card-desc { display: none; }
-    .damage-detail {
-      display: none;
-      grid-column: 1 / -1;
+    .damage-detail { display: none; }
+
+    /* Tap hint dots on cards */
+    .damage-card::after {
+      content: '· · ·';
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.18);
       margin-top: 12px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,200,120,0.15);
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 12px;
-      line-height: 1.8;
-      color: var(--text-secondary);
+      text-align: left;
     }
-    .damage-detail.visible { display: block; }
-    .damage-detail-title {
+    .damage-card.active::after {
+      color: var(--card-color, rgba(255,200,120,0.4));
+    }
+
+    /* Card Sheet (bottom sheet for card details) */
+    .card-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #100D1A;
+      border-top: 1px solid rgba(201,168,76,0.18);
+      padding: 28px 24px calc(28px + env(safe-area-inset-bottom));
+      transform: translateY(100%);
+      transition: transform 0.48s var(--ease-silk);
+      z-index: 100;
+      max-height: 75dvh;
+      overflow-y: auto;
+    }
+    .card-sheet.visible { transform: translateY(0); }
+
+    .card-sheet-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding-right: 32px;
+    }
+    .card-sheet-icon {
+      width: 56px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+    .card-sheet-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
+      font-size: 26px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
       color: var(--text-primary);
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
+      line-height: 1.2;
+      margin-bottom: 4px;
     }
-    .damage-card-cause {
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--text-muted);
-      line-height: 1.6;
+    .card-sheet-en {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.25);
+      text-transform: uppercase;
     }
-    .damage-card-cause strong {
-      color: rgba(255,200,120,0.8);
+    .card-sheet-divider {
+      width: 28px;
+      height: 2px;
+      border-radius: 1px;
+      margin-bottom: 18px;
+    }
+    .card-sheet-body {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .card-sheet-cause {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.75;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      border-left: 2px solid rgba(255,255,255,0.08);
+    }
+    .card-sheet-cause strong {
+      color: rgba(255,200,120,0.7);
       font-weight: 400;
       letter-spacing: 0.06em;
     }
+
+    .damage-card-cause { display: none; }
 
     /* ── Hamburger ── */
     .hamburger {
@@ -1744,6 +1802,21 @@
 
 </div><!-- /section-service -->
 
+<!-- Card Sheet -->
+<div class="card-sheet" id="card-sheet">
+  <button class="panel-close" id="card-sheet-close">✕</button>
+  <div class="card-sheet-header">
+    <svg class="card-sheet-icon" id="card-sheet-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div>
+      <div class="card-sheet-name" id="card-sheet-name"></div>
+      <div class="card-sheet-en" id="card-sheet-en"></div>
+    </div>
+  </div>
+  <div class="card-sheet-divider" id="card-sheet-divider"></div>
+  <div class="card-sheet-body" id="card-sheet-body"></div>
+  <div class="card-sheet-cause" id="card-sheet-cause"></div>
+</div>
+
 <!-- Overlay -->
 <div class="overlay" id="overlay"></div>
 
@@ -1930,7 +2003,16 @@
   }
 
   document.getElementById('panel-close').addEventListener('click', closePanel);
-  document.getElementById('overlay').addEventListener('click', closePanel);
+
+  // Card Sheet
+  const cardSheet = document.getElementById('card-sheet');
+  function closeCardSheet() {
+    cardSheet.classList.remove('visible');
+    document.getElementById('overlay').classList.remove('visible');
+    document.querySelectorAll('.damage-card.active').forEach(c => c.classList.remove('active'));
+  }
+  document.getElementById('card-sheet-close').addEventListener('click', closeCardSheet);
+  document.getElementById('overlay').addEventListener('click', () => { closePanel(); closeCardSheet(); });
 
   // ── 1. 載入動畫：光層從內到外依序顯現 ──
   const layerEls = [1,2,3,4,5,6,7].map(n => document.getElementById(`layer-${n}`));
@@ -2096,31 +2178,44 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Card strip interaction (damage, interaction, space)
-  const CARD_DETAIL_MAP = {
-    'damage-cards-strip': 'damage-detail',
-    'interaction-cards-strip': 'interaction-detail',
-    'space-cards-strip': 'space-detail'
-  };
-  Object.keys(CARD_DETAIL_MAP).forEach(stripId => {
-    const strip = document.getElementById(stripId);
-    const detail = document.getElementById(CARD_DETAIL_MAP[stripId]);
-    if (!strip || !detail) return;
+  // Card strip interaction → card sheet
+  document.querySelectorAll('.damage-cards-strip').forEach(strip => {
     strip.addEventListener('click', e => {
       const card = e.target.closest('.damage-card');
       if (!card) return;
       const isActive = card.classList.contains('active');
-      strip.querySelectorAll('.damage-card').forEach(c => c.classList.remove('active'));
-      if (isActive) { detail.classList.remove('visible'); detail.innerHTML = ''; return; }
+      document.querySelectorAll('.damage-card.active').forEach(c => c.classList.remove('active'));
+      if (isActive) { closeCardSheet(); return; }
       card.classList.add('active');
+
+      const iconEl = card.querySelector('.damage-card-icon');
       const nameEl = card.querySelector('.damage-card-name');
+      const enEl   = card.querySelector('.damage-card-en');
       const descEl = card.querySelector('.damage-card-desc');
       const causeEl = card.querySelector('.damage-card-cause');
-      detail.innerHTML =
-        '<div class="damage-detail-title">' + (nameEl ? nameEl.textContent : '') + '</div>' +
-        (descEl ? descEl.innerHTML : '');
-      detail.classList.add('visible');
-      detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const cardColor = card.style.getPropertyValue('--card-color') || 'rgba(201,168,76,0.6)';
+
+      document.getElementById('card-sheet-icon').innerHTML = iconEl ? iconEl.innerHTML : '';
+      document.getElementById('card-sheet-name').textContent = nameEl ? nameEl.textContent : '';
+      document.getElementById('card-sheet-en').textContent = enEl ? enEl.textContent : '';
+      document.getElementById('card-sheet-divider').style.background = cardColor;
+
+      if (descEl) {
+        const clone = descEl.cloneNode(true);
+        const causeClone = clone.querySelector('.damage-card-cause');
+        if (causeClone) causeClone.remove();
+        document.getElementById('card-sheet-body').innerHTML = clone.innerHTML;
+      }
+      const causeDiv = document.getElementById('card-sheet-cause');
+      if (causeEl) {
+        causeDiv.innerHTML = causeEl.innerHTML;
+        causeDiv.style.display = 'block';
+      } else {
+        causeDiv.style.display = 'none';
+      }
+
+      cardSheet.classList.add('visible');
+      document.getElementById('overlay').classList.add('visible');
     });
   });
 
