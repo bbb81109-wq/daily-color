@@ -378,6 +378,90 @@
     }
 
     /* ── Story quote ── */
+    .damaged-section {
+      margin: 24px 16px;
+    }
+    .damaged-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 4px;
+      opacity: 0.85;
+    }
+    .damaged-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    .damaged-stage {
+      max-width: 260px;
+      margin: 0 auto;
+    }
+    #damaged-svg {
+      width: 100%;
+      height: auto;
+    }
+    .d-layer {
+      cursor: pointer;
+      transition: opacity 0.25s ease;
+    }
+    .d-layer.d-dimmed { opacity: 0.2; }
+    .d-layer.d-active ellipse:first-child {
+      stroke-opacity: 0.9 !important;
+      stroke-width: 2 !important;
+    }
+    .damage-panel {
+      margin-top: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      display: none;
+    }
+    .damage-panel.visible { display: block; }
+    .damage-panel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .damage-panel-title {
+      display: inline;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+    .damage-list {
+      margin: 12px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .damage-list li {
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      letter-spacing: 0.03em;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      gap: 8px;
+    }
+    .damage-list li::before {
+      content: '·';
+      color: var(--gold);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+    .damage-list li:last-child { border-bottom: none; }
+
     .service-section {
       margin: 8px 16px 24px;
     }
@@ -836,6 +920,77 @@
   </div>
 </div>
 
+<!-- Damaged Aura Section -->
+<div class="damaged-section">
+  <p class="damaged-title">✦ 當光場出現破洞 ✦</p>
+  <p class="damaged-subtitle">輕觸任一層，了解它的影響</p>
+
+  <div class="damaged-stage">
+    <svg id="damaged-svg" viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="leak" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
+        </filter>
+      </defs>
+
+      <!-- Layer 7 -->
+      <g class="d-layer" data-layer="7">
+        <ellipse cx="140" cy="180" rx="128" ry="172" fill="none" stroke="#C67FFF" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="18 8 40 6 25 12 60 5"/>
+        <ellipse cx="140" cy="180" rx="128" ry="172" fill="#C67FFF" fill-opacity="0.04"/>
+        <circle cx="195" cy="60" r="7" fill="#C67FFF" fill-opacity="0.5" filter="url(#leak)"/>
+        <circle cx="80" cy="290" r="5" fill="#C67FFF" fill-opacity="0.4" filter="url(#leak)"/>
+      </g>
+      <!-- Layer 6 -->
+      <g class="d-layer" data-layer="6">
+        <ellipse cx="140" cy="180" rx="113" ry="155" fill="none" stroke="#60AAFF" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="30 7 20 10 50 5"/>
+        <ellipse cx="140" cy="180" rx="113" ry="155" fill="#60AAFF" fill-opacity="0.04"/>
+        <circle cx="220" cy="130" r="6" fill="#60AAFF" fill-opacity="0.5" filter="url(#leak)"/>
+      </g>
+      <!-- Layer 5 -->
+      <g class="d-layer" data-layer="5">
+        <ellipse cx="140" cy="180" rx="98" ry="138" fill="none" stroke="#4DFFA8" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="22 9 45 6 15 8"/>
+        <ellipse cx="140" cy="180" rx="98" ry="138" fill="#4DFFA8" fill-opacity="0.04"/>
+        <circle cx="65" cy="100" r="6" fill="#4DFFA8" fill-opacity="0.45" filter="url(#leak)"/>
+      </g>
+      <!-- Layer 4 -->
+      <g class="d-layer" data-layer="4">
+        <ellipse cx="140" cy="180" rx="83" ry="120" fill="none" stroke="#FFE84D" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="35 8 18 12 40 6"/>
+        <ellipse cx="140" cy="180" rx="83" ry="120" fill="#FFE84D" fill-opacity="0.04"/>
+        <circle cx="205" cy="240" r="5" fill="#FFE84D" fill-opacity="0.5" filter="url(#leak)"/>
+      </g>
+      <!-- Layer 3 -->
+      <g class="d-layer" data-layer="3">
+        <ellipse cx="140" cy="180" rx="68" ry="103" fill="none" stroke="#FFB04D" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="25 7 38 9 16 6"/>
+        <ellipse cx="140" cy="180" rx="68" ry="103" fill="#FFB04D" fill-opacity="0.05"/>
+        <circle cx="75" cy="200" r="5" fill="#FFB04D" fill-opacity="0.45" filter="url(#leak)"/>
+      </g>
+      <!-- Layer 2 -->
+      <g class="d-layer" data-layer="2">
+        <ellipse cx="140" cy="180" rx="53" ry="86" fill="none" stroke="#FF7AA8" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="20 8 32 7 14 10"/>
+        <ellipse cx="140" cy="180" rx="53" ry="86" fill="#FF7AA8" fill-opacity="0.05"/>
+        <circle cx="170" cy="105" r="5" fill="#FF7AA8" fill-opacity="0.5" filter="url(#leak)"/>
+      </g>
+      <!-- Layer 1 -->
+      <g class="d-layer" data-layer="1">
+        <ellipse cx="140" cy="180" rx="38" ry="68" fill="none" stroke="#FF6060" stroke-opacity="0.55" stroke-width="1.5" stroke-dasharray="16 7 28 8"/>
+        <ellipse cx="140" cy="180" rx="38" ry="68" fill="#FF6060" fill-opacity="0.06"/>
+        <circle cx="155" cy="250" r="4" fill="#FF6060" fill-opacity="0.5" filter="url(#leak)"/>
+      </g>
+
+      <!-- Center hint text -->
+      <text x="140" y="176" text-anchor="middle" fill="white" fill-opacity="0.2" font-size="10" letter-spacing="2" font-family="Cormorant Garamond, serif">輕觸查看</text>
+      <text x="140" y="192" text-anchor="middle" fill="white" fill-opacity="0.2" font-size="10" letter-spacing="2" font-family="Cormorant Garamond, serif">破洞影響</text>
+    </svg>
+  </div>
+
+  <!-- Damage info panel -->
+  <div class="damage-panel" id="damage-panel">
+    <div class="damage-panel-dot" id="damage-dot"></div>
+    <div class="damage-panel-title" id="damage-title"></div>
+    <ul class="damage-list" id="damage-list"></ul>
+  </div>
+</div>
+
 <!-- Service Section -->
 <div class="service-section">
   <p class="service-title">✦ 光場繪製 · 服務流程 ✦</p>
@@ -1132,6 +1287,35 @@
     btn.classList.toggle('open');
     body.classList.toggle('open');
   }
+
+  // ── 破損光場互動 ──
+  const DAMAGE_DATA = {
+    1: { color: '#FF6060', title: '以太體', items: ['長期疲勞、睡再多都覺得累', '免疫力下降、身體容易出狀況', '對自己的身體感到疏離或陌生'] },
+    2: { color: '#FF7AA8', title: '情緒體', items: ['情緒起伏劇烈、難以平穩', '莫名焦慮或憂鬱，找不到來源', '容易吸收他人情緒、感覺被耗盡'] },
+    3: { color: '#FFB04D', title: '心智體', items: ['腦霧、思緒混亂難以集中', '負面思考循環、停不下來', '決策困難、失去清晰與自信'] },
+    4: { color: '#FFE84D', title: '星光體', items: ['人際界線模糊、容易在關係中消失', '渴望連結卻感到孤立無援', '付出很多卻感受不到被愛'] },
+    5: { color: '#4DFFA8', title: '乙太模板', items: ['話到嘴邊說不出，表達困難', '創意堵塞、找不到自己的聲音', '喉嚨、甲狀腺部位反覆不適'] },
+    6: { color: '#60AAFF', title: '天人體', items: ['直覺減弱、感知變得遲鈍', '與內在自我的連線感中斷', '對美的事物失去感動與共鳴'] },
+    7: { color: '#C67FFF', title: '因果體', items: ['失去方向感、不知道自己要什麼', '身份認同模糊、不確定自己是誰', '對人生失去信任與意義感'] },
+  };
+
+  document.querySelectorAll('.d-layer').forEach(el => {
+    el.addEventListener('click', () => {
+      const n = parseInt(el.dataset.layer);
+      const d = DAMAGE_DATA[n];
+
+      document.querySelectorAll('.d-layer').forEach(e => {
+        e.classList.toggle('d-dimmed', parseInt(e.dataset.layer) !== n);
+        e.classList.toggle('d-active', parseInt(e.dataset.layer) === n);
+      });
+
+      const dot = document.getElementById('damage-dot');
+      dot.style.cssText = `background:${d.color}; box-shadow:0 0 8px ${d.color};`;
+      document.getElementById('damage-title').textContent = d.title;
+      document.getElementById('damage-list').innerHTML = d.items.map(i => `<li>${i}</li>`).join('');
+      document.getElementById('damage-panel').classList.add('visible');
+    });
+  });
 
 </script>
 </body>
