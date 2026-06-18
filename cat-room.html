@@ -3335,8 +3335,13 @@ function generateExtension(objectKey) {
 
 function showResult() {
   const resultKey = `${selectedObject}_${selectedColor}`;
-  const result = RESULTS[resultKey];
   const objectData = OBJECTS[selectedObject];
+  const colorData2 = COLORS[selectedColor];
+  const result = RESULTS[resultKey] || {
+    message: `你選了${objectData?.name || ''}和${colorData2?.name || ''}。${colorData2?.energy || ''}的能量，與${objectData?.meaning || ''}相遇。此刻，這個組合在告訴你：停下來，好好感受它帶給你的直覺。`,
+    reminder: `${objectData?.name || ''}提醒你：${objectData?.scenario || '跟隨你的內在聲音'}。`,
+    action: `花幾分鐘，安靜地感受${objectData?.name || '這個物件'}帶給你的感覺，讓它說完它想說的。`
+  };
   const colorData = COLORS[selectedColor];
 
   // 設置顏色徽章
