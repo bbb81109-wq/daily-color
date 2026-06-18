@@ -565,7 +565,7 @@
     }
     .damage-cards-strip::-webkit-scrollbar { display: none; }
     .damage-card {
-      flex: 0 0 120px;
+      flex: 0 0 100px;
       scroll-snap-align: start;
       background: linear-gradient(150deg,
         color-mix(in srgb, var(--card-color, rgba(255,255,255,0.3)) 10%, transparent) 0%,
@@ -579,7 +579,7 @@
       transition: transform 0.28s ease, box-shadow 0.28s ease;
     }
     .damage-card:first-child {
-      flex: 0 0 134px;
+      flex: 0 0 112px;
     }
     .damage-card:hover, .damage-card.active {
       transform: translateY(-4px);
@@ -1211,7 +1211,8 @@
     .page-section { max-width: 480px; margin: 0 auto; }
     .aura-stage { width: min(360px, 80vw); }
     .color-strip { grid-template-columns: repeat(6, 1fr); }
-    .damage-card { flex: 0 0 180px; }
+    .damage-card { flex: 0 0 140px; }
+    .damage-card:first-child { flex: 0 0 155px; }
     .accordion { margin: 0 0 10px; }
     .service-section { margin: 8px 0 24px; }
     .cta-btn { margin: 8px 0 36px; }
