@@ -2130,6 +2130,17 @@ function showPair(pair) {
     radial-gradient(ellipse 80% 40% at 50% 100%, rgba(232,201,122,0.18) 0%, transparent 60%)
   `;
 
+  if (isSpirit) {
+    // 靈性指引卡：跳過第一張，直接顯示
+    icWrap.style.display = 'none';
+    ckScene.classList.add('active');
+    showResultCard(true);
+    setTimeout(() => {
+      ckScene.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
+    return;
+  }
+
   // 卡1：直覺祝福 淡入
   icWrap.style.display = 'block';
   void icWrap.offsetWidth;
