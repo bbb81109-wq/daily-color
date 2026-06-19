@@ -1413,8 +1413,8 @@
   <button class="drawer-subitem" data-anchor="anchor-chakra">脈輪與光場的關係</button>
   <button class="drawer-subitem" data-anchor="anchor-care">日常保養光場的方式</button>
   <button class="drawer-subitem" data-anchor="anchor-protection">能量防護</button>
-  <button class="drawer-subitem" data-anchor="anchor-sevenyear">光場的七年發展週期</button>
-  <button class="drawer-subitem" data-anchor="anchor-children">孩童的光場與成長環境</button>
+  <button class="drawer-subitem" data-href="seven-year.html">光場的七年發展週期</button>
+  <button class="drawer-subitem" data-href="children-aura.html">孩童的光場與成長環境</button>
   <button class="drawer-item" data-section="service">
     <span class="drawer-icon">◇</span>服務介紹
   </button>
@@ -2475,6 +2475,11 @@
   drawer.addEventListener('click', e => {
     const subitem = e.target.closest('.drawer-subitem');
     if (subitem) {
+      if (subitem.dataset.href) {
+        closeDrawer();
+        window.location.href = subitem.dataset.href;
+        return;
+      }
       const anchorId = subitem.dataset.anchor;
       // Switch to knowledge section
       document.querySelectorAll('.page-section').forEach(p => p.classList.toggle('active', p.id === 'section-knowledge'));
