@@ -1371,8 +1371,14 @@
     .page-section { max-width: 480px; margin: 0 auto; }
     .aura-stage { width: min(360px, 80vw); }
     .color-strip { grid-template-columns: repeat(6, 1fr); }
-    .damage-card { flex: 0 0 140px; }
-    .damage-card:first-child { flex: 0 0 155px; }
+    .damage-cards-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow-x: visible;
+      padding-right: 0;
+    }
+    .damage-card { flex: unset; }
+    .damage-card:first-child { flex: unset; }
     .accordion { margin: 0 0 10px; }
     .service-section { margin: 8px 0 24px; }
     .cta-btn { margin: 8px 0 36px; }
