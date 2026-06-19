@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光場的七年發展週期 · 光之手</title>
+<style>
+  :root {
+    --bg: #252040;
+    --gold: #C9A84C;
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.52);
+    --text-tertiary: rgba(255,255,255,0.32);
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Georgia', 'Noto Serif TC', serif;
+    font-size: 15px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .page-header {
+    position: relative;
+    text-align: center;
+    padding: 64px 24px 48px;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--gold); }
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+  .page-title {
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+  .page-intro {
+    max-width: 520px;
+    margin: 0 auto;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+
+  /* Timeline container */
+  .timeline {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.15) 10%, rgba(201,168,76,0.15) 90%, transparent);
+  }
+
+  /* Phase card */
+  .phase {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .phase-dot {
+    flex-shrink: 0;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .phase-orb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .phase-orb::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--phase-color) 0%, transparent 70%);
+    opacity: 0.3;
+  }
+  .phase-body {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--phase-color);
+    border-radius: 16px;
+    padding: 20px 20px 22px;
+  }
+  .phase-age {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--phase-color);
+    margin-bottom: 4px;
+    opacity: 0.9;
+  }
+  .phase-name {
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+    color: var(--text-primary);
+  }
+  .phase-layer {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .phase-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.85;
+  }
+  .phase-desc p { margin-bottom: 10px; }
+  .phase-desc p:last-child { margin-bottom: 0; }
+  .phase-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .phase-tag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-tertiary);
+  }
+
+  /* Divider */
+  .section-divider {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+    margin: 8px 0 40px 60px;
+  }
+
+  /* Beyond note */
+  .beyond-note {
+    margin-left: 60px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 16px;
+    padding: 20px 20px 22px;
+    margin-bottom: 48px;
+  }
+  .beyond-note-title {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  .beyond-note p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    margin-bottom: 8px;
+  }
+  .beyond-note p:last-child { margin-bottom: 0; }
+
+  /* Back CTA */
+  .back-cta {
+    display: block;
+    text-align: center;
+    margin: 0 20px 40px;
+  }
+  .back-cta a {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 10px 28px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .back-cta a:hover { color: var(--gold); border-color: rgba(201,168,76,0.3); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div><a class="back-link" href="aura.html">← 返回光場知識</a></div>
+  <p class="page-eyebrow">AURA · SEVEN-YEAR CYCLES</p>
+  <h1 class="page-title">光場的七年發展週期</h1>
+  <p class="page-intro">光場不是一出生就完整的。它隨著生命歷程逐層成熟，每七年，對應的一層光場進入主要發展階段。這個節奏與身體、情緒、心智和靈性的成長深度呼應，每一個七年都是生命的一個新章節。</p>
+</div>
+
+<div class="timeline">
+
+  <!-- Phase 1 -->
+  <div class="phase" style="--phase-color: #FF8A65;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #FF8A65, #cc4400);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">0 – 7 歲</div>
+      <div class="phase-name">乙太體的建立</div>
+      <div class="phase-layer">第一層 · Etheric Body</div>
+      <div class="phase-desc">
+        <p>最貼近身體的第一層光場，在生命最初的七年開始建立。這個階段，孩子透過感官認識物質世界，建立起對身體的基本認知與信任。</p>
+        <p>身體的安全感、被照顧的品質、以及周遭環境的穩定性，都直接影響這一層的健康程度。在這個時期缺乏身體安全感的人，成年後的乙太體往往較薄弱，容易有身體的疲憊感或難以落地的狀態。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">根基感</span>
+        <span class="phase-tag">身體意識</span>
+        <span class="phase-tag">安全感</span>
+        <span class="phase-tag">感官發展</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase" style="--phase-color: #FFB74D;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #FFB74D, #cc7700);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">7 – 14 歲</div>
+      <div class="phase-name">情緒體的成形</div>
+      <div class="phase-layer">第二層 · Emotional Body</div>
+      <div class="phase-desc">
+        <p>第二層光場進入發展期，情緒模式在這段時間逐漸成形。孩子開始擁有更豐富的內在情感世界，也開始學習如何處理與表達感受。</p>
+        <p>這個階段的家庭情緒氛圍、是否被允許感受和表達情緒，會在光場中留下深遠的印記。長期情緒壓抑或不被接納的環境，可能使情緒體形成固著的能量模式，延續到成年後的情緒反應方式中。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">情緒模式</span>
+        <span class="phase-tag">感受力</span>
+        <span class="phase-tag">內在世界</span>
+        <span class="phase-tag">情感表達</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase" style="--phase-color: #FFF176;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #FFF176, #ccaa00);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">14 – 21 歲</div>
+      <div class="phase-name">心智體的建構</div>
+      <div class="phase-layer">第三層 · Mental Body</div>
+      <div class="phase-desc">
+        <p>第三層光場開始發展，理性思維、自我意識與價值觀在這裡逐漸形成。青少年開始透過邏輯理解世界，質疑既有的規則，並建立屬於自己的信念系統。</p>
+        <p>這個階段若思想被過度壓制，或長期處於批判性的環境中，心智體可能形成過度的自我審視模式，以及根深柢固的「不夠好」信念。反之，被鼓勵獨立思考的人，心智體通常更為靈活清晰。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">自我意識</span>
+        <span class="phase-tag">信念系統</span>
+        <span class="phase-tag">邏輯思維</span>
+        <span class="phase-tag">價值觀形成</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase" style="--phase-color: #81C784;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #81C784, #2e7d32);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">21 – 28 歲</div>
+      <div class="phase-name">星光體的探索</div>
+      <div class="phase-layer">第四層 · Astral Body</div>
+      <div class="phase-desc">
+        <p>第四層光場對應愛與人際連結的能量。這個階段人們開始深入探索親密關係，學習如何在連結中保持自我，以及如何給予與接受愛。</p>
+        <p>許多人在這個七年中經歷第一段深刻的愛情，或是第一次感受到真實的失落與傷痛。這些經歷都會在星光體留下印記，影響之後與他人建立連結的方式。這一層的療癒，往往也是許多人尋求靈性探索的起點。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">親密關係</span>
+        <span class="phase-tag">愛的學習</span>
+        <span class="phase-tag">連結與分離</span>
+        <span class="phase-tag">情感成熟</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">✦ &nbsp; 第五層以上 &nbsp; · &nbsp; 28 歲後的發展 &nbsp; ✦</div>
+
+  <!-- Phase 5 -->
+  <div class="phase" style="--phase-color: #64B5F6;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #64B5F6, #1565c0);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">28 – 35 歲</div>
+      <div class="phase-name">乙太模板的落地</div>
+      <div class="phase-layer">第五層 · Etheric Template</div>
+      <div class="phase-desc">
+        <p>第五層光場被稱為「乙太模板」，是第一層乙太體在更高維度的藍圖，也與聲音、個人意志、以及真實說出自己的使命感密切相關。</p>
+        <p>28 歲後，許多人開始感受到「不能再假裝了」的內在呼喚——對工作、關係、或生活方式的真實性出現強烈的要求。這是第五層光場開始整合的訊號，也是為自己的人生方向負責的時期。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">個人意志</span>
+        <span class="phase-tag">真實表達</span>
+        <span class="phase-tag">使命感</span>
+        <span class="phase-tag">聲音頻率</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 6 -->
+  <div class="phase" style="--phase-color: #CE93D8;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #CE93D8, #7b1fa2);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">35 – 42 歲</div>
+      <div class="phase-name">天人體的開展</div>
+      <div class="phase-layer">第六層 · Celestial Body</div>
+      <div class="phase-desc">
+        <p>第六層天人體對應靈性之愛與高層次的感知。這個階段許多人開始對靈性議題有更深的興趣，感知到自己與更大存在之間的連結，也更能感受到無條件的慈悲與愛。</p>
+        <p>這一層開展時，人的直覺往往變得更敏銳，對他人的感受更有共鳴，也更容易在日常生活中體驗到「神聖的時刻」。天人體是靈性覺知正式落入日常的層次。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">靈性之愛</span>
+        <span class="phase-tag">直覺敏銳</span>
+        <span class="phase-tag">慈悲心</span>
+        <span class="phase-tag">神聖感知</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 7 -->
+  <div class="phase" style="--phase-color: #C9A84C;">
+    <div class="phase-dot">
+      <div class="phase-orb" style="background: radial-gradient(circle, #C9A84C, #7a5f1a);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-age">42 – 49 歲</div>
+      <div class="phase-name">因果體的整合</div>
+      <div class="phase-layer">第七層 · Ketheric Template</div>
+      <div class="phase-desc">
+        <p>第七層，也稱為因果體或克提體，是光場中振動頻率最高的一層，包含著你這一生所有層次的整合，以及更高層意識的連結。它常被描述為金色或白金色的光格，圍繞著整個能量場。</p>
+        <p>這個七年是人生中深度整合的時期——前六層的課題在此匯聚，許多人在這個階段感受到對生命深刻的理解與接受，對自身使命有更清晰的覺知，也開始看到自己生命中更大的模式與意義。</p>
+      </div>
+      <div class="phase-tags">
+        <span class="phase-tag">整合</span>
+        <span class="phase-tag">神性意志</span>
+        <span class="phase-tag">光格結構</span>
+        <span class="phase-tag">生命意義</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Beyond -->
+  <div class="beyond-note">
+    <div class="beyond-note-title">✦ &nbsp; 49 歲之後</div>
+    <p>完成七層光場的初次發展週期之後，生命進入一個更高八度的螺旋。第二輪的七年週期並非重複，而是以更深的智慧重新整合每一層的課題。</p>
+    <p>許多靈性傳統認為，49 歲之後的人擁有一種特殊的智慧品質，因為他們的光場已經歷過完整的一輪成熟。每一個新的七年，都是在更寬廣的視野中，重新理解自己的生命。</p>
+  </div>
+
+</div><!-- /timeline -->
+
+<div class="back-cta">
+  <a href="aura.html">← 返回光場知識</a>
+</div>
+
+</body>
+</html>
