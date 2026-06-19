@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孩童的光場與成長環境 · 光之手</title>
+<style>
+  :root {
+    --bg: #252040;
+    --gold: #C9A84C;
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.52);
+    --text-tertiary: rgba(255,255,255,0.32);
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Georgia', 'Noto Serif TC', serif;
+    font-size: 15px;
+    line-height: 1.85;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    position: relative;
+    text-align: center;
+    padding: 64px 24px 48px;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(129,199,132,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--gold); }
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: #81C784;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+  .page-title {
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .page-intro {
+    max-width: 520px;
+    margin: 0 auto;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+
+  .content {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .section-block {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: #81C784;
+    margin-bottom: 16px;
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(129,199,132,0.15);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    margin-bottom: 10px;
+  }
+  .card p:last-child { margin-bottom: 0; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(129,199,132,0.06), rgba(129,199,132,0.02));
+    border: 1px solid rgba(129,199,132,0.15);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .highlight-box p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.85;
+  }
+
+  .signal-list {
+    list-style: none;
+    margin-top: 12px;
+  }
+  .signal-list li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+  }
+  .signal-list li:last-child { border-bottom: none; }
+  .signal-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #81C784;
+    flex-shrink: 0;
+    margin-top: 8px;
+    opacity: 0.6;
+  }
+
+  .back-cta {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .back-cta a {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 10px 28px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .back-cta a:hover { color: var(--gold); border-color: rgba(201,168,76,0.3); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div><a class="back-link" href="aura.html">← 返回光場知識</a></div>
+  <p class="page-eyebrow">AURA · CHILDREN & ENVIRONMENT</p>
+  <h1 class="page-title">孩童的光場與成長環境</h1>
+  <p class="page-intro">孩子的光場比成人更開放、更流動，對周圍的能量極度敏感。了解孩童光場的特質，也是理解我們如何被塑造的起點。</p>
+</div>
+
+<div class="content">
+
+  <div class="section-block">
+    <div class="section-title">孩童光場的特質</div>
+
+    <div class="card">
+      <div class="card-title">開放而流動的邊界</div>
+      <p>孩子的光場邊界尚未完全形成，這是一種自然的狀態，讓他們能夠完全地與環境融合，吸收周圍的一切。這份開放性讓孩子天生具有高度的感知能力，但同時也意味著他們對能量的影響幾乎沒有防護。</p>
+      <p>隨著年齡增長，光場的邊界會逐漸建立，但這個過程的品質，與成長環境密切相關。</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">天生的感知能力</div>
+      <p>許多孩子在幼年時期天生就能感知光場——看見顏色、感受到他人的情緒場，或對「看不見的東西」有直覺性的感應。這是尚未被「正常化」教育關閉的自然能力。</p>
+      <p>隨著成長與社會化，大多數孩子會逐漸失去這份敏感，除非所在的環境允許並支持這份天賦。成人後重新開展靈性感知的人，往往是在重新連結這個幼年曾擁有過的能力。</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-title">環境對光場的影響</div>
+
+    <div class="card">
+      <div class="card-title">父母的能量場是孩子的第一個環境</div>
+      <p>父母的情緒狀態、家庭的能量氛圍，對孩子光場發展有深遠的影響。孩子在光場邊界尚未成形的階段，幾乎無法過濾父母的能量，因此父母的焦慮、憤怒、悲傷，都會直接進入孩子的能量場。</p>
+      <p>這不是在責怪父母。每個父母都有自己的課題與限制。理解這個機制，是為了能夠以更有意識的方式，回頭理解自己的成長經歷。</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">長期的情緒環境會留下結構性印記</div>
+      <p>長期的情緒忽視、反覆的批評、或家庭中的高頻衝突，會在孩子仍在成形的光場中留下結構性的印記。這些印記有時會以能量塊（凍結的情緒）或裂縫（能量流動中斷的區域）的形式，延續到成年後的光場狀態中。</p>
+      <p>光場繪製時，有時能看見這些源自童年的痕跡，特別是在情緒體與心智體的層次上。</p>
+    </div>
+
+    <div class="highlight-box">
+      <p>這也是為什麼一個穩定、充滿愛的成長環境，從能量的角度來看同樣至關重要——它不只是心理層面的養分，也是光場健康發展的基礎。</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-title">辨識高敏感孩童的訊號</div>
+
+    <div class="card">
+      <p>有些孩子的光場天生更為開放與敏感，這樣的孩子可能會有以下表現：</p>
+      <ul class="signal-list">
+        <li><span class="signal-dot"></span><span>對他人的情緒變化極度敏感，容易被「帶走」</span></li>
+        <li><span class="signal-dot"></span><span>在人多的場合容易疲憊或不安，需要大量獨處時間恢復</span></li>
+        <li><span class="signal-dot"></span><span>對某些空間、地方或人有強烈的喜歡或排斥，且無法解釋原因</span></li>
+        <li><span class="signal-dot"></span><span>有「看不見的朋友」或對靈性事物有自然的興趣</span></li>
+        <li><span class="signal-dot"></span><span>夜間容易做生動的夢，或對黑暗有特別的敏感</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">如何支持高敏感孩童</div>
+      <p>對於光場較開放的孩子，最重要的是讓他們感受到自己的敏感是被接受的，而不是需要被修正的問題。</p>
+      <p>提供穩定的日常節奏、足夠的自然接觸、以及一個他們可以說出感受的安全空間，都是最直接的支持方式。在能量層面，父母自身的情緒穩定，是給孩子最好的保護。</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="back-cta">
+  <a href="aura.html">← 返回光場知識</a>
+</div>
+
+</body>
+</html>

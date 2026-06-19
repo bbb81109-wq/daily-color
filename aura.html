@@ -1316,6 +1316,41 @@
       margin: 0;
     }
     .accordion-body p:first-child { padding-top: 12px; }
+    .deep-link-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .deep-link-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(201,168,76,0.2);
+    }
+    .deep-link-card-inner { flex: 1; }
+    .deep-link-title {
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 5px;
+    }
+    .deep-link-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+    .deep-link-arrow {
+      font-size: 16px;
+      color: rgba(201,168,76,0.5);
+      flex-shrink: 0;
+    }
+
     .accordion-body strong {
       color: var(--text-primary);
       font-weight: 600;
@@ -1926,35 +1961,21 @@
 
 
 <!-- 7-year cycles -->
-<div class="accordion" id="anchor-sevenyear">
-  <button class="accordion-btn" onclick="toggleAccordion(this)">
-    <span>光場的七年發展週期</span>
-    <span class="accordion-arrow">﹢</span>
-  </button>
-  <div class="accordion-body">
-    <p>光場不是一出生就完整的，它隨著生命歷程逐層成熟。每七年，對應的一層光場進入主要發展階段，這個週期與身體、情緒、心智和靈性的成長節奏深度呼應。</p>
-    <p><strong>0–7 歲　乙太體</strong>　最貼近身體的第一層光場開始建立。這個階段孩子透過感官認識物質世界，身體的安全感與被照顧的經驗，直接影響這一層的健康程度。</p>
-    <p><strong>7–14 歲　情緒體</strong>　第二層光場進入發展期，情緒模式在這段時間逐漸成形。孩子開始有更豐富的內在情感世界，也開始學習如何處理感受。這個階段的情緒環境，會在光場中留下深遠的印記。</p>
-    <p><strong>14–21 歲　心智體</strong>　第三層光場發展，理性思維、自我意識與價值觀在這裡形成。青少年開始透過邏輯理解世界，也開始質疑、建立屬於自己的信念系統。</p>
-    <p><strong>21–28 歲　星光體</strong>　第四層光場對應愛與人際關係。這個階段人們開始深入探索親密關係，學習如何在連結中保持自我。</p>
-    <p><strong>28 歲之後</strong>　第五至第七層陸續進入發展，涉及個人意志的落地、靈性視野的開展，以及與更高層次意識的整合。每一個七年都是生命的一個新章節，也是光場的一次蛻變。</p>
-    <a href="seven-year.html" style="display:inline-block;margin-top:14px;font-size:12px;letter-spacing:0.12em;color:rgba(201,168,76,0.75);text-decoration:none;border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:6px 16px;">查看完整七年週期 →</a>
+<a id="anchor-sevenyear" href="seven-year.html" class="deep-link-card">
+  <div class="deep-link-card-inner">
+    <div class="deep-link-title">光場的七年發展週期</div>
+    <div class="deep-link-desc">每七年，光場的一層進入主要發展期——從乙太體到因果體，生命的每個階段都有對應的成長課題。</div>
   </div>
-</div>
+  <div class="deep-link-arrow">→</div>
+</a>
 
-<!-- Children's aura -->
-<div class="accordion" id="anchor-children">
-  <button class="accordion-btn" onclick="toggleAccordion(this)">
-    <span>孩童的光場與成長環境</span>
-    <span class="accordion-arrow">﹢</span>
-  </button>
-  <div class="accordion-body">
-    <p>孩子的光場與成人有著本質上的不同——它更開放、更流動，邊界尚未完全形成。這讓孩子對周圍的能量場極度敏感，也更容易吸收環境中的情緒與頻率。</p>
-    <p>許多孩子在幼年時期天生就能感知光場，看見顏色或感受到他人的情緒場，這是尚未被「正常化」教育關閉的自然能力。隨著成長，大多數孩子會逐漸失去這個感知，除非所在的環境允許並支持這份天賦。</p>
-    <p>父母的情緒狀態、家庭的能量氛圍，對孩子的光場發展有深遠的影響。長期的情緒忽視、反覆的批評或家庭衝突，會在孩子仍在成形的光場中留下結構性的印記，有時會以能量塊或裂縫的形式延續至成年。</p>
-    <p>這也是為什麼一個穩定、充滿愛的成長環境，從能量的角度來看同樣至關重要——它不只是心理層面的養分，也是光場健康發展的基礎。</p>
+<a id="anchor-children" href="children-aura.html" class="deep-link-card">
+  <div class="deep-link-card-inner">
+    <div class="deep-link-title">孩童的光場與成長環境</div>
+    <div class="deep-link-desc">孩子的光場更開放、更流動，對周圍能量極度敏感。了解孩童光場的特質，也是理解自己如何被塑造的起點。</div>
   </div>
-</div>
+  <div class="deep-link-arrow">→</div>
+</a>
 
 </div><!-- /section-knowledge -->
 
