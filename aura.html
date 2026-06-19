@@ -1153,6 +1153,37 @@
       letter-spacing: 0.15em;
     }
 
+    .gallery-strip {
+      display: flex;
+      gap: 12px;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 4px 0 8px;
+    }
+    .gallery-strip::-webkit-scrollbar { display: none; }
+    .gallery-item {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .gallery-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      margin: 0 0 10px;
+    }
+
     .story-block {
       margin: 4px 20px 20px;
       padding: 18px 16px;
@@ -1589,12 +1620,16 @@
     <div class="color-swatch" data-color="orange"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(255,210,140,0.95) 0%,rgba(220,100,20,0.6) 45%,rgba(180,70,0,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(220,100,20,0.35),0 0 44px 16px rgba(220,100,20,0.12)"></div><span>橙</span></div>
     <div class="color-swatch" data-color="yellow"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(255,248,180,0.95) 0%,rgba(210,170,0,0.6) 45%,rgba(160,120,0,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(210,170,0,0.35),0 0 44px 16px rgba(210,170,0,0.12)"></div><span>黃</span></div>
     <div class="color-swatch" data-color="green"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(180,255,210,0.95) 0%,rgba(30,170,80,0.6) 45%,rgba(10,110,40,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(30,170,80,0.35),0 0 44px 16px rgba(30,170,80,0.12)"></div><span>綠</span></div>
+    <div class="color-swatch" data-color="mint"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(200,255,240,0.95) 0%,rgba(60,200,160,0.6) 45%,rgba(20,130,100,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(60,200,160,0.35),0 0 44px 16px rgba(60,200,160,0.12)"></div><span>淡綠</span></div>
+    <div class="color-swatch" data-color="teal"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(180,240,255,0.95) 0%,rgba(0,160,180,0.6) 45%,rgba(0,100,120,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(0,160,180,0.35),0 0 44px 16px rgba(0,160,180,0.12)"></div><span>青綠</span></div>
     <div class="color-swatch" data-color="blue"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(180,220,255,0.95) 0%,rgba(30,110,220,0.6) 45%,rgba(10,60,160,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(30,110,220,0.35),0 0 44px 16px rgba(30,110,220,0.12)"></div><span>藍</span></div>
+    <div class="color-swatch" data-color="skyblue"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(210,235,255,0.95) 0%,rgba(100,170,240,0.6) 45%,rgba(60,120,200,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(100,170,240,0.35),0 0 44px 16px rgba(100,170,240,0.12)"></div><span>淡藍</span></div>
     <div class="color-swatch" data-color="indigo"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(190,180,255,0.95) 0%,rgba(80,50,200,0.6) 45%,rgba(40,20,150,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(80,50,200,0.35),0 0 44px 16px rgba(80,50,200,0.12)"></div><span>靛</span></div>
     <div class="color-swatch" data-color="violet"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(240,200,255,0.95) 0%,rgba(160,40,220,0.6) 45%,rgba(100,10,160,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(160,40,220,0.38),0 0 44px 16px rgba(160,40,220,0.14)"></div><span>紫</span></div>
     <div class="color-swatch" data-color="white"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(255,255,255,0.98) 0%,rgba(200,200,240,0.5) 45%,rgba(160,160,220,0.06) 80%,transparent 100%);box-shadow:0 0 24px 10px rgba(220,220,255,0.4),0 0 48px 18px rgba(220,220,255,0.12)"></div><span>白</span></div>
     <div class="color-swatch" data-color="gold"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(255,240,180,0.95) 0%,rgba(200,140,0,0.6) 45%,rgba(150,90,0,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(200,150,0,0.38),0 0 44px 16px rgba(200,150,0,0.14)"></div><span>金</span></div>
     <div class="color-swatch" data-color="pink"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(255,210,230,0.95) 0%,rgba(220,60,140,0.6) 45%,rgba(160,20,90,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(220,60,140,0.35),0 0 44px 16px rgba(220,60,140,0.12)"></div><span>粉</span></div>
+    <div class="color-swatch" data-color="magenta"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(255,200,240,0.95) 0%,rgba(210,0,160,0.6) 45%,rgba(150,0,110,0.08) 80%,transparent 100%);box-shadow:0 0 22px 8px rgba(210,0,160,0.38),0 0 44px 16px rgba(210,0,160,0.14)"></div><span>洋紅</span></div>
     <div class="color-swatch" data-color="gray"><div class="swatch-dot" style="background:radial-gradient(circle at 50% 50%,rgba(180,180,200,0.85) 0%,rgba(80,80,100,0.4) 45%,rgba(40,40,60,0.05) 80%,transparent 100%);box-shadow:0 0 18px 6px rgba(100,100,130,0.25),0 0 36px 12px rgba(100,100,130,0.08)"></div><span>暗</span></div>
   </div>
   <div class="color-meaning" id="color-meaning"></div>
@@ -1961,6 +1996,16 @@
   <div class="service-receive">
     <strong>✦ 你將收到</strong>
     專屬手繪光場圖 · 七層能量解讀 · 色彩與狀態說明
+  </div>
+</div>
+
+<!-- Gallery -->
+<div style="margin: 40px 0 8px;">
+  <p class="gallery-label">✦ 作品展示 ✦</p>
+  <div class="gallery-strip">
+    <div class="gallery-item"><img src="未命名的作品%201.png" alt="光場繪製作品" loading="lazy"></div>
+    <div class="gallery-item"><img src="未命名的作品%209.png" alt="光場繪製作品" loading="lazy"></div>
+    <div class="gallery-item"><img src="未命名的作品%2010.png" alt="光場繪製作品" loading="lazy"></div>
   </div>
 </div>
 
@@ -2348,12 +2393,16 @@
     orange: { title: '橙色', text: '創造力與情感流動的顏色。出現橙色代表充滿創意、情感豐富；若混濁則可能是情緒壓抑或對自我價值的懷疑。' },
     yellow: { title: '黃色', text: '思維清晰、意志活躍的象徵。明亮的黃色出現在頭部周圍，代表專注、邏輯清晰；混濁的黃則可能是過度分析或自我批評。' },
     green:  { title: '綠色', text: '療癒與平衡的顏色，與心的能量相關。明亮的草綠代表愛的流動、同理心；暗綠混褐則可能是嫉妒或壓抑的負面情緒。' },
+    mint:   { title: '淡綠色', text: '心與溝通之間的橋樑頻率。淡綠代表從心說話、溫和表達真實感受的能力；在 Aura-Soma 體系中，薄荷綠象徵個體性的覺醒，找到自己獨特的聲音，同時保持對他人的開放。' },
+    teal:   { title: '青綠色', text: '創意溝通與自我表達的顏色。青綠出現在光場中，代表能夠用創意的方式傳達自身本質，適合藝術家、療癒師；也象徵心輪的能量向上延伸，與更高的表達整合。' },
     blue:   { title: '藍色', text: '平靜、溝通與靈性感知的顏色。天空藍代表表達清晰、內心平靜；深藍或灰藍則可能是溝通受阻或過度封閉。' },
+    skyblue: { title: '淡藍色', text: '輕盈的平靜與深層安慰。淡藍色在 Aura-Soma 中對應深度的和平與信任，象徵讓事情如其所是的能力；在光場中出現淡藍，常見於冥想者或正在學習放下控制的人，代表與流動和諧共存。' },
     indigo: { title: '靛藍色', text: '直覺與洞察的顏色，與第三眼相關。靛藍出現代表直覺敏銳、靈性感知開啟；若模糊則可能是與內在感知斷線。' },
     violet: { title: '紫色', text: '靈性轉化與高我連結的頻率。紫色代表靈性意識提升、與更高維度連結；混濁的紫則可能是靈性自我過度膨脹或迷失方向。' },
     white:  { title: '白色', text: '純淨與整體性的象徵，最高頻率的光。白色代表能量場完整、受到保護；閃爍的白光通常出現在深度療癒或靈性開啟時。' },
     gold:   { title: '金色', text: '健康連結與神性智慧的顏色。金色能量帶代表人際關係健康、充滿愛與信任；腦下垂體發出金光，與深度靈視和冥想狀態相關。' },
     pink:   { title: '粉紅色', text: '無條件的愛與溫柔能量。粉紅色代表處於愛的狀態、對自己和他人充滿慈悲；深度戀愛或心輪開啟時，氣場中常出現粉紅光。' },
+    magenta: { title: '洋紅色', text: '來自高處的愛，Aura-Soma 體系中最具代表性的顏色之一。洋紅象徵神性之愛落入日常細節，提醒我們在平凡之中看見神聖；也代表強烈的使命感與靈性服務的渴望，常見於正在整合高我與人間任務的靈魂。' },
     gray:   { title: '暗沉 / 灰色', text: '能量滯留或需要淨化的信號。灰色或混濁的顏色代表壓抑的情緒、能量堵塞；出現在身體特定部位時，可能對應該區域的緊繃或疾病前兆。' },
   };
 
