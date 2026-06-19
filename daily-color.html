@@ -739,51 +739,40 @@
       border-radius: 10px;
     }
 
-    /* 深度理解 & 轉化方向 */
+    /* 深度理解 & 轉化方向 — 常駐顯示 */
     .ck-deeper-section {
-      margin-top: 1.5rem;
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: opacity 0.5s ease, max-height 0.5s ease;
-    }
-    .ck-deeper-section.visible {
-      opacity: 1;
-      max-height: 500px;
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(180,155,220,0.18);
     }
     .ck-deeper-label {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 0.64rem;
-      letter-spacing: 0.3em;
-      color: var(--quartz);
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      color: rgba(160,130,210,0.7);
       text-transform: uppercase;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
+      font-weight: 300;
+      margin-bottom: 0.45rem;
     }
     .ck-deeper-text {
-      font-size: 0.92rem;
-      line-height: 2;
+      font-size: 0.78rem;
+      line-height: 1.95;
       letter-spacing: 0.02em;
-      color: var(--text-secondary);
-      padding: 1rem 1.1rem;
-      background: rgba(142, 196, 216, 0.07);
-      border-radius: 10px;
-      margin-bottom: 1.2rem;
+      color: rgba(80,70,100,0.72);
+      margin-bottom: 1.1rem;
     }
     .ck-transform {
-      font-size: 0.92rem;
-      line-height: 2;
-      letter-spacing: 0.02em;
-      color: var(--text-muted);
-      padding: 1rem 1.2rem;
-      background: rgba(142, 196, 216, 0.06);
-      border-left: 3px solid rgba(142, 196, 216, 0.40);
-      border-radius: 10px;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      color: rgba(120,100,160,0.8);
       font-style: italic;
-      font-weight: 300;
+      padding: 0.65rem 1rem;
+      background: rgba(201,180,232,0.1);
+      border-radius: 8px;
+      border-left: 2px solid rgba(180,155,220,0.45);
     }
 
-    /* 按鈕 "更多" */
+    /* 按鈕 "更多" — 已移除，保留空位 */
     .ck-expand-btn {
       display: block;
       width: calc(100% - 3.2rem);
@@ -1372,7 +1361,6 @@
               <div class="ck-transform ta" id="ckTransform"></div>
             </div>
 
-            <button class="ck-expand-btn ta" id="ckExpandBtn" style="display: none;">深度理解 · 轉化方向</button>
 
             <div style="display: flex; gap: 0.8rem; margin-top: 1.3rem; justify-content: center; flex-wrap: wrap;">
               <button class="ck-share line-btn ta" id="ckShare">分享到 LINE ↗</button>
@@ -2014,8 +2002,7 @@ function fillCK(ck, spirit = null) {
       spirit.question || '這訊息對你的當下有什麼啟發？'
     );
 
-    document.getElementById('ckDeeperSection').classList.remove('visible');
-    document.getElementById('ckExpandBtn').style.display = 'none';
+    document.getElementById('ckDeeperSection').style.display = 'none';
   } else {
     // 脈輪卡：5 層結構
     document.getElementById('ckStrip').style.background = ck.color;
@@ -2039,8 +2026,7 @@ function fillCK(ck, spirit = null) {
       `你可以如何用 ${ck.name} 的能量轉化此刻？`
     );
 
-    document.getElementById('ckExpandBtn').style.display = 'inline-block';
-    document.getElementById('ckDeeperSection').classList.remove('visible');
+    document.getElementById('ckDeeperSection').style.display = 'block';
   }
   document.querySelectorAll('#ckFront .ta').forEach(el => el.classList.remove('in'));
 }
@@ -2317,20 +2303,6 @@ drawBtn.addEventListener('click', handleDraw);
 backScene.addEventListener('click', () => { if (state === 'idle') handleDraw(); });
 redrawBtn.addEventListener('click', handleRedraw);
 
-// ── 展開/收起深度理解 ──
-document.getElementById('ckExpandBtn').addEventListener('click', function() {
-  const deeperSection = document.getElementById('ckDeeperSection');
-  const isVisible = deeperSection.classList.contains('visible');
-  if (isVisible) {
-    deeperSection.classList.remove('visible');
-    this.classList.remove('expanded');
-    this.textContent = '深度理解 · 轉化方向';
-  } else {
-    deeperSection.classList.add('visible');
-    this.classList.add('expanded');
-    this.textContent = '深度理解 · 轉化方向';
-  }
-});
 
 // ── 進入房間 ──
 document.getElementById('roomBtn').addEventListener('click', function() {
