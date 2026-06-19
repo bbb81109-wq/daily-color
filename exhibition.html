@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>能量創作 | Anmita Riga</title>
+  <meta name="description" content="手工製作的能量物件——每一件都是一個故事的起點。走進展覽室，探索光燭、噴霧與靈性藝術。">
+  <meta property="og:title" content="能量創作 | Anmita Riga">
+  <meta property="og:description" content="手工製作的能量物件，走進展覽室">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://euphonious-lebkuchen-60376f.netlify.app/icon-512.png">
+  <meta name="theme-color" content="#F5F3F8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #F5F3F8 0%, #F2EAE4 50%, #F5F3F8 100%);
+      font-family: "Noto Serif TC", Georgia, serif;
+      font-weight: 300;
+      color: #5A5059;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 20% 15%, rgba(232, 200, 220, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 500px 350px at 80% 30%, rgba(242, 234, 228, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 700px 450px at 50% 90%, rgba(216, 198, 240, 0.08) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      max-width: 480px;
+      padding: 20px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .back-btn {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      color: #9A8A9A;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0.75;
+      transition: opacity 0.25s;
+    }
+    .back-btn:hover { opacity: 1; }
+
+    .page-tag {
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      color: #B8A8B8;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    /* ── Content ── */
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* ── 粉色光球 ── */
+    .orb-wrap {
+      position: relative;
+      margin-bottom: 2.4rem;
+      animation: orbFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .orb {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #EDD0E4 0%, #D8B8CC 60%, #C8A0B8 100%);
+      box-shadow:
+        0 0 0 1px rgba(200, 150, 180, 0.22),
+        0 8px 32px rgba(200, 150, 180, 0.28),
+        0 0 60px rgba(220, 170, 200, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .orb::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px dashed rgba(200, 150, 180, 0.28);
+      animation: ringRotate 8s linear infinite;
+    }
+
+    @keyframes ringRotate {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .orb-symbol {
+      font-size: 2.4rem;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 6px rgba(200, 150, 180, 0.5));
+    }
+
+    /* ── 文字 ── */
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.38em;
+      color: #B8A0B0;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      font-weight: 300;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 10vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: #5A5059;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: #8A7090;
+    }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200, 150, 180, 0.5), transparent);
+      margin: 1.2rem auto;
+    }
+
+    .intro-text {
+      font-size: 0.82rem;
+      line-height: 1.95;
+      color: #8A7A8A;
+      text-align: center;
+      max-width: 300px;
+      letter-spacing: 0.04em;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── 主 CTA ── */
+    .enter-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      padding: 20px 48px;
+      border: 1px solid rgba(200, 150, 180, 0.38);
+      border-radius: 2px;
+      background: rgba(232, 200, 220, 0.08);
+      transition: all 0.35s ease;
+      cursor: pointer;
+      margin-bottom: 3.5rem;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .enter-btn:hover {
+      background: rgba(232, 200, 220, 0.16);
+      border-color: rgba(200, 150, 180, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .enter-btn:active { transform: translateY(0); }
+
+    .enter-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      letter-spacing: 0.18em;
+      color: #7A6070;
+    }
+
+    .enter-sub {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: #B8A0B0;
+      text-transform: uppercase;
+    }
+
+    /* ── 行星導覽 ── */
+    .nav-title {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      color: #C0A8C0;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .nav-planets {
+      display: flex;
+      gap: 1.4rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-planet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.25s, transform 0.25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-planet:hover { opacity: 1; transform: translateY(-3px); }
+
+    .nav-orb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+    }
+
+    .nav-orb.gold    { background: linear-gradient(135deg, #F0D898, #E8C97A); }
+    .nav-orb.purple  { background: linear-gradient(135deg, #D4C0EC, #C4AADF); }
+    .nav-orb.blue    { background: linear-gradient(135deg, #A8D4E4, #8EC4D8); }
+
+    .nav-name {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: #9A8A9A;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* ── 底部 ── */
+    .footer-sig {
+      margin-top: 3rem;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: #C0B0C0;
+      text-align: center;
+    }
+
+    @media (max-width: 360px) {
+      .nav-planets { gap: 1rem; }
+      .nav-orb { width: 38px; height: 38px; font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="back-btn">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      首頁
+    </a>
+    <span class="page-tag">Energy Works</span>
+  </header>
+
+  <div class="content">
+
+    <!-- 光球 -->
+    <div class="orb-wrap">
+      <div class="orb">
+        <span class="orb-symbol">◇</span>
+      </div>
+    </div>
+
+    <!-- 標題 -->
+    <p class="eyebrow">Studio · Gallery</p>
+    <h1>能量創作<br><em>energy works</em></h1>
+    <div class="divider"></div>
+
+    <p class="intro-text">
+      每一件手工物件，<br>
+      都承載著一個意念與祝福。<br>
+      走進展覽室，<br>
+      找到與你共振的那一件。
+    </p>
+
+    <!-- 主入口 -->
+    <a href="https://energy-works.vercel.app" class="enter-btn" id="enter-gallery" target="_blank" rel="noopener">
+      <span class="enter-label">走進展覽室</span>
+      <span class="enter-sub">open gallery</span>
+    </a>
+
+    <!-- 行星導覽 -->
+    <p class="nav-title">探索更多</p>
+    <div class="nav-planets">
+      <a href="/daily-color.html" class="nav-planet" id="nav-blessing">
+        <div class="nav-orb gold">✦</div>
+        <span class="nav-name">每日色彩</span>
+      </a>
+      <a href="/chakra-cat.html" class="nav-planet" id="nav-chakra">
+        <div class="nav-orb purple">◎</div>
+        <span class="nav-name">脈輪覺察</span>
+      </a>
+      <a href="/cat-room.html" class="nav-planet" id="nav-room">
+        <div class="nav-orb blue">○</div>
+        <span class="nav-name">靜觀空間</span>
+      </a>
+    </div>
+
+    <p class="footer-sig">Anmita Riga · 宇宙訊號</p>
+  </div>
+
+</body>
+</html>
