@@ -284,6 +284,93 @@
       box-shadow: 0 0 40px rgba(200, 150, 180, 0.6);
     }
 
+    /* ── 中心行星：能量光場 ── */
+    .aura-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      z-index: 2;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-tap-highlight-color: transparent;
+      animation: auraFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes auraFloat {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -52%) scale(1.04); }
+    }
+
+    .aura-center:hover { animation: none; transform: translate(-50%, -50%) scale(1.12); }
+    .aura-center:active { transform: translate(-50%, -50%) scale(0.96); }
+
+    .aura-orb {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #7060A8, #3D3460 55%, #28224A);
+      box-shadow:
+        0 0 0 1px rgba(201, 168, 76, 0.3),
+        0 0 16px rgba(100, 80, 160, 0.5),
+        0 0 32px rgba(100, 80, 160, 0.25),
+        inset 0 0 20px rgba(201, 168, 76, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.55rem;
+      position: relative;
+      transition: all 0.5s ease;
+    }
+
+    .aura-orb::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      animation: auraRing 3s linear infinite;
+    }
+
+    @keyframes auraRing {
+      0% { transform: rotate(0deg) scale(1); opacity: 0.5; }
+      50% { transform: rotate(180deg) scale(1.06); opacity: 0.9; }
+      100% { transform: rotate(360deg) scale(1); opacity: 0.5; }
+    }
+
+    .aura-center:hover .aura-orb {
+      box-shadow:
+        0 0 0 1px rgba(201, 168, 76, 0.5),
+        0 0 24px rgba(120, 100, 200, 0.7),
+        0 0 48px rgba(120, 100, 200, 0.35),
+        inset 0 0 30px rgba(201, 168, 76, 0.2);
+    }
+
+    .aura-symbol {
+      font-size: 1.6rem;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.6));
+    }
+
+    .aura-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: #8A7898;
+      font-weight: 300;
+      text-align: center;
+      line-height: 1.4;
+      font-family: "Noto Serif TC", serif;
+    }
+
+    @media (max-width: 480px) {
+      .aura-orb { width: 60px; height: 60px; }
+      .aura-symbol { font-size: 1.3rem; }
+      .aura-label { font-size: 0.62rem; }
+    }
+
     /* 行星符號 */
     .btn-symbol {
       font-size: 2.4rem;
@@ -406,6 +493,15 @@
         </a>
 
       </div>
+
+      <!-- 中心行星：能量光場 -->
+      <a class="aura-center" href="/aura">
+        <div class="aura-orb">
+          <div class="aura-symbol">✧</div>
+        </div>
+        <div class="aura-label">能量光場</div>
+      </a>
+
     </div>
 
     <div class="footer-note">每一刻都是一個重新開始的機會</div>
