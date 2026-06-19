@@ -135,276 +135,158 @@
     .btn-entry:hover { transform: scale(1.1); }
     .btn-entry:active { transform: scale(0.95); transition-duration: 0.1s; }
 
-    /* 行星各自位置 */
-    .blessing {
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: planetFloat-1 4s ease-in-out infinite;
-    }
-
+    /* ── 軌道行星位置（4顆）── */
     .chakra {
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: planetFloat-2 4.5s ease-in-out infinite;
+      top: 0; left: 50%;
+      animation: planetFloat-1 4.5s ease-in-out infinite;
     }
-
     .room {
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
+      top: 50%; right: 0;
       animation: planetFloat-3 4.2s ease-in-out infinite;
     }
-
     .exhibition {
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      animation: planetFloat-4 4.7s ease-in-out infinite;
+      bottom: 0; left: 50%;
+      animation: planetFloat-2 4.7s ease-in-out infinite;
+    }
+    .aura-orbit {
+      top: 50%; left: 0;
+      animation: planetFloat-4 4s ease-in-out infinite;
     }
 
     @keyframes planetFloat-1 {
       0%, 100% { transform: translateX(-50%) translateY(0px); }
-      50% { transform: translateX(-50%) translateY(-8px); }
+      50% { transform: translateX(-50%) translateY(-7px); }
     }
-
     @keyframes planetFloat-2 {
       0%, 100% { transform: translateX(-50%) translateY(0px); }
-      50% { transform: translateX(-50%) translateY(8px); }
+      50% { transform: translateX(-50%) translateY(7px); }
     }
-
     @keyframes planetFloat-3 {
       0%, 100% { transform: translateY(-50%) translateX(0px); }
-      50% { transform: translateY(-50%) translateX(-8px); }
+      50% { transform: translateY(-50%) translateX(-7px); }
     }
-
     @keyframes planetFloat-4 {
       0%, 100% { transform: translateY(-50%) translateX(0px); }
-      50% { transform: translateY(-50%) translateX(8px); }
+      50% { transform: translateY(-50%) translateX(7px); }
     }
 
-    /* 行星視覺 */
+    /* 軌道行星視覺（小） */
     .btn-visual {
-      width: 120px;
-      height: 120px;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
       transition: all 0.5s ease;
       position: relative;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
       overflow: hidden;
     }
-
-    .btn-entry:hover .btn-visual {
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-    }
-
-    /* 行星環 */
-    .btn-visual::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .btn-entry:hover .btn-visual::before {
-      opacity: 1;
-    }
-
-    /* 光暈 */
+    .btn-entry:hover .btn-visual { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.13); transform: scale(1.08); }
     .btn-visual::after {
-      content: '';
-      position: absolute;
-      inset: -20px;
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
+      content: ''; position: absolute; inset: -16px;
+      border-radius: 50%; opacity: 0;
+      transition: opacity 0.5s ease; pointer-events: none;
     }
+    .btn-entry:hover .btn-visual::after { opacity: 1; }
 
-    .btn-entry:hover .btn-visual::after {
-      opacity: 1;
-    }
-
-    /* 金星（祝福）— 溫暖金色 + 太陽光暈 */
-    .blessing .btn-visual {
-      background: linear-gradient(135deg, #F0D898 0%, #E8C97A 100%);
-    }
-
-    .blessing .btn-visual::before {
-      box-shadow: inset 0 0 30px rgba(240, 216, 152, 0.5);
-    }
-
-    .blessing .btn-visual::after {
-      box-shadow: 0 0 40px rgba(240, 216, 152, 0.6);
-    }
-
-    /* 紫星（脈輪）— 神祕深紫 + 靈性光圈 */
-    .chakra .btn-visual {
-      background: linear-gradient(135deg, #D4C0EC 0%, #C4AADF 100%);
-    }
-
-    .chakra .btn-visual::before {
-      box-shadow: inset 0 0 30px rgba(196, 170, 223, 0.5);
-    }
-
-    .chakra .btn-visual::after {
-      box-shadow: 0 0 40px rgba(196, 170, 223, 0.6);
-    }
-
-    /* 藍星（靜觀）— 清冷藍 + 冷靜光環 */
-    .room .btn-visual {
-      background: linear-gradient(135deg, #A8D4E4 0%, #8EC4D8 100%);
-    }
-
-    .room .btn-visual::before {
-      box-shadow: inset 0 0 30px rgba(142, 196, 216, 0.5);
-    }
-
-    .room .btn-visual::after {
-      box-shadow: 0 0 40px rgba(142, 196, 216, 0.6);
-    }
-
-    /* 粉星（能量創作）— 溫柔粉紅 + 溫暖光暈 */
-    .exhibition .btn-visual {
-      background: linear-gradient(135deg, #E8C8DC 0%, #D8B8CC 100%);
-    }
-
-    .exhibition .btn-visual::before {
-      box-shadow: inset 0 0 30px rgba(200, 150, 180, 0.5);
-    }
-
-    .exhibition .btn-visual::after {
-      box-shadow: 0 0 40px rgba(200, 150, 180, 0.6);
-    }
-
-    /* ── 中心行星：能量光場 ── */
-    .aura-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      z-index: 2;
-      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-      -webkit-tap-highlight-color: transparent;
-      animation: auraFloat 6s ease-in-out infinite;
-    }
-
-    @keyframes auraFloat {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -52%) scale(1.04); }
-    }
-
-    .aura-center:hover { animation: none; transform: translate(-50%, -50%) scale(1.12); }
-    .aura-center:active { transform: translate(-50%, -50%) scale(0.96); }
-
-    .aura-orb {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #7060A8, #3D3460 55%, #28224A);
-      box-shadow:
-        0 0 0 1px rgba(201, 168, 76, 0.3),
-        0 0 16px rgba(100, 80, 160, 0.5),
-        0 0 32px rgba(100, 80, 160, 0.25),
-        inset 0 0 20px rgba(201, 168, 76, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 0.55rem;
-      position: relative;
-      transition: all 0.5s ease;
-    }
-
-    .aura-orb::before {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      border: 1px solid rgba(201, 168, 76, 0.2);
-      animation: auraRing 3s linear infinite;
-    }
-
-    @keyframes auraRing {
-      0% { transform: rotate(0deg) scale(1); opacity: 0.5; }
-      50% { transform: rotate(180deg) scale(1.06); opacity: 0.9; }
-      100% { transform: rotate(360deg) scale(1); opacity: 0.5; }
-    }
-
-    .aura-center:hover .aura-orb {
-      box-shadow:
-        0 0 0 1px rgba(201, 168, 76, 0.5),
-        0 0 24px rgba(120, 100, 200, 0.7),
-        0 0 48px rgba(120, 100, 200, 0.35),
-        inset 0 0 30px rgba(201, 168, 76, 0.2);
-    }
-
-    .aura-symbol {
-      font-size: 1.6rem;
-      opacity: 0.85;
-      filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.6));
-    }
-
-    .aura-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      color: #8A7898;
-      font-weight: 300;
-      text-align: center;
-      line-height: 1.4;
-      font-family: "Noto Serif TC", serif;
-    }
-
-    @media (max-width: 480px) {
-      .aura-orb { width: 60px; height: 60px; }
-      .aura-symbol { font-size: 1.3rem; }
-      .aura-label { font-size: 0.62rem; }
-    }
+    /* 軌道行星顏色 */
+    .chakra .btn-visual { background: radial-gradient(circle at 35% 35%, #E0D0F8, #C4AADF 55%, #B098D0); }
+    .chakra .btn-visual::after { box-shadow: 0 0 30px rgba(196, 170, 223, 0.55); }
+    .room .btn-visual { background: radial-gradient(circle at 35% 35%, #C8E8F4, #8EC4D8 55%, #78B4CC); }
+    .room .btn-visual::after { box-shadow: 0 0 30px rgba(142, 196, 216, 0.55); }
+    .exhibition .btn-visual { background: radial-gradient(circle at 35% 35%, #F0D8E8, #D8B8CC 55%, #C8A8BC); }
+    .exhibition .btn-visual::after { box-shadow: 0 0 30px rgba(200, 150, 180, 0.55); }
+    .aura-orbit .btn-visual { background: radial-gradient(circle at 35% 35%, #7060A8, #3D3460 55%, #28224A); box-shadow: 0 6px 20px rgba(60,50,100,0.2), 0 0 0 1px rgba(201,168,76,0.2); }
+    .aura-orbit .btn-visual::after { box-shadow: 0 0 30px rgba(100, 80, 160, 0.5); }
 
     /* 行星符號 */
     .btn-symbol {
-      font-size: 2.4rem;
-      line-height: 1;
-      opacity: 0.8;
+      font-size: 1.7rem; line-height: 1;
+      opacity: 0.8; transition: all 0.5s ease;
+    }
+    .btn-entry:hover .btn-symbol { opacity: 1; transform: scale(1.15); }
+    .aura-orbit .btn-symbol { filter: drop-shadow(0 0 3px rgba(201,168,76,0.5)); }
+
+    /* 軌道行星文字 */
+    .btn-text { text-align: center; width: 100%; }
+    .btn-label {
+      font-size: 0.78rem; font-weight: 400;
+      letter-spacing: 0.08em; color: #5A5059; line-height: 1.4;
+    }
+    .btn-desc { display: none; }
+
+    /* ── 中心主星：接收祝福 ── */
+    .blessing-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex; flex-direction: column; align-items: center;
+      text-decoration: none; z-index: 2;
+      -webkit-tap-highlight-color: transparent;
+      animation: blessingPulse 5s ease-in-out infinite;
+    }
+    @keyframes blessingPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -52%) scale(1.03); }
+    }
+    .blessing-center:hover { animation: none; transform: translate(-50%, -50%) scale(1.08); }
+    .blessing-center:active { transform: translate(-50%, -50%) scale(0.95); }
+
+    .blessing-orb {
+      width: 108px; height: 108px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #FAF0C0, #F0D898 50%, #E0C070);
+      box-shadow:
+        0 0 0 1px rgba(240, 216, 152, 0.4),
+        0 8px 32px rgba(230, 200, 100, 0.35),
+        0 0 48px rgba(230, 200, 100, 0.2),
+        inset 0 0 24px rgba(255, 250, 220, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.7rem; position: relative;
       transition: all 0.5s ease;
     }
-
-    .btn-entry:hover .btn-symbol {
-      opacity: 1;
-      transform: scale(1.2) rotate(360deg);
+    .blessing-orb::before {
+      content: ''; position: absolute; inset: -8px;
+      border-radius: 50%;
+      border: 1px dashed rgba(240, 216, 152, 0.4);
+      animation: blessingRing 8s linear infinite;
     }
-
-    /* 文字區 */
-    .btn-text {
-      text-align: center;
-      width: 100%;
+    .blessing-orb::after {
+      content: ''; position: absolute; inset: -18px;
+      border-radius: 50%;
+      border: 1px dashed rgba(240, 216, 152, 0.18);
+      animation: blessingRing 12s linear infinite reverse;
     }
-
-    .btn-label {
-      font-size: 0.95rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.4rem;
-      color: #5A5059;
-      line-height: 1.4;
+    @keyframes blessingRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
-
-    .btn-desc {
-      font-size: 0.7rem;
-      letter-spacing: 0.04em;
-      line-height: 1.6;
-      color: #8A7A8A;
-      font-weight: 300;
+    .blessing-center:hover .blessing-orb {
+      box-shadow:
+        0 0 0 1px rgba(240, 216, 152, 0.6),
+        0 12px 48px rgba(230, 200, 100, 0.5),
+        0 0 64px rgba(230, 200, 100, 0.3),
+        inset 0 0 32px rgba(255, 250, 220, 0.5);
+    }
+    .blessing-symbol {
+      font-size: 2.4rem; opacity: 0.85;
+      filter: drop-shadow(0 0 6px rgba(200, 160, 60, 0.5));
+      transition: all 0.5s ease;
+    }
+    .blessing-center:hover .blessing-symbol { transform: rotate(30deg) scale(1.1); opacity: 1; }
+    .blessing-title {
+      font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.12em; color: #7A6040;
+      text-align: center; line-height: 1.5;
+      font-family: "Noto Serif TC", serif;
+    }
+    .blessing-sub {
+      font-size: 0.62rem; letter-spacing: 0.1em;
+      color: #A8906A; font-weight: 300; margin-top: 0.15rem;
+      font-family: "Noto Serif TC", serif;
     }
 
     /* 底部標語 */
@@ -427,14 +309,16 @@
     /* 響應式 */
     @media (max-width: 480px) {
       body { padding: 3rem 1.5rem 4rem; }
-      .hero { margin-bottom: 3.5rem; }
+      .hero { margin-bottom: 3rem; }
       .hero-title { font-size: 1.5rem; }
-      .orbital-system { width: 320px; height: 320px; margin-bottom: 3rem; }
-      .btn-entry { width: 110px; padding: 1.5rem 1rem; }
-      .btn-visual { width: 100px; height: 100px; margin-bottom: 0.8rem; }
-      .btn-symbol { font-size: 2rem; }
-      .btn-label { font-size: 0.85rem; }
-      .btn-desc { font-size: 0.65rem; }
+      .orbital-system { width: 300px; height: 300px; margin-bottom: 3rem; }
+      .btn-entry { width: 90px; padding: 1rem 0.6rem; }
+      .btn-visual { width: 68px; height: 68px; margin-bottom: 0.5rem; }
+      .btn-symbol { font-size: 1.4rem; }
+      .btn-label { font-size: 0.68rem; }
+      .blessing-orb { width: 88px; height: 88px; }
+      .blessing-symbol { font-size: 2rem; }
+      .blessing-title { font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -450,17 +334,8 @@
     <div class="orbital-system">
       <div class="orbital-track"></div>
 
+      <!-- 4 顆軌道行星 -->
       <div class="entries">
-
-        <a class='btn-entry blessing' href='/daily-color'>
-          <div class="btn-visual">
-            <div class="btn-symbol">✦</div>
-          </div>
-          <div class="btn-text">
-            <div class="btn-label">接收祝福</div>
-            <div class="btn-desc">今日的色彩訊息<br>給你一個靜觀的起點</div>
-          </div>
-        </a>
 
         <a class='btn-entry chakra' href='/chakra-cat'>
           <div class="btn-visual">
@@ -468,7 +343,6 @@
           </div>
           <div class="btn-text">
             <div class="btn-label">覺察能量</div>
-            <div class="btn-desc">感受七個能量中心<br>聆聽身體此刻的聲音</div>
           </div>
         </a>
 
@@ -478,7 +352,6 @@
           </div>
           <div class="btn-text">
             <div class="btn-label">靜觀空間</div>
-            <div class="btn-desc">透過色彩與物件的組合<br>發現內在的靜謐角落</div>
           </div>
         </a>
 
@@ -488,18 +361,27 @@
           </div>
           <div class="btn-text">
             <div class="btn-label">能量創作</div>
-            <div class="btn-desc">瀏覽靈性藝廊<br>發現和邀請</div>
+          </div>
+        </a>
+
+        <a class='btn-entry aura-orbit' href='/aura'>
+          <div class="btn-visual">
+            <div class="btn-symbol">✧</div>
+          </div>
+          <div class="btn-text">
+            <div class="btn-label">能量光場</div>
           </div>
         </a>
 
       </div>
 
-      <!-- 中心行星：能量光場 -->
-      <a class="aura-center" href="/aura">
-        <div class="aura-orb">
-          <div class="aura-symbol">✧</div>
+      <!-- 中心主星：接收祝福 -->
+      <a class="blessing-center" href="/daily-color">
+        <div class="blessing-orb">
+          <div class="blessing-symbol">✦</div>
         </div>
-        <div class="aura-label">能量光場</div>
+        <div class="blessing-title">接收祝福</div>
+        <div class="blessing-sub">今日色彩訊息</div>
       </a>
 
     </div>
@@ -515,7 +397,7 @@
 
   initLiff();
 
-  document.querySelectorAll('.btn-entry').forEach(btn => {
+  document.querySelectorAll('.btn-entry, .blessing-center').forEach(btn => {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
       const href = this.getAttribute('href');
