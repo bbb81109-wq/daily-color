@@ -144,6 +144,25 @@
       font-size: 10.5px;
     }
 
+    /* 關節圓點 — 稍微突出 */
+    .joint-zone .zone-shape {
+      fill: rgba(180, 195, 225, 0.28);
+      stroke: rgba(150, 170, 210, 0.5);
+      stroke-width: 1.2;
+      stroke-dasharray: 3 2;
+    }
+    .joint-zone:hover .zone-shape {
+      fill: rgba(160, 185, 225, 0.45);
+      stroke: rgba(120, 160, 210, 0.75);
+      stroke-dasharray: none;
+    }
+    .joint-zone.selected .zone-shape {
+      fill: rgba(120, 185, 220, 0.48);
+      stroke: rgba(90, 160, 205, 0.9);
+      stroke-width: 2;
+      stroke-dasharray: none;
+    }
+
     /* cute face */
     .face-feature { pointer-events: none; }
 
@@ -431,67 +450,132 @@
   <p class="step-hint">輕輕點選，可以選多個地方</p>
 
   <div class="figure-wrap">
-    <svg viewBox="0 0 200 370" class="body-figure" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 200 400" class="body-figure" xmlns="http://www.w3.org/2000/svg">
 
-      <!-- 頭腦 -->
-      <g class="body-zone" data-part="head" data-label="頭腦" onclick="togglePart(this)">
-        <circle cx="100" cy="50" r="40" class="zone-shape"/>
-        <!-- cute face -->
-        <g class="face-feature">
-          <ellipse cx="88" cy="47" rx="4.5" ry="5" fill="rgba(90,80,110,0.18)"/>
-          <ellipse cx="112" cy="47" rx="4.5" ry="5" fill="rgba(90,80,110,0.18)"/>
-          <path d="M90 60 Q100 68 110 60" stroke="rgba(90,80,110,0.18)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </g>
-        <text x="100" y="82" class="zone-label">頭腦</text>
+      <!-- 雙腳（最底層先畫） -->
+      <g class="body-zone" data-part="feet" data-label="雙腳" onclick="togglePart(this)">
+        <ellipse cx="80" cy="388" rx="20" ry="11" class="zone-shape"/>
+        <ellipse cx="120" cy="388" rx="20" ry="11" class="zone-shape"/>
+        <text x="100" y="392" class="zone-label" style="font-size:9px">腳掌</text>
       </g>
 
-      <!-- 喉嚨 -->
-      <g class="body-zone" data-part="throat" data-label="喉嚨" onclick="togglePart(this)">
-        <rect x="82" y="88" width="36" height="22" rx="11" class="zone-shape"/>
-        <text x="100" y="100" class="zone-label">喉</text>
+      <!-- 小腿 -->
+      <g class="body-zone" data-part="shins" data-label="小腿" onclick="togglePart(this)">
+        <rect x="69" y="320" width="22" height="52" rx="11" class="zone-shape"/>
+        <rect x="109" y="320" width="22" height="52" rx="11" class="zone-shape"/>
+        <text x="80" y="348" class="zone-label" style="font-size:9px">腿</text>
+        <text x="120" y="348" class="zone-label" style="font-size:9px">腿</text>
       </g>
 
-      <!-- 肩膀（左） -->
-      <g class="body-zone" data-part="shoulders" data-label="肩膀" onclick="togglePart(this)">
-        <ellipse cx="36" cy="122" rx="30" ry="18" class="zone-shape"/>
-        <ellipse cx="164" cy="122" rx="30" ry="18" class="zone-shape"/>
-        <text x="36" y="126" class="zone-label" style="font-size:9px">肩</text>
-        <text x="164" y="126" class="zone-label" style="font-size:9px">肩</text>
-      </g>
-
-      <!-- 胸口 -->
-      <g class="body-zone" data-part="chest" data-label="胸口" onclick="togglePart(this)">
-        <rect x="60" y="108" width="80" height="50" rx="22" class="zone-shape"/>
-        <text x="100" y="134" class="zone-label">胸口</text>
-      </g>
-
-      <!-- 雙手 -->
-      <g class="body-zone" data-part="hands" data-label="雙手" onclick="togglePart(this)">
-        <rect x="12" y="136" width="22" height="65" rx="11" class="zone-shape"/>
-        <rect x="166" y="136" width="22" height="65" rx="11" class="zone-shape"/>
-        <text x="23" y="174" class="zone-label" style="font-size:9px">手</text>
-        <text x="177" y="174" class="zone-label" style="font-size:9px">手</text>
-      </g>
-
-      <!-- 腹部 -->
-      <g class="body-zone" data-part="belly" data-label="腹部" onclick="togglePart(this)">
-        <rect x="64" y="154" width="72" height="44" rx="20" class="zone-shape"/>
-        <text x="100" y="177" class="zone-label">腹部</text>
+      <!-- 大腿 -->
+      <g class="body-zone" data-part="thighs" data-label="大腿" onclick="togglePart(this)">
+        <rect x="67" y="248" width="26" height="56" rx="13" class="zone-shape"/>
+        <rect x="107" y="248" width="26" height="56" rx="13" class="zone-shape"/>
+        <text x="80" y="278" class="zone-label" style="font-size:9px">腿</text>
+        <text x="120" y="278" class="zone-label" style="font-size:9px">腿</text>
       </g>
 
       <!-- 下腹 -->
       <g class="body-zone" data-part="lower_belly" data-label="下腹" onclick="togglePart(this)">
-        <rect x="68" y="194" width="64" height="36" rx="16" class="zone-shape"/>
-        <text x="100" y="213" class="zone-label">下腹</text>
+        <rect x="68" y="207" width="64" height="36" rx="16" class="zone-shape"/>
+        <text x="100" y="226" class="zone-label">下腹</text>
       </g>
 
-      <!-- 雙腳 -->
-      <g class="body-zone" data-part="feet" data-label="雙腳" onclick="togglePart(this)">
-        <rect x="70" y="226" width="24" height="80" rx="12" class="zone-shape"/>
-        <rect x="106" y="226" width="24" height="80" rx="12" class="zone-shape"/>
-        <ellipse cx="82" cy="314" rx="20" ry="11" class="zone-shape"/>
-        <ellipse cx="118" cy="314" rx="20" ry="11" class="zone-shape"/>
-        <text x="100" y="280" class="zone-label">雙腳</text>
+      <!-- 腹部 -->
+      <g class="body-zone" data-part="belly" data-label="腹部" onclick="togglePart(this)">
+        <rect x="64" y="164" width="72" height="46" rx="20" class="zone-shape"/>
+        <text x="100" y="188" class="zone-label">腹部</text>
+      </g>
+
+      <!-- 前臂 -->
+      <g class="body-zone" data-part="forearms" data-label="前臂" onclick="togglePart(this)">
+        <rect x="9" y="172" width="20" height="36" rx="10" class="zone-shape"/>
+        <rect x="171" y="172" width="20" height="36" rx="10" class="zone-shape"/>
+      </g>
+
+      <!-- 上臂 -->
+      <g class="body-zone" data-part="upper_arms" data-label="上臂" onclick="togglePart(this)">
+        <rect x="8" y="130" width="22" height="36" rx="11" class="zone-shape"/>
+        <rect x="170" y="130" width="22" height="36" rx="11" class="zone-shape"/>
+      </g>
+
+      <!-- 胸口 -->
+      <g class="body-zone" data-part="chest" data-label="胸口" onclick="togglePart(this)">
+        <rect x="60" y="114" width="80" height="54" rx="22" class="zone-shape"/>
+        <text x="100" y="142" class="zone-label">胸口</text>
+      </g>
+
+      <!-- 肩膀 -->
+      <g class="body-zone" data-part="shoulders" data-label="肩膀" onclick="togglePart(this)">
+        <ellipse cx="34" cy="126" rx="28" ry="17" class="zone-shape"/>
+        <ellipse cx="166" cy="126" rx="28" ry="17" class="zone-shape"/>
+        <text x="34" y="130" class="zone-label" style="font-size:9px">肩</text>
+        <text x="166" y="130" class="zone-label" style="font-size:9px">肩</text>
+      </g>
+
+      <!-- 頭（背景圓） -->
+      <circle cx="100" cy="54" r="42" class="zone-shape" fill="rgba(200,210,230,0.18)" stroke="rgba(160,180,210,0.28)" stroke-width="1.5"/>
+      <!-- 微笑（裝飾，不可點） -->
+      <path d="M88 66 Q100 76 112 66" stroke="rgba(90,80,110,0.15)" stroke-width="2" fill="none" stroke-linecap="round" pointer-events="none"/>
+
+      <!-- 腳踝（關節） -->
+      <g class="body-zone joint-zone" data-part="ankles" data-label="腳踝" onclick="togglePart(this)">
+        <circle cx="80" cy="378" r="12" class="zone-shape"/>
+        <circle cx="120" cy="378" r="12" class="zone-shape"/>
+        <text x="80" y="382" class="zone-label" style="font-size:8px">踝</text>
+        <text x="120" y="382" class="zone-label" style="font-size:8px">踝</text>
+      </g>
+
+      <!-- 膝蓋（關節） -->
+      <g class="body-zone joint-zone" data-part="knees" data-label="膝蓋" onclick="togglePart(this)">
+        <circle cx="80" cy="308" r="14" class="zone-shape"/>
+        <circle cx="120" cy="308" r="14" class="zone-shape"/>
+        <text x="80" y="312" class="zone-label" style="font-size:8px">膝</text>
+        <text x="120" y="312" class="zone-label" style="font-size:8px">膝</text>
+      </g>
+
+      <!-- 髖關節 -->
+      <g class="body-zone joint-zone" data-part="hips" data-label="髖關節" onclick="togglePart(this)">
+        <circle cx="76" cy="242" r="14" class="zone-shape"/>
+        <circle cx="124" cy="242" r="14" class="zone-shape"/>
+        <text x="76" y="246" class="zone-label" style="font-size:8px">髖</text>
+        <text x="124" y="246" class="zone-label" style="font-size:8px">髖</text>
+      </g>
+
+      <!-- 手腕（關節） -->
+      <g class="body-zone joint-zone" data-part="wrists" data-label="手腕" onclick="togglePart(this)">
+        <circle cx="19" cy="210" r="11" class="zone-shape"/>
+        <circle cx="181" cy="210" r="11" class="zone-shape"/>
+        <text x="19" y="214" class="zone-label" style="font-size:8px">腕</text>
+        <text x="181" y="214" class="zone-label" style="font-size:8px">腕</text>
+      </g>
+
+      <!-- 手肘（關節） -->
+      <g class="body-zone joint-zone" data-part="elbows" data-label="手肘" onclick="togglePart(this)">
+        <circle cx="18" cy="166" r="12" class="zone-shape"/>
+        <circle cx="182" cy="166" r="12" class="zone-shape"/>
+        <text x="18" y="170" class="zone-label" style="font-size:8px">肘</text>
+        <text x="182" y="170" class="zone-label" style="font-size:8px">肘</text>
+      </g>
+
+      <!-- 喉嚨 -->
+      <g class="body-zone" data-part="throat" data-label="喉嚨" onclick="togglePart(this)">
+        <rect x="83" y="94" width="34" height="22" rx="11" class="zone-shape"/>
+        <text x="100" y="106" class="zone-label" style="font-size:9px">喉嚨</text>
+      </g>
+
+      <!-- 頭腦（可點選區，排除眼睛） -->
+      <g class="body-zone" data-part="head" data-label="頭腦" onclick="togglePart(this)">
+        <ellipse cx="100" cy="46" rx="32" ry="22" class="zone-shape" fill="rgba(200,210,230,0.0)" stroke="none"/>
+        <text x="100" y="30" class="zone-label">頭腦</text>
+      </g>
+
+      <!-- 眼睛（最上層，可點） -->
+      <g class="body-zone joint-zone" data-part="eyes" data-label="眼睛" onclick="togglePart(this)">
+        <ellipse cx="87" cy="50" rx="10" ry="11" class="zone-shape"/>
+        <ellipse cx="113" cy="50" rx="10" ry="11" class="zone-shape"/>
+        <text x="87" y="54" class="zone-label" style="font-size:8px">眼</text>
+        <text x="113" y="54" class="zone-label" style="font-size:8px">眼</text>
       </g>
 
     </svg>
@@ -583,6 +667,16 @@ const BODY_PARTS = {
     ],
     action: '今天找五分鐘，讓思緒自然飄，不強迫自己想清楚任何事。'
   },
+  eyes: {
+    name: '眼睛', chakra: '眉心輪',
+    meaning: '觀看與洞見',
+    phrases: [
+      '你看見的，不只是眼前的事物',
+      '有時候閉上眼，才能真正看見',
+      '你的眼睛累了，不只是從睡眠，是從看太多、想太多'
+    ],
+    action: '今天讓眼睛好好休息——閉上眼睛三分鐘，讓它們放空。'
+  },
   throat: {
     name: '喉嚨', chakra: '喉輪',
     meaning: '聲音與表達',
@@ -652,6 +746,96 @@ const BODY_PARTS = {
       '先踩穩這一步，下一步會自然出現'
     ],
     action: '把雙腳平放在地面上，感受地面的支撐，三次深呼吸，讓自己落地。'
+  },
+  elbows: {
+    name: '手肘', chakra: '心輪',
+    meaning: '彈性與轉向',
+    phrases: [
+      '手肘是讓你改變方向的地方，你現在是否需要轉個彎？',
+      '僵硬的關節提醒你：是時候讓自己更有彈性了',
+      '退一步，有時比一直往前更需要勇氣'
+    ],
+    action: '輕輕轉動手肘，讓關節活動一下，感受身體的靈活性。'
+  },
+  wrists: {
+    name: '手腕', chakra: '心輪',
+    meaning: '靈活與放手',
+    phrases: [
+      '手腕連接著意圖和行動',
+      '你握得太緊了嗎？試著放鬆一點點',
+      '靈活不是沒有原則，是在原則裡找到流動'
+    ],
+    action: '輕輕轉動手腕，感受放開的感覺，讓手掌慢慢張開。'
+  },
+  upper_arms: {
+    name: '上臂', chakra: '心輪',
+    meaning: '力量與給予',
+    phrases: [
+      '你的臂膀一直在撐著什麼',
+      '力量不是撐到最後，是知道何時放下',
+      '你可以伸出手，也可以讓手臂好好休息'
+    ],
+    action: '伸展一下雙臂，往兩側展開，深吸一口氣，感受自己的寬度。'
+  },
+  forearms: {
+    name: '前臂', chakra: '心輪',
+    meaning: '執行與創造',
+    phrases: [
+      '你的前臂記錄著你做過的每一件事',
+      '今天的你，是否做了太多？',
+      '創造需要雙手，但靈感需要安靜'
+    ],
+    action: '按摩一下前臂，感謝它們今天的付出。'
+  },
+  hips: {
+    name: '髖關節', chakra: '臍輪',
+    meaning: '重心與流動',
+    phrases: [
+      '髖部是身體的重心，你現在找到重心了嗎？',
+      '這裡承載著很多情緒記憶，允許它們鬆動',
+      '穩定的重心，讓你可以安心移動'
+    ],
+    action: '輕輕畫圓轉動髖部，或站起來走幾步，感受身體的重心回來。'
+  },
+  thighs: {
+    name: '大腿', chakra: '海底輪',
+    meaning: '穩定與前進',
+    phrases: [
+      '大腿支撐著你所有的移動',
+      '你走了很長的路，讓腿先休息一下',
+      '前進的力量來自下方，來自紮根'
+    ],
+    action: '站起來輕輕抖動雙腿，釋放累積的張力。'
+  },
+  knees: {
+    name: '膝蓋', chakra: '海底輪',
+    meaning: '謙遜與彈性',
+    phrases: [
+      '膝蓋是讓你彎曲、讓你謙遜的地方',
+      '有時候彎下去，是為了更有力量站起來',
+      '僵硬的膝蓋提醒你：允許自己更柔軟'
+    ],
+    action: '輕輕彎曲膝蓋幾次，感謝它們一直支撐著你。'
+  },
+  shins: {
+    name: '小腿', chakra: '海底輪',
+    meaning: '行動與節奏',
+    phrases: [
+      '小腿記錄著你走過的每一步',
+      '你現在的步伐，是急是緩？',
+      '找到屬於自己的節奏，比快更重要'
+    ],
+    action: '按摩一下小腿肚，感受那裡的緊繃慢慢釋放。'
+  },
+  ankles: {
+    name: '腳踝', chakra: '海底輪',
+    meaning: '適應與平衡',
+    phrases: [
+      '腳踝讓你在不平的地面上仍能保持平衡',
+      '你的適應力比你以為的更強',
+      '在不確定的路上，一步一步地走'
+    ],
+    action: '轉動腳踝，感受連結大地的那個點，讓自己踏實地站著。'
   }
 };
 
