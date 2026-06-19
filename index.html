@@ -182,34 +182,34 @@
     }
     .btn-entry:hover .btn-visual { transform: scale(1.12); }
 
-    /* 發光球體顏色 */
+    /* 發光球體顏色 — 柔和光球 */
     .chakra .btn-visual {
-      background: radial-gradient(circle at 38% 32%, #EDE5FF, #C4AADF 45%, #A088CC);
-      box-shadow: 0 4px 24px rgba(180,148,220,0.45), 0 0 40px rgba(180,148,220,0.25), 0 0 0 1px rgba(196,170,223,0.2);
+      background: radial-gradient(circle at 42% 40%, rgba(240,232,255,0.9), rgba(196,170,223,0.7) 55%, rgba(160,130,200,0.5));
+      box-shadow: 0 0 20px rgba(196,170,223,0.5), 0 0 44px rgba(196,170,223,0.22);
     }
     .chakra:hover .btn-visual {
-      box-shadow: 0 6px 32px rgba(180,148,220,0.65), 0 0 60px rgba(180,148,220,0.4);
+      box-shadow: 0 0 28px rgba(196,170,223,0.7), 0 0 60px rgba(196,170,223,0.35);
     }
     .room .btn-visual {
-      background: radial-gradient(circle at 38% 32%, #E0F4FC, #8EC4D8 45%, #70AACC);
-      box-shadow: 0 4px 24px rgba(120,188,216,0.45), 0 0 40px rgba(120,188,216,0.25), 0 0 0 1px rgba(142,196,216,0.2);
+      background: radial-gradient(circle at 42% 40%, rgba(224,244,252,0.9), rgba(142,196,216,0.7) 55%, rgba(100,168,196,0.5));
+      box-shadow: 0 0 20px rgba(142,196,216,0.5), 0 0 44px rgba(142,196,216,0.22);
     }
     .room:hover .btn-visual {
-      box-shadow: 0 6px 32px rgba(120,188,216,0.65), 0 0 60px rgba(120,188,216,0.4);
+      box-shadow: 0 0 28px rgba(142,196,216,0.7), 0 0 60px rgba(142,196,216,0.35);
     }
     .exhibition .btn-visual {
-      background: radial-gradient(circle at 38% 32%, #FDE8F0, #D8B8CC 45%, #C0A0B8);
-      box-shadow: 0 4px 24px rgba(200,148,180,0.45), 0 0 40px rgba(200,148,180,0.25), 0 0 0 1px rgba(216,184,204,0.2);
+      background: radial-gradient(circle at 42% 40%, rgba(252,232,242,0.9), rgba(216,184,204,0.7) 55%, rgba(185,148,172,0.5));
+      box-shadow: 0 0 20px rgba(216,184,204,0.5), 0 0 44px rgba(216,184,204,0.22);
     }
     .exhibition:hover .btn-visual {
-      box-shadow: 0 6px 32px rgba(200,148,180,0.65), 0 0 60px rgba(200,148,180,0.4);
+      box-shadow: 0 0 28px rgba(216,184,204,0.7), 0 0 60px rgba(216,184,204,0.35);
     }
     .aura-orbit .btn-visual {
-      background: radial-gradient(circle at 38% 32%, #9080C8, #483870 45%, #2C1E50);
-      box-shadow: 0 4px 24px rgba(90,65,150,0.55), 0 0 40px rgba(90,65,150,0.3), 0 0 0 1px rgba(201,168,76,0.25);
+      background: radial-gradient(circle at 42% 40%, rgba(148,128,200,0.85), rgba(72,56,112,0.7) 55%, rgba(44,30,80,0.55));
+      box-shadow: 0 0 20px rgba(100,80,160,0.5), 0 0 44px rgba(100,80,160,0.22), 0 0 0 1px rgba(201,168,76,0.18);
     }
     .aura-orbit:hover .btn-visual {
-      box-shadow: 0 6px 32px rgba(90,65,150,0.75), 0 0 60px rgba(90,65,150,0.45), 0 0 0 1px rgba(201,168,76,0.4);
+      box-shadow: 0 0 28px rgba(100,80,160,0.7), 0 0 60px rgba(100,80,160,0.35), 0 0 0 1px rgba(201,168,76,0.35);
     }
 
     /* 行星文字 */
@@ -239,16 +239,13 @@
     .blessing-center:active { transform: translate(-50%, -50%) scale(0.95); }
 
     .blessing-orb {
-      width: 112px; height: 112px;
+      width: 96px; height: 96px;
       border-radius: 50%;
-      background: radial-gradient(circle at 38% 30%, #FFFDE0, #F5D870 42%, #E8C050 70%, #D4A830);
+      background: radial-gradient(circle at 40% 38%, rgba(255,252,220,0.95), rgba(245,220,110,0.8) 50%, rgba(220,185,70,0.6));
       box-shadow:
-        0 0 0 1px rgba(240, 216, 100, 0.3),
-        0 6px 28px rgba(220, 185, 70, 0.55),
-        0 0 50px rgba(240, 210, 80, 0.4),
-        0 0 90px rgba(240, 200, 60, 0.22),
-        inset 0 -8px 24px rgba(200, 150, 30, 0.15),
-        inset 0 6px 20px rgba(255, 252, 200, 0.5);
+        0 0 24px rgba(240, 215, 80, 0.5),
+        0 0 56px rgba(240, 210, 70, 0.28),
+        0 0 88px rgba(230, 200, 60, 0.14);
       margin-bottom: 0.7rem; position: relative;
       transition: all 0.5s ease;
     }
