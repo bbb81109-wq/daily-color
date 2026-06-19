@@ -702,6 +702,71 @@
 
     .damage-card-cause { display: none; }
 
+    /* ── Card Icon Animations ── */
+    @keyframes holePulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    @keyframes crackFlicker {
+      0%, 85%, 100% { opacity: 1; }
+      90% { opacity: 0.25; }
+      93% { opacity: 0.9; }
+      96% { opacity: 0.2; }
+    }
+    @keyframes blockBreath {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+    @keyframes cordFlow {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -16; }
+    }
+    @keyframes overlapDrift {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-3px); }
+    }
+    @keyframes overlapDriftR {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(3px); }
+    }
+    @keyframes rippleWave {
+      0%, 100% { opacity: 0.3; r: 8; }
+      50% { opacity: 0.08; r: 10; }
+    }
+    @keyframes rippleWave2 {
+      0%, 100% { opacity: 0.15; r: 13; }
+      50% { opacity: 0.04; r: 15; }
+    }
+    @keyframes vampirePull {
+      0%, 100% { stroke-dashoffset: 0; opacity: 0.7; }
+      50% { stroke-dashoffset: 8; opacity: 1; }
+    }
+    @keyframes lowFreqSink {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50% { transform: translateY(2px); opacity: 0.7; }
+    }
+    @keyframes highFreqRise {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(-2px); opacity: 0.9; }
+    }
+    @keyframes cleanseDrop {
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-1px); }
+    }
+
+    .anim-hole { animation: holePulse 2.8s ease-in-out infinite; }
+    .anim-crack { animation: crackFlicker 3.5s ease-in-out infinite; }
+    .anim-block { animation: blockBreath 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-cord { animation: cordFlow 1.8s linear infinite; }
+    .anim-overlap-l { animation: overlapDrift 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-overlap-r { animation: overlapDriftR 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-ripple1 { animation: rippleWave 2.5s ease-in-out infinite; }
+    .anim-ripple2 { animation: rippleWave2 2.5s ease-in-out infinite 0.6s; }
+    .anim-vampire { animation: vampirePull 2s ease-in-out infinite; }
+    .anim-low { animation: lowFreqSink 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-high { animation: highFreqRise 2.5s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-cleanse { animation: cleanseDrop 2.8s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
     /* ── Hamburger ── */
     .hamburger {
       background: rgba(255,255,255,0.06);
@@ -1543,8 +1608,8 @@
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="24" cy="18" rx="20" ry="14" stroke="rgba(255,180,100,0.4)" stroke-width="1.2"/>
         <ellipse cx="24" cy="18" rx="20" ry="14" stroke="rgba(255,180,100,0.15)" stroke-width="6"/>
-        <ellipse cx="30" cy="10" rx="4" ry="3" fill="rgba(10,8,20,0.9)" stroke="rgba(255,100,80,0.6)" stroke-width="1"/>
-        <ellipse cx="16" cy="24" rx="3" ry="2.2" fill="rgba(10,8,20,0.9)" stroke="rgba(255,100,80,0.5)" stroke-width="0.8"/>
+        <ellipse class="anim-hole" cx="30" cy="10" rx="4" ry="3" fill="rgba(10,8,20,0.9)" stroke="rgba(255,100,80,0.6)" stroke-width="1"/>
+        <ellipse class="anim-hole" cx="16" cy="24" rx="3" ry="2.2" fill="rgba(10,8,20,0.9)" stroke="rgba(255,100,80,0.5)" stroke-width="0.8" style="animation-delay:0.4s"/>
       </svg>
       <div class="damage-card-name">破洞</div>
       <div class="damage-card-en">Hole / Tear</div>
@@ -1557,8 +1622,8 @@
     <div class="damage-card" data-id="crack" style="--card-color:#FFB347">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="24" cy="18" rx="20" ry="14" stroke="rgba(255,180,100,0.4)" stroke-width="1.2"/>
-        <polyline points="20,6 24,14 19,18 26,30" stroke="rgba(255,120,80,0.8)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <polyline points="30,8 33,16 29,20" stroke="rgba(255,120,80,0.5)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="anim-crack" points="20,6 24,14 19,18 26,30" stroke="rgba(255,120,80,0.8)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="anim-crack" points="30,8 33,16 29,20" stroke="rgba(255,120,80,0.5)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:0.3s"/>
       </svg>
       <div class="damage-card-name">裂縫</div>
       <div class="damage-card-en">Crack / Fissure</div>
@@ -1571,8 +1636,8 @@
     <div class="damage-card" data-id="block" style="--card-color:#B39DDB">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="24" cy="18" rx="20" ry="14" stroke="rgba(255,180,100,0.4)" stroke-width="1.2"/>
-        <ellipse cx="22" cy="20" rx="7" ry="5" fill="rgba(80,60,120,0.5)" stroke="rgba(160,100,200,0.6)" stroke-width="1"/>
-        <ellipse cx="22" cy="20" rx="4" ry="2.8" fill="rgba(60,40,100,0.7)"/>
+        <ellipse class="anim-block" cx="22" cy="20" rx="7" ry="5" fill="rgba(80,60,120,0.5)" stroke="rgba(160,100,200,0.6)" stroke-width="1"/>
+        <ellipse class="anim-block" cx="22" cy="20" rx="4" ry="2.8" fill="rgba(60,40,100,0.7)" style="animation-delay:0.2s"/>
       </svg>
       <div class="damage-card-name">能量塊</div>
       <div class="damage-card-en">Energy Block</div>
@@ -1585,9 +1650,9 @@
     <div class="damage-card" data-id="cord" style="--card-color:#F48FB1">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="20" cy="18" rx="16" ry="12" stroke="rgba(255,180,100,0.4)" stroke-width="1.2"/>
-        <path d="M34,12 C38,10 44,14 46,18" stroke="rgba(255,100,120,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2"/>
+        <path class="anim-cord" d="M34,12 C38,10 44,14 46,18" stroke="rgba(255,100,120,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2"/>
         <circle cx="34" cy="12" r="2" fill="rgba(255,100,120,0.5)" stroke="rgba(255,100,120,0.8)" stroke-width="0.8"/>
-        <path d="M34,24 C38,26 42,22 46,20" stroke="rgba(255,100,120,0.5)" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="2 2"/>
+        <path class="anim-cord" d="M34,24 C38,26 42,22 46,20" stroke="rgba(255,100,120,0.5)" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="2 2" style="animation-delay:0.3s"/>
         <circle cx="34" cy="24" r="1.5" fill="rgba(255,100,120,0.4)" stroke="rgba(255,100,120,0.6)" stroke-width="0.8"/>
       </svg>
       <div class="damage-card-name">能量索</div>
@@ -1609,8 +1674,8 @@
 
     <div class="damage-card" data-id="overlap" style="--card-color:#90CAF9">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="16" cy="18" rx="12" ry="14" stroke="rgba(144,202,255,0.5)" stroke-width="1.2"/>
-        <ellipse cx="32" cy="18" rx="12" ry="14" stroke="rgba(255,144,187,0.5)" stroke-width="1.2"/>
+        <ellipse class="anim-overlap-l" cx="16" cy="18" rx="12" ry="14" stroke="rgba(144,202,255,0.5)" stroke-width="1.2"/>
+        <ellipse class="anim-overlap-r" cx="32" cy="18" rx="12" ry="14" stroke="rgba(255,144,187,0.5)" stroke-width="1.2"/>
         <ellipse cx="24" cy="18" rx="4" ry="10" fill="rgba(200,160,255,0.15)" stroke="rgba(200,160,255,0.3)" stroke-width="0.8"/>
       </svg>
       <div class="damage-card-name">光場交疊</div>
@@ -1624,8 +1689,8 @@
     <div class="damage-card" data-id="resonance" style="--card-color:#FFD54F">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="24" cy="18" r="4" fill="rgba(255,220,120,0.4)" stroke="rgba(255,220,120,0.7)" stroke-width="1"/>
-        <circle cx="24" cy="18" r="8" fill="none" stroke="rgba(255,220,120,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
-        <circle cx="24" cy="18" r="13" fill="none" stroke="rgba(255,220,120,0.15)" stroke-width="0.8" stroke-dasharray="3 3"/>
+        <circle class="anim-ripple1" cx="24" cy="18" r="8" fill="none" stroke="rgba(255,220,120,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+        <circle class="anim-ripple2" cx="24" cy="18" r="13" fill="none" stroke="rgba(255,220,120,0.15)" stroke-width="0.8" stroke-dasharray="3 3"/>
         <circle cx="24" cy="18" r="18" fill="none" stroke="rgba(255,220,120,0.08)" stroke-width="0.8"/>
       </svg>
       <div class="damage-card-name">能量共鳴</div>
@@ -1640,8 +1705,8 @@
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="28" cy="18" rx="14" ry="12" stroke="rgba(255,180,100,0.4)" stroke-width="1.2"/>
         <ellipse cx="14" cy="18" rx="8" ry="7" fill="rgba(80,40,80,0.4)" stroke="rgba(200,80,120,0.5)" stroke-width="1"/>
-        <path d="M22,16 Q18,18 22,20" stroke="rgba(200,80,120,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M20,14 Q15,18 20,22" stroke="rgba(200,80,120,0.4)" stroke-width="0.8" stroke-linecap="round"/>
+        <path class="anim-vampire" d="M22,16 Q18,18 22,20" stroke="rgba(200,80,120,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="4 2"/>
+        <path class="anim-vampire" d="M20,14 Q15,18 20,22" stroke="rgba(200,80,120,0.4)" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="4 2" style="animation-delay:0.4s"/>
       </svg>
       <div class="damage-card-name">能量吸血鬼</div>
       <div class="damage-card-en">Energy Vampire</div>
@@ -1666,7 +1731,7 @@
         <line x1="14" y1="14" x2="34" y2="14" stroke="rgba(100,80,140,0.4)" stroke-width="0.8"/>
         <line x1="10" y1="19" x2="38" y2="19" stroke="rgba(100,80,140,0.5)" stroke-width="0.8"/>
         <line x1="14" y1="24" x2="34" y2="24" stroke="rgba(100,80,140,0.4)" stroke-width="0.8"/>
-        <ellipse cx="24" cy="19" rx="6" ry="4" fill="rgba(60,40,100,0.5)" stroke="rgba(160,100,200,0.3)" stroke-width="0.8"/>
+        <ellipse class="anim-low" cx="24" cy="19" rx="6" ry="4" fill="rgba(60,40,100,0.5)" stroke="rgba(160,100,200,0.3)" stroke-width="0.8"/>
       </svg>
       <div class="damage-card-name">低頻空間</div>
       <div class="damage-card-en">Low-Frequency Space</div>
@@ -1679,10 +1744,10 @@
     <div class="damage-card" data-id="high-space" style="--card-color:#80CBC4">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8,28 Q16,10 24,14 Q32,18 40,8" stroke="rgba(144,255,200,0.5)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
-        <circle cx="24" cy="18" r="5" fill="rgba(144,255,200,0.15)" stroke="rgba(144,255,200,0.5)" stroke-width="1"/>
-        <line x1="24" y1="6" x2="24" y2="10" stroke="rgba(255,220,120,0.6)" stroke-width="1" stroke-linecap="round"/>
-        <line x1="32" y1="9" x2="30" y2="12" stroke="rgba(255,220,120,0.5)" stroke-width="1" stroke-linecap="round"/>
-        <line x1="16" y1="9" x2="18" y2="12" stroke="rgba(255,220,120,0.5)" stroke-width="1" stroke-linecap="round"/>
+        <circle class="anim-high" cx="24" cy="18" r="5" fill="rgba(144,255,200,0.15)" stroke="rgba(144,255,200,0.5)" stroke-width="1"/>
+        <line class="anim-high" x1="24" y1="6" x2="24" y2="10" stroke="rgba(255,220,120,0.6)" stroke-width="1" stroke-linecap="round" style="animation-delay:0.2s"/>
+        <line class="anim-high" x1="32" y1="9" x2="30" y2="12" stroke="rgba(255,220,120,0.5)" stroke-width="1" stroke-linecap="round" style="animation-delay:0.4s"/>
+        <line class="anim-high" x1="16" y1="9" x2="18" y2="12" stroke="rgba(255,220,120,0.5)" stroke-width="1" stroke-linecap="round" style="animation-delay:0.6s"/>
       </svg>
       <div class="damage-card-name">高頻空間</div>
       <div class="damage-card-en">High-Frequency Space</div>
@@ -1694,9 +1759,9 @@
 
     <div class="damage-card" data-id="cleanse-space" style="--card-color:#90CAF9">
       <svg class="damage-card-icon" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M24,30 Q14,22 14,16 A10,10 0 0,1 34,16 Q34,22 24,30Z" fill="rgba(144,202,255,0.15)" stroke="rgba(144,202,255,0.5)" stroke-width="1.2"/>
+        <path class="anim-cleanse" d="M24,30 Q14,22 14,16 A10,10 0 0,1 34,16 Q34,22 24,30Z" fill="rgba(144,202,255,0.15)" stroke="rgba(144,202,255,0.5)" stroke-width="1.2"/>
         <path d="M24,26 Q18,20 18,16 A6,6 0 0,1 30,16 Q30,20 24,26Z" fill="rgba(144,202,255,0.2)"/>
-        <circle cx="24" cy="8" r="2" fill="rgba(255,220,120,0.6)" stroke="rgba(255,220,120,0.4)" stroke-width="0.5"/>
+        <circle class="anim-cleanse" cx="24" cy="8" r="2" fill="rgba(255,220,120,0.6)" stroke="rgba(255,220,120,0.4)" stroke-width="0.5" style="animation-delay:0.3s"/>
         <line x1="24" y1="5" x2="24" y2="3" stroke="rgba(255,220,120,0.5)" stroke-width="0.8" stroke-linecap="round"/>
       </svg>
       <div class="damage-card-name">空間淨化</div>
