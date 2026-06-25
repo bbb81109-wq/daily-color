@@ -170,36 +170,90 @@
     }
 
     /* ── 抽牌按鈕 ── */
-    .draw-btn {
-      background: linear-gradient(135deg,
-        rgba(200, 160, 60, 0.10) 0%,
-        rgba(160, 120, 200, 0.08) 100%);
-      border: 1px solid rgba(160, 120, 40, 0.35);
-      color: var(--gold);
-      font-family: "Noto Serif TC", serif;
-      font-size: 0.88rem;
-      font-weight: 400;
-      letter-spacing: 0.28em;
-      padding: 0.85rem 2.8rem;
-      border-radius: 100px;
-      cursor: pointer;
-      transition: all 0.5s var(--ease-silk);
-      margin-bottom: 2.4rem;
+    /* 三選一塔羅提示 */
+    .tarot-hint {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: #B0A0C8;
+      text-align: center;
+      margin-bottom: 2.2rem;
+      font-weight: 300;
+      animation: hint-pulse 3s ease-in-out infinite;
+    }
+    @keyframes hint-pulse {
+      0%,100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* 扇形展開容器 */
+    .tarot-spread {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0;
+      height: 260px;
       position: relative;
-      z-index: 1;
-      box-shadow: 0 4px 20px rgba(160, 120, 40, 0.10);
     }
-    .draw-btn:hover {
-      background: linear-gradient(135deg,
-        rgba(200, 160, 60, 0.18) 0%,
-        rgba(160, 120, 200, 0.14) 100%);
-      border-color: var(--gold);
-      color: var(--gold-soft);
-      box-shadow: 0 6px 28px rgba(160, 120, 40, 0.18);
-      transform: translateY(-2px);
+
+    /* 單張牌 */
+    .tarot-card {
+      width: 110px;
+      height: 175px;
+      border-radius: 14px;
+      background: linear-gradient(155deg, #EDE5F8 0%, #DDD0F2 40%, #C9B4E8 100%);
+      border: 1px solid rgba(180,155,220,0.4);
+      box-shadow: 0 8px 28px rgba(150,120,200,0.18), 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+      position: absolute;
+      bottom: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1),
+                  box-shadow 0.4s ease,
+                  opacity 0.4s ease;
+      transform-origin: bottom center;
+      -webkit-tap-highlight-color: transparent;
     }
-    .draw-btn:active { transform: scale(0.98); }
-    .draw-btn.gone   { opacity: 0; pointer-events: none; transform: translateY(-6px); }
+    .tc-left  { transform: rotate(-18deg) translateX(-60px); z-index: 1; }
+    .tc-mid   { transform: rotate(0deg);                     z-index: 2; }
+    .tc-right { transform: rotate(18deg)  translateX(60px);  z-index: 1; }
+
+    .tarot-card:hover { box-shadow: 0 16px 44px rgba(150,120,200,0.32), 0 4px 12px rgba(0,0,0,0.12); }
+    .tc-left:hover  { transform: rotate(-18deg) translateX(-60px) translateY(-18px) scale(1.06); }
+    .tc-mid:hover   { transform: rotate(0deg)                     translateY(-18px) scale(1.06); }
+    .tc-right:hover { transform: rotate(18deg)  translateX(60px)  translateY(-18px) scale(1.06); }
+
+    .tarot-card.selected {
+      transform: rotate(0deg) translateX(0) translateY(-24px) scale(1.1) !important;
+      box-shadow: 0 24px 56px rgba(150,120,200,0.38), 0 6px 16px rgba(0,0,0,0.12);
+      z-index: 10;
+    }
+    .tarot-card.fading-out {
+      opacity: 0;
+      transform: rotate(0deg) translateY(20px) scale(0.9) !important;
+      pointer-events: none;
+    }
+
+    .tc-inner {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+      border-radius: 13px;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(180,155,220,0.08) 8px,
+        rgba(180,155,220,0.08) 9px
+      );
+    }
+    .tc-symbol {
+      font-size: 2rem;
+      color: rgba(160,130,210,0.35);
+      animation: symbol-breathe 4s ease-in-out infinite;
+    }
+    @keyframes symbol-breathe {
+      0%,100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.08); }
+    }
 
     /* ════════════════════════════════════════
        卡片區域
@@ -1272,15 +1326,15 @@
 <a class="back-link" href="index.html"><span>首 頁</span></a>
 <div class="line-greeting" id="lineGreeting"></div>
 <p class="headline">讓宇宙透過色彩和脈輪<br>為你說出一句話</p>
-<button class="draw-btn" id="drawBtn">抽一次，看看宇宙想說什麼</button>
-
 <div class="cards-area" id="cardsArea">
 
-  <!-- ── 初始背面卡片 ── -->
+  <!-- ── 三選一塔羅牌 ── -->
   <div class="back-scene" id="backScene">
-    <div class="back-card">
-      <img src="card-back.png" alt="牌背">
-      <div class="back-hint">輕輕地<br>在這裡停下來</div>
+    <div class="tarot-hint">選一張，感受今天宇宙想對你說的話</div>
+    <div class="tarot-spread" id="tarotSpread">
+      <div class="tarot-card tc-left"  data-index="0"><div class="tc-inner"><div class="tc-symbol">✦</div></div></div>
+      <div class="tarot-card tc-mid"   data-index="1"><div class="tc-inner"><div class="tc-symbol">✦</div></div></div>
+      <div class="tarot-card tc-right" data-index="2"><div class="tc-inner"><div class="tc-symbol">✦</div></div></div>
     </div>
   </div>
 
@@ -1922,7 +1976,6 @@ const backScene  = document.getElementById('backScene');
 const icWrap     = document.getElementById('icWrap');
 const ckScene    = document.getElementById('ckScene');
 const ck3d       = document.getElementById('ck3d');
-const drawBtn    = document.getElementById('drawBtn');
 const redrawBtn  = document.getElementById('redrawBtn');
 const particleField = document.getElementById('particleField');
 
@@ -2204,38 +2257,29 @@ function showPair(pair) {
 }
 
 // ── 抽牌觸發 ──
-function handleDraw() {
+function handleDraw(selectedCard) {
   if (state !== 'idle') return;
   state = 'animating';
 
-  drawBtn.classList.add('gone');
-  const backCard = backScene.querySelector('.back-card');
+  // 其他兩張牌淡出，選中牌上浮
+  document.querySelectorAll('.tarot-card').forEach(card => {
+    if (card === selectedCard) {
+      card.classList.add('selected');
+    } else {
+      card.classList.add('fading-out');
+    }
+  });
 
-  // 顯示 Loading 狀態
-  backCard.classList.add('loading');
-  const hint = backCard.querySelector('.back-hint');
-  const originalHint = hint.textContent;
-  hint.textContent = '宇宙在思考\n請稍等...';
+  spawnHalo(selectedCard);
 
-  spawnHalo(backCard);
-
-  // 背面卡翻轉動畫 + 粒子
-  setTimeout(() => {
-    backCard.classList.remove('loading');
-    backCard.classList.add('flipping');
-    hint.textContent = originalHint;
-  }, 600);
-  // spawnParticles('#b89ad8'); // 禁用粒子效果
-
-  // 背面卡淡出
+  // 短暫停頓後整個 backScene 淡出，顯示結果
   setTimeout(() => {
     backScene.classList.add('fading');
-  }, 150);
-  setTimeout(() => { backScene.style.display = 'none'; }, 380);
-
+  }, 500);
   setTimeout(() => {
+    backScene.style.display = 'none';
     showPair(pickPair());
-  }, 280);
+  }, 750);
 }
 
 // ── 顯示結果卡片 ──
@@ -2270,6 +2314,14 @@ function showResultCard(delayHide = false) {
 }
 
 // ── 換一張 ──
+function resetTarotSpread() {
+  backScene.style.display = 'block';
+  backScene.classList.remove('fading');
+  document.querySelectorAll('.tarot-card').forEach(card => {
+    card.classList.remove('selected', 'fading-out');
+  });
+}
+
 function handleRedraw() {
   if (state !== 'shown') return;
   state = 'animating';
@@ -2332,8 +2384,9 @@ function handleRedraw() {
   });
 }
 
-drawBtn.addEventListener('click', handleDraw);
-backScene.addEventListener('click', () => { if (state === 'idle') handleDraw(); });
+document.querySelectorAll('.tarot-card').forEach(card => {
+  card.addEventListener('click', () => { if (state === 'idle') handleDraw(card); });
+});
 redrawBtn.addEventListener('click', handleRedraw);
 
 
