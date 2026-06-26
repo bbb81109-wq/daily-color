@@ -1685,6 +1685,19 @@ document.querySelectorAll('.chakra-group').forEach(g => {
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
 initLiff();
+
+// 從靜觀空間跳過來時，自動展開對應脈輪
+const urlChakra = new URLSearchParams(location.search).get('chakra');
+if (urlChakra) {
+  const chakraMap = { '海底輪': 0, '臍輪': 1, '太陽神經叢': 2, '心輪': 3, '喉輪': 4, '眉心輪': 5, '頂輪': 6 };
+  const idx = chakraMap[urlChakra];
+  if (idx !== undefined) {
+    setTimeout(() => {
+      const target = document.querySelector(`.chakra-group[data-i="${idx}"]`);
+      if (target) target.click();
+    }, 800);
+  }
+}
 </script>
 </body>
 </html>

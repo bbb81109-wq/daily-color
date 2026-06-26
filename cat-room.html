@@ -688,7 +688,7 @@
       <div class="nav-orb-sm gold"></div>
       <span class="nav-name-sm">每日色彩</span>
     </a>
-    <a href="/chakra-cat" class="nav-planet-btn">
+    <a href="/chakra-cat" class="nav-planet-btn" id="chakra-cat-link">
       <div class="nav-orb-sm purple"></div>
       <span class="nav-name-sm">脈輪覺察</span>
     </a>
@@ -1077,6 +1077,12 @@ function showResult() {
   if (depth) {
     document.getElementById('depth-card').style.display = 'block';
     document.getElementById('depth-text').textContent = depth.text;
+  }
+
+  // 更新脈輪覺察連結，帶入對應脈輪
+  const chakraCatLink = document.getElementById('chakra-cat-link');
+  if (chakraCatLink && primary.chakra) {
+    chakraCatLink.href = `/chakra-cat?chakra=${encodeURIComponent(primary.chakra)}`;
   }
 }
 
