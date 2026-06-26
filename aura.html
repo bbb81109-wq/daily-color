@@ -2381,7 +2381,7 @@
     document.getElementById('panel-color-note').textContent = d.colorNote || '';
     const chakraEl = document.getElementById('panel-chakra');
     if (d.chakra) {
-      chakraEl.innerHTML = `<span class="panel-chakra-dot" style="background:${d.chakra.color};box-shadow:0 0 6px ${d.chakra.color};"></span>${d.chakra.name} · ${d.chakra.en}`;
+      chakraEl.innerHTML = `<span class="panel-chakra-dot" style="background:${d.chakra.color};box-shadow:0 0 6px ${d.chakra.color};"></span>${d.chakra.name} · ${d.chakra.en}<a href="chakra-cat.html" style="margin-left:10px;font-size:11px;color:rgba(201,168,76,0.65);text-decoration:none;letter-spacing:0.08em;border-left:1px solid rgba(255,255,255,0.1);padding-left:10px;">深入了解 →</a>`;
     } else { chakraEl.innerHTML = ''; }
     document.getElementById('panel-purify-list').innerHTML = d.purify.map(p =>
       `<span class="purify-tag">✦ ${p}</span>`
