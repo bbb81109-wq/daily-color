@@ -20,8 +20,8 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <script src="liff.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js" async></script>
+  <script src="liff.js" defer></script>
   <style>
     /* ── Design Tokens ── */
     :root {
@@ -1697,7 +1697,7 @@ document.querySelectorAll('.chakra-group').forEach(g => {
 
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
-initLiff();
+// LIFF 延遲初始化，只在分享時才呼叫
 
 // 從靜觀空間跳過來時，自動展開對應脈輪
 const urlChakra = new URLSearchParams(location.search).get('chakra');

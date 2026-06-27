@@ -1156,9 +1156,7 @@ document.getElementById('line-share').addEventListener('click', async () => {
 
 buildColorGrids();
 
-(async () => {
-  if (typeof initLiff !== 'undefined') await initLiff();
-})();
+// LIFF 延遲初始化，只在分享時才呼叫
 </script>
 </body>
 </html>

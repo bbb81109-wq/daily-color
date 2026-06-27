@@ -43,6 +43,7 @@ function getLiffUser() {
  * @param {Array} messages - LINE Flex Messages 陣列
  */
 async function shareToLine(messages) {
+  if (!_liffReady) await initLiff();
   if (isInLiff() && liff.isApiAvailable('shareTargetPicker')) {
     try {
       const result = await liff.shareTargetPicker(messages, { isMultiple: true });
@@ -555,7 +556,6 @@ async function shareToInstagram(title, text, bgColor, subtext = '') {
 // 已棄用，保留向下相容
 function _generateInstagramImageLegacy(title, text, bgColor) {
   return generateInstagramImage(title, text, bgColor);
-}
 }
 
 /**
