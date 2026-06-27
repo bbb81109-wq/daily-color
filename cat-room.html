@@ -109,11 +109,27 @@
       width: 100%; max-width: 280px;
       margin: 0 auto 1.2rem;
     }
+    .figure-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(200,190,240,0.13) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .body-figure { position: relative; z-index: 1; }
 
     .body-figure {
       width: 100%; height: auto;
       filter: drop-shadow(0 4px 20px rgba(120,140,200,0.08));
     }
+
+    @keyframes zonePulse {
+      0%   { opacity: 1; }
+      50%  { opacity: 0.65; }
+      100% { opacity: 1; }
+    }
+    .body-zone.selected { animation: zonePulse 2.2s ease-in-out infinite; }
 
     .body-zone {
       cursor: pointer;
@@ -318,10 +334,20 @@
     .result-card {
       width: 100%;
       border: 1px solid rgba(160, 180, 210, 0.25);
-      border-radius: 4px;
-      background: rgba(255,255,255,0.5);
-      padding: 1.8rem 1.6rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.55);
+      padding: 0 0 1.6rem;
       margin-bottom: 1.4rem;
+      overflow: hidden;
+    }
+    .result-card-strip {
+      height: 5px;
+      width: 100%;
+      margin-bottom: 1.6rem;
+      border-radius: 12px 12px 0 0;
+    }
+    .result-card-inner {
+      padding: 0 1.6rem;
     }
 
     .result-parts {
@@ -510,9 +536,9 @@
 
 <!-- ═══ Step 1: Body Figure ═══ -->
 <div class="step active" id="step-body">
-  <p class="step-eyebrow">今天的感受</p>
-  <h1 class="step-title">身體的哪裡有感覺？</h1>
-  <p class="step-hint">輕輕點選，可以選多個地方</p>
+  <p class="step-eyebrow">此刻感受</p>
+  <h1 class="step-title">身體的哪裡<br>有一點感覺？</h1>
+  <p class="step-hint">停下來，輕輕感受<br>可以選多個地方</p>
 
   <div class="figure-wrap">
     <svg viewBox="0 0 200 400" class="body-figure" xmlns="http://www.w3.org/2000/svg">
@@ -650,14 +676,15 @@
     <span style="font-size:11px;color:#C0B0C0;letter-spacing:0.08em">點選身體部位</span>
   </div>
 
-  <button class="btn-primary" id="next-to-color" disabled>繼續</button>
+  <button class="btn-primary" id="next-to-color" disabled>帶著這個，繼續</button>
 </div>
 
 <!-- ═══ Step 2: Color ═══ -->
 <div class="step" id="step-color">
-  <p class="step-eyebrow">選一個顏色</p>
+  <p class="step-eyebrow">直覺選色</p>
   <h1 class="step-title">今天的心情<br>最靠近哪個色？</h1>
   <p class="step-hint">不需要想太多，直覺選</p>
+  <p id="color-chosen-name" style="font-size:0.72rem;letter-spacing:0.18em;color:#9A8AAA;min-height:1.4em;margin-bottom:0.4rem;margin-top:-0.8rem;text-align:center;transition:opacity 0.3s;opacity:0;">　</p>
 
   <div class="color-section">
     <span class="color-group-label">粉 · 紫</span>
@@ -668,7 +695,7 @@
     <div class="color-grid" id="grid-warm"></div>
   </div>
 
-  <button class="btn-primary" id="next-to-result" disabled>看看身體說什麼</button>
+  <button class="btn-primary" id="next-to-result" disabled>聽聽身體說什麼</button>
   <button class="btn-secondary" id="back-to-body">← 回上一步</button>
 </div>
 
@@ -678,12 +705,15 @@
   <h1 class="step-title" style="margin-bottom:1.6rem" id="result-headline">此刻的你</h1>
 
   <div class="result-card">
-    <div class="result-parts" id="result-parts"></div>
-    <div class="result-divider"></div>
-    <p class="result-message" id="result-message"></p>
-    <div class="result-divider"></div>
-    <p class="result-action-label">今天可以</p>
-    <p class="result-action" id="result-action"></p>
+    <div class="result-card-strip" id="result-card-strip"></div>
+    <div class="result-card-inner">
+      <div class="result-parts" id="result-parts"></div>
+      <div class="result-divider"></div>
+      <p class="result-message" id="result-message"></p>
+      <div class="result-divider"></div>
+      <p class="result-action-label">今天可以</p>
+      <p class="result-action" id="result-action"></p>
+    </div>
   </div>
 
   <div class="depth-card" id="depth-card" style="display:none">
@@ -1037,6 +1067,8 @@ function selectColor(key, el) {
   el.classList.add('selected');
   selectedColor = key;
   document.getElementById('next-to-result').disabled = false;
+  const nameEl = document.getElementById('color-chosen-name');
+  if (nameEl) { nameEl.textContent = COLORS[key].name; nameEl.style.opacity = '1'; }
 
   // 更新主題色
   const hex = COLORS[key].hex;
@@ -1084,6 +1116,14 @@ function showResult() {
 
   // action
   document.getElementById('result-action').textContent = primary.action;
+
+  // result card strip color based on chakra
+  const chakraColors = { '頂輪':'#A882C2','眉心輪':'#7A7AAF','喉輪':'#7AA2C4','心輪':'#7DAF88','太陽神經叢':'#C9B86A','臍輪':'#C9976C','海底輪':'#C17B7B' };
+  const stripEl = document.getElementById('result-card-strip');
+  if (stripEl && primary.chakra) {
+    const c = chakraColors[primary.chakra] || '#B0A8C8';
+    stripEl.style.background = `linear-gradient(90deg, ${c}99, ${c}44)`;
+  }
 
   // color depth
   const depth = COLOR_DEPTH[selectedColor];
