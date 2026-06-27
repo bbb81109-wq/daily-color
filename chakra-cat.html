@@ -20,8 +20,16 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js" async></script>
-  <script src="liff.js" defer></script>
+  <script>
+    if (/Line\//i.test(navigator.userAgent)) {
+      var s = document.createElement('script');
+      s.src = 'https://static.line-scdn.net/liff/edge/2/sdk.js';
+      s.onload = function() {
+        var l = document.createElement('script'); l.src = 'liff.js'; document.head.appendChild(l);
+      };
+      document.head.appendChild(s);
+    }
+  </script>
   <style>
     /* ── Design Tokens ── */
     :root {

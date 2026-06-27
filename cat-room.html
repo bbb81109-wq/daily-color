@@ -17,8 +17,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js" async></script>
-  <script src="liff.js" defer></script>
+  <script>
+    // 只在 LINE App 內才載入 LIFF SDK，避免外部瀏覽器等待 LINE 伺服器
+    if (/Line\//i.test(navigator.userAgent)) {
+      var s = document.createElement('script');
+      s.src = 'https://static.line-scdn.net/liff/edge/2/sdk.js';
+      s.onload = function() {
+        var l = document.createElement('script'); l.src = 'liff.js'; document.head.appendChild(l);
+      };
+      document.head.appendChild(s);
+    }
+  </script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
